@@ -15,6 +15,8 @@
 		AA30852925B6658A00F4B92B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA30852725B6658A00F4B92B /* LaunchScreen.storyboard */; };
 		AA30853425B6658A00F4B92B /* Honey_AggregatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA30853325B6658A00F4B92B /* Honey_AggregatorTests.swift */; };
 		AA30853F25B6658A00F4B92B /* Honey_AggregatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA30853E25B6658A00F4B92B /* Honey_AggregatorUITests.swift */; };
+		AA692BDB25B8D4AC00DA8DD8 /* HiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA692BDA25B8D4AC00DA8DD8 /* HiveViewController.swift */; };
+		AA692BE025B8DCD200DA8DD8 /* HiveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA692BDF25B8DCD200DA8DD8 /* HiveListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		AA30853A25B6658A00F4B92B /* Honey AggregatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Honey AggregatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA30853E25B6658A00F4B92B /* Honey_AggregatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorUITests.swift; sourceTree = "<group>"; };
 		AA30854025B6658A00F4B92B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA692BDA25B8D4AC00DA8DD8 /* HiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveViewController.swift; sourceTree = "<group>"; };
+		AA692BDF25B8DCD200DA8DD8 /* HiveListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,8 @@
 				AA30851E25B6658900F4B92B /* SceneDelegate.swift */,
 				AA30852025B6658900F4B92B /* ViewController.swift */,
 				AA30852225B6658900F4B92B /* Main.storyboard */,
+				AA692BDF25B8DCD200DA8DD8 /* HiveListViewController.swift */,
+				AA692BDA25B8D4AC00DA8DD8 /* HiveViewController.swift */,
 				AA30852525B6658A00F4B92B /* Assets.xcassets */,
 				AA30852725B6658A00F4B92B /* LaunchScreen.storyboard */,
 				AA30852A25B6658A00F4B92B /* Info.plist */,
@@ -259,7 +265,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA30852125B6658900F4B92B /* ViewController.swift in Sources */,
+				AA692BE025B8DCD200DA8DD8 /* HiveListViewController.swift in Sources */,
 				AA30851D25B6658900F4B92B /* AppDelegate.swift in Sources */,
+				AA692BDB25B8D4AC00DA8DD8 /* HiveViewController.swift in Sources */,
 				AA30851F25B6658900F4B92B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

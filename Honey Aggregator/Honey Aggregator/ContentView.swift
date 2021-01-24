@@ -11,11 +11,15 @@ struct ContentView: View {
     var body: some View {
         
         VStack {
-            Text("Honey Aggregator")
-                .fontWeight(.bold)
+            
+            Spacer()
+            
+            Text("Honey \nAggregator")
+                .fontWeight(.black)
                 .foregroundColor(Color.orange)
                 .multilineTextAlignment(.center)
                 .font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
+                .lineLimit(2)
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             
             Spacer()
@@ -34,7 +38,7 @@ struct ContentView: View {
                         .bold()
                         
                 }.padding()
-                .background(Color.orange)
+                
                 
                 Button(action: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/{}/*@END_MENU_TOKEN@*/) {
                     Text("Hive List")
@@ -42,7 +46,7 @@ struct ContentView: View {
                         .bold()
                         
                 }.padding()
-                .background(Color.orange)
+                
             }
 
         }

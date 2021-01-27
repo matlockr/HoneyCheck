@@ -10,9 +10,12 @@ import SwiftUI
 struct HiveListUI: View {
     var body: some View {
         
-        NavigationView{
             VStack{
-                
+                Text("Hive List")
+                    .font(.title)
+                    .bold()
+                    .padding()
+                Divider()
                 List{
                     //Example Hive entry
                     HStack{
@@ -32,8 +35,6 @@ struct HiveListUI: View {
                 Spacer()
                 Divider()
             }
-            .navigationBarTitle("Hive List", displayMode: .inline)
-        }
     }
 }
 

@@ -8,11 +8,79 @@
 import SwiftUI
 
 struct FrameCreator: View {
+    var templates = ["Langstroth Deep", "Langstroth Medium", "Langstroth Shallow"]
+
+    @State private var templateSelected = 0
+    @State private var heightFieldText = ""
+    @State private var widthFieldText = ""
+    
+    //For Debugger purposes
+    @State private var saveFrame = false
+    
     var body: some View {
-        NavigationView{
-            Text("Hello")
+        VStack{
+            Text("Frame Creator")
+                .font(.title)
+                .bold()
+                .padding()
+            Divider()
+            Text("Template Selection")
+                .font(.title2)
+                Section {
+                    Picker(selection: $templateSelected, label: Text("Template")) {
+                        ForEach(0 ..< templates.count) {
+                            Text(self.templates[$0])
+
+                        }
+                    }
+                        .pickerStyle(WheelPickerStyle())
+                }
+            Section{
+                Divider()
+                Text("OR Manual Entry")
+                    .font(.title2)
+                HStack{
+                    Text("Height")
+                        .padding()
+                    TextField("",  text: $heightFieldText)
+                        .padding()
+                }
+                HStack{
+                    Text("Width")
+                        .padding()
+                    TextField("",  text: $widthFieldText)
+                        .padding()
+                }
+            }
+            Spacer()
+            Section{
+                Divider()
+                Text("Frame Picture")
+                    .padding()
+                    .font(.title2)
+                HStack{
+                    Image("comb")
+                        .resizable()
+                        .frame(width: 100, height: 100, alignment: .center)
+                        .padding()
+                    ZStack{
+                        Image(systemName: "circle")
+                            .font(.system(size: 100.0))
+                        Image(systemName: "camera")
+                            .font(.system(size: 56.0))
+                            .padding()
+                    }
+                }
+            }
+            Button(action: {self.saveFrame.toggle()}) {
+                Text("Save Frame")
+                    .padding()
+            }
+            
+            if saveFrame {//Do nothing
                 
-            .navigationBarTitle("Frame Creator", displayMode: .inline)
+            }
+
         }
     }
 }

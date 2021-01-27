@@ -15,8 +15,12 @@ struct HiveCreator: View {
     ]
     
     var body: some View {
-        NavigationView{
             VStack{
+                Text("Hive Creator")
+                    .font(.title)
+                    .bold()
+                    .padding()
+                Divider()
                 HStack{
                     Text("Hive Name:")
                         .padding()
@@ -58,8 +62,6 @@ struct HiveCreator: View {
                     }.buttonStyle(PlainButtonStyle())
                 }
             }
-            .navigationBarTitle("Hive Creator", displayMode: .inline)
-        }
 
     }
 }

@@ -10,44 +10,29 @@ import SwiftUI
 struct HiveListUI: View {
     var body: some View {
         
-        VStack{
-            HStack{
-                Button(action: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/{}/*@END_MENU_TOKEN@*/) {
-                    Text("<")
-                }.padding()
-                Spacer()
-                Text("Hive List")
-                    .fontWeight(.black)
-                    .foregroundColor(Color.orange)
-                    .multilineTextAlignment(.center)
-                    .font(.largeTitle)
-                    .lineLimit(2)
-                    .padding(.all)
-                Spacer()
-            }
-            Divider()
-            
-            List{
-                //Example Hive entry
-                HStack{
-                    Circle()
-                        .frame(width: 40.0)
-                    Spacer()
-                    Text("My Hive!")
-                        .fontWeight(.regular)
-                        .multilineTextAlignment(.center)
-                        .scaledToFill()
-                    Spacer()
-
-                    Button(action: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/{}/*@END_MENU_TOKEN@*/) {
-                        Text(">")
-                    }
+        NavigationView{
+            VStack{
+                
+                List{
+                    //Example Hive entry
+                    HStack{
+                        Image("comb")
+                            .resizable()
+                            .frame(width: 50, height: 50, alignment: .center)
+                            .padding(.all)
+                            .clipShape(Circle())
+                        Spacer()
+                        Text("My Hive!")
+                            .fontWeight(.regular)
+                            .multilineTextAlignment(.center)
+                            .scaledToFill()
+                        Spacer()
+                    }
                 }
+                Spacer()
+                Divider()
             }
-            Spacer()
-            Divider()
-            
-            
+            .navigationBarTitle("Hive List", displayMode: .inline)
         }
     }
 }

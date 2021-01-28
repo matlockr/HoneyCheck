@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/FrameCreator.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/HiveCreator.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/HiveListUI.swift">
+   </FileRef>
+   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>

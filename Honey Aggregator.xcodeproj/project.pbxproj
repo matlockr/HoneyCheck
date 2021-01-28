@@ -13,9 +13,9 @@
 		AA09ACA025C31F2700351DA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA09AC9F25C31F2700351DA3 /* Preview Assets.xcassets */; };
 		AA09ACAB25C31F2700351DA3 /* Honey_AggregatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACAA25C31F2700351DA3 /* Honey_AggregatorTests.swift */; };
 		AA09ACB625C31F2700351DA3 /* Honey_AggregatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACB525C31F2700351DA3 /* Honey_AggregatorUITests.swift */; };
-		AA09ACC725C3237900351DA3 /* HiveListUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACC625C3237900351DA3 /* HiveListUI.swift */; };
-		AA09ACCD25C323DC00351DA3 /* FrameCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACCB25C323DC00351DA3 /* FrameCreator.swift */; };
-		AA09ACCE25C323DC00351DA3 /* HiveCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACCC25C323DC00351DA3 /* HiveCreator.swift */; };
+		AA09ACDE25C3262900351DA3 /* HiveListUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACDD25C3262900351DA3 /* HiveListUI.swift */; };
+		AA09ACDF25C3262900351DA3 /* FrameCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACDC25C3262900351DA3 /* FrameCreator.swift */; };
+		AA09ACE025C3262900351DA3 /* HiveCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACDB25C3262800351DA3 /* HiveCreator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,9 +48,9 @@
 		AA09ACB125C31F2700351DA3 /* Honey AggregatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Honey AggregatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09ACB525C31F2700351DA3 /* Honey_AggregatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorUITests.swift; sourceTree = "<group>"; };
 		AA09ACB725C31F2700351DA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA09ACC625C3237900351DA3 /* HiveListUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HiveListUI.swift; path = "../../../../Documents/GitHub/Help-Local-Beekepers/Honey Aggregator/HiveListUI.swift"; sourceTree = "<group>"; };
-		AA09ACCB25C323DC00351DA3 /* FrameCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameCreator.swift; path = "../../../../Documents/GitHub/Help-Local-Beekepers/Honey Aggregator/FrameCreator.swift"; sourceTree = "<group>"; };
-		AA09ACCC25C323DC00351DA3 /* HiveCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HiveCreator.swift; path = "../../../../Documents/GitHub/Help-Local-Beekepers/Honey Aggregator/HiveCreator.swift"; sourceTree = "<group>"; };
+		AA09ACDB25C3262800351DA3 /* HiveCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HiveCreator.swift; path = "/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/HiveCreator.swift"; sourceTree = "<absolute>"; };
+		AA09ACDC25C3262900351DA3 /* FrameCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FrameCreator.swift; path = "/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/FrameCreator.swift"; sourceTree = "<absolute>"; };
+		AA09ACDD25C3262900351DA3 /* HiveListUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HiveListUI.swift; path = "/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/HiveListUI.swift"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,10 +102,10 @@
 			isa = PBXGroup;
 			children = (
 				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
+				AA09ACDC25C3262900351DA3 /* FrameCreator.swift */,
+				AA09ACDB25C3262800351DA3 /* HiveCreator.swift */,
+				AA09ACDD25C3262900351DA3 /* HiveListUI.swift */,
 				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
-				AA09ACC625C3237900351DA3 /* HiveListUI.swift */,
-				AA09ACCB25C323DC00351DA3 /* FrameCreator.swift */,
-				AA09ACCC25C323DC00351DA3 /* HiveCreator.swift */,
 				AA09AC9C25C31F2700351DA3 /* Assets.xcassets */,
 				AA09ACA125C31F2700351DA3 /* Info.plist */,
 				AA09AC9E25C31F2700351DA3 /* Preview Content */,
@@ -268,11 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA09ACCD25C323DC00351DA3 /* FrameCreator.swift in Sources */,
-				AA09ACCE25C323DC00351DA3 /* HiveCreator.swift in Sources */,
+				AA09ACDF25C3262900351DA3 /* FrameCreator.swift in Sources */,
+				AA09ACE025C3262900351DA3 /* HiveCreator.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
 				AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */,
-				AA09ACC725C3237900351DA3 /* HiveListUI.swift in Sources */,
+				AA09ACDE25C3262900351DA3 /* HiveListUI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

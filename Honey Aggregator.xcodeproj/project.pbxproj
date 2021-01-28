@@ -16,6 +16,8 @@
 		AA09ACDE25C3262900351DA3 /* HiveListUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACDD25C3262900351DA3 /* HiveListUI.swift */; };
 		AA09ACDF25C3262900351DA3 /* FrameCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACDC25C3262900351DA3 /* FrameCreator.swift */; };
 		AA09ACE025C3262900351DA3 /* HiveCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACDB25C3262800351DA3 /* HiveCreator.swift */; };
+		AA09ACE525C32AF000351DA3 /* Hive.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACE425C32AF000351DA3 /* Hive.swift */; };
+		AA09ACEA25C32BF500351DA3 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACE925C32BF500351DA3 /* Frame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		AA09ACDB25C3262800351DA3 /* HiveCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HiveCreator.swift; path = "/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/HiveCreator.swift"; sourceTree = "<absolute>"; };
 		AA09ACDC25C3262900351DA3 /* FrameCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FrameCreator.swift; path = "/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/FrameCreator.swift"; sourceTree = "<absolute>"; };
 		AA09ACDD25C3262900351DA3 /* HiveListUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HiveListUI.swift; path = "/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/HiveListUI.swift"; sourceTree = "<absolute>"; };
+		AA09ACE425C32AF000351DA3 /* Hive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hive.swift; sourceTree = "<group>"; };
+		AA09ACE925C32BF500351DA3 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,8 @@
 				AA09AC9C25C31F2700351DA3 /* Assets.xcassets */,
 				AA09ACA125C31F2700351DA3 /* Info.plist */,
 				AA09AC9E25C31F2700351DA3 /* Preview Content */,
+				AA09ACE425C32AF000351DA3 /* Hive.swift */,
+				AA09ACE925C32BF500351DA3 /* Frame.swift */,
 			);
 			path = "Honey Aggregator";
 			sourceTree = "<group>";
@@ -272,7 +278,9 @@
 				AA09ACE025C3262900351DA3 /* HiveCreator.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
 				AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */,
+				AA09ACEA25C32BF500351DA3 /* Frame.swift in Sources */,
 				AA09ACDE25C3262900351DA3 /* HiveListUI.swift in Sources */,
+				AA09ACE525C32AF000351DA3 /* Hive.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

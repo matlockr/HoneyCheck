@@ -1,0 +1,579 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */; };
+		AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9A25C31F2600351DA3 /* ContentView.swift */; };
+		AA09AC9D25C31F2700351DA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA09AC9C25C31F2700351DA3 /* Assets.xcassets */; };
+		AA09ACA025C31F2700351DA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA09AC9F25C31F2700351DA3 /* Preview Assets.xcassets */; };
+		AA09ACAB25C31F2700351DA3 /* Honey_AggregatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACAA25C31F2700351DA3 /* Honey_AggregatorTests.swift */; };
+		AA09ACB625C31F2700351DA3 /* Honey_AggregatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACB525C31F2700351DA3 /* Honey_AggregatorUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AA09ACA725C31F2700351DA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA09AC8D25C31F2600351DA3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA09AC9425C31F2600351DA3;
+			remoteInfo = "Honey Aggregator";
+		};
+		AA09ACB225C31F2700351DA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA09AC8D25C31F2600351DA3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA09AC9425C31F2600351DA3;
+			remoteInfo = "Honey Aggregator";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honey Aggregator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorApp.swift; sourceTree = "<group>"; };
+		AA09AC9A25C31F2600351DA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AA09AC9C25C31F2700351DA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA09AC9F25C31F2700351DA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		AA09ACA125C31F2700351DA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA09ACA625C31F2700351DA3 /* Honey AggregatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Honey AggregatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA09ACAA25C31F2700351DA3 /* Honey_AggregatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorTests.swift; sourceTree = "<group>"; };
+		AA09ACAC25C31F2700351DA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA09ACB125C31F2700351DA3 /* Honey AggregatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Honey AggregatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA09ACB525C31F2700351DA3 /* Honey_AggregatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorUITests.swift; sourceTree = "<group>"; };
+		AA09ACB725C31F2700351DA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA09AC9225C31F2600351DA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA09ACA325C31F2700351DA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA09ACAE25C31F2700351DA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA09AC8C25C31F2600351DA3 = {
+			isa = PBXGroup;
+			children = (
+				AA09AC9725C31F2600351DA3 /* Honey Aggregator */,
+				AA09ACA925C31F2700351DA3 /* Honey AggregatorTests */,
+				AA09ACB425C31F2700351DA3 /* Honey AggregatorUITests */,
+				AA09AC9625C31F2600351DA3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA09AC9625C31F2600351DA3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */,
+				AA09ACA625C31F2700351DA3 /* Honey AggregatorTests.xctest */,
+				AA09ACB125C31F2700351DA3 /* Honey AggregatorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA09AC9725C31F2600351DA3 /* Honey Aggregator */ = {
+			isa = PBXGroup;
+			children = (
+				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
+				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
+				AA09AC9C25C31F2700351DA3 /* Assets.xcassets */,
+				AA09ACA125C31F2700351DA3 /* Info.plist */,
+				AA09AC9E25C31F2700351DA3 /* Preview Content */,
+			);
+			path = "Honey Aggregator";
+			sourceTree = "<group>";
+		};
+		AA09AC9E25C31F2700351DA3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				AA09AC9F25C31F2700351DA3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		AA09ACA925C31F2700351DA3 /* Honey AggregatorTests */ = {
+			isa = PBXGroup;
+			children = (
+				AA09ACAA25C31F2700351DA3 /* Honey_AggregatorTests.swift */,
+				AA09ACAC25C31F2700351DA3 /* Info.plist */,
+			);
+			path = "Honey AggregatorTests";
+			sourceTree = "<group>";
+		};
+		AA09ACB425C31F2700351DA3 /* Honey AggregatorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AA09ACB525C31F2700351DA3 /* Honey_AggregatorUITests.swift */,
+				AA09ACB725C31F2700351DA3 /* Info.plist */,
+			);
+			path = "Honey AggregatorUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA09AC9425C31F2600351DA3 /* Honey Aggregator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA09ACBA25C31F2700351DA3 /* Build configuration list for PBXNativeTarget "Honey Aggregator" */;
+			buildPhases = (
+				AA09AC9125C31F2600351DA3 /* Sources */,
+				AA09AC9225C31F2600351DA3 /* Frameworks */,
+				AA09AC9325C31F2600351DA3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Honey Aggregator";
+			productName = "Honey Aggregator";
+			productReference = AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA09ACA525C31F2700351DA3 /* Honey AggregatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA09ACBD25C31F2700351DA3 /* Build configuration list for PBXNativeTarget "Honey AggregatorTests" */;
+			buildPhases = (
+				AA09ACA225C31F2700351DA3 /* Sources */,
+				AA09ACA325C31F2700351DA3 /* Frameworks */,
+				AA09ACA425C31F2700351DA3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA09ACA825C31F2700351DA3 /* PBXTargetDependency */,
+			);
+			name = "Honey AggregatorTests";
+			productName = "Honey AggregatorTests";
+			productReference = AA09ACA625C31F2700351DA3 /* Honey AggregatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AA09ACB025C31F2700351DA3 /* Honey AggregatorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA09ACC025C31F2700351DA3 /* Build configuration list for PBXNativeTarget "Honey AggregatorUITests" */;
+			buildPhases = (
+				AA09ACAD25C31F2700351DA3 /* Sources */,
+				AA09ACAE25C31F2700351DA3 /* Frameworks */,
+				AA09ACAF25C31F2700351DA3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA09ACB325C31F2700351DA3 /* PBXTargetDependency */,
+			);
+			name = "Honey AggregatorUITests";
+			productName = "Honey AggregatorUITests";
+			productReference = AA09ACB125C31F2700351DA3 /* Honey AggregatorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA09AC8D25C31F2600351DA3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1210;
+				LastUpgradeCheck = 1210;
+				TargetAttributes = {
+					AA09AC9425C31F2600351DA3 = {
+						CreatedOnToolsVersion = 12.1;
+					};
+					AA09ACA525C31F2700351DA3 = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = AA09AC9425C31F2600351DA3;
+					};
+					AA09ACB025C31F2700351DA3 = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = AA09AC9425C31F2600351DA3;
+					};
+				};
+			};
+			buildConfigurationList = AA09AC9025C31F2600351DA3 /* Build configuration list for PBXProject "Honey Aggregator" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA09AC8C25C31F2600351DA3;
+			productRefGroup = AA09AC9625C31F2600351DA3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA09AC9425C31F2600351DA3 /* Honey Aggregator */,
+				AA09ACA525C31F2700351DA3 /* Honey AggregatorTests */,
+				AA09ACB025C31F2700351DA3 /* Honey AggregatorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA09AC9325C31F2600351DA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA09ACA025C31F2700351DA3 /* Preview Assets.xcassets in Resources */,
+				AA09AC9D25C31F2700351DA3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA09ACA425C31F2700351DA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA09ACAF25C31F2700351DA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA09AC9125C31F2600351DA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
+				AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA09ACA225C31F2700351DA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA09ACAB25C31F2700351DA3 /* Honey_AggregatorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA09ACAD25C31F2700351DA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA09ACB625C31F2700351DA3 /* Honey_AggregatorUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA09ACA825C31F2700351DA3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA09AC9425C31F2600351DA3 /* Honey Aggregator */;
+			targetProxy = AA09ACA725C31F2700351DA3 /* PBXContainerItemProxy */;
+		};
+		AA09ACB325C31F2700351DA3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA09AC9425C31F2600351DA3 /* Honey Aggregator */;
+			targetProxy = AA09ACB225C31F2700351DA3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AA09ACB825C31F2700351DA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA09ACB925C31F2700351DA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA09ACBB25C31F2700351DA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Honey Aggregator/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Honey Aggregator/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-Aggregator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA09ACBC25C31F2700351DA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Honey Aggregator/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Honey Aggregator/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-Aggregator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AA09ACBE25C31F2700351DA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Honey AggregatorTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-AggregatorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Honey Aggregator.app/Honey Aggregator";
+			};
+			name = Debug;
+		};
+		AA09ACBF25C31F2700351DA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Honey AggregatorTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-AggregatorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Honey Aggregator.app/Honey Aggregator";
+			};
+			name = Release;
+		};
+		AA09ACC125C31F2700351DA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Honey AggregatorUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-AggregatorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Honey Aggregator";
+			};
+			name = Debug;
+		};
+		AA09ACC225C31F2700351DA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "Honey AggregatorUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-AggregatorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Honey Aggregator";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA09AC9025C31F2600351DA3 /* Build configuration list for PBXProject "Honey Aggregator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA09ACB825C31F2700351DA3 /* Debug */,
+				AA09ACB925C31F2700351DA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA09ACBA25C31F2700351DA3 /* Build configuration list for PBXNativeTarget "Honey Aggregator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA09ACBB25C31F2700351DA3 /* Debug */,
+				AA09ACBC25C31F2700351DA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA09ACBD25C31F2700351DA3 /* Build configuration list for PBXNativeTarget "Honey AggregatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA09ACBE25C31F2700351DA3 /* Debug */,
+				AA09ACBF25C31F2700351DA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA09ACC025C31F2700351DA3 /* Build configuration list for PBXNativeTarget "Honey AggregatorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA09ACC125C31F2700351DA3 /* Debug */,
+				AA09ACC225C31F2700351DA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA09AC8D25C31F2600351DA3 /* Project object */;
+}

@@ -9,7 +9,7 @@ import Foundation
 
 struct Hive : Identifiable{
     let id : UUID
-    let hiveName : String
+    let hiveName : String	
     let honeyTotal : Float
     let frames = [Frame]()
 }

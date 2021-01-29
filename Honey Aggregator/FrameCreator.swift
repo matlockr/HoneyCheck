@@ -24,7 +24,7 @@ struct FrameCreator: View {
                 .bold()
                 .padding()
             Divider()
-            Text("Template Selection")
+            Text("Template Selection")	
                 .font(.title2)
                 Section {
                     Picker(selection: $templateSelected, label: Text("Template")) {

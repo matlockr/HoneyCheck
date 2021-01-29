@@ -10,6 +10,8 @@ import SwiftUI
 struct HiveCreator: View {
     @State private var tempHiveName = ""
     
+    @Environment(\.presentationMode) var presentation
+    
     private var columns: [GridItem] = [
             GridItem(.adaptive(minimum: 100, maximum: 100), spacing: 16),
     ]
@@ -50,16 +52,10 @@ struct HiveCreator: View {
                 HStack{
                     NavigationLink(destination: FrameCreator()){
                         Text("Add Frame")
-                            .font(.title)
-                            .bold()
-                            .padding(.all)
-                        }.buttonStyle(PlainButtonStyle())
-                    Button(action: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/{}/*@END_MENU_TOKEN@*/) {
-                        Text("Save")
-                            .font(.title)
-                            .bold()
-                            .padding()
                     }.buttonStyle(PlainButtonStyle())
+                    Button("Save"){ self.presentation.wrappedValue.dismiss()
+                    }
+                    
                 }
             }
 

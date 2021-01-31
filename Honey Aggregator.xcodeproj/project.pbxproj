@@ -18,6 +18,9 @@
 		AA09ACE025C3262900351DA3 /* HiveCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACDB25C3262800351DA3 /* HiveCreator.swift */; };
 		AA09ACE525C32AF000351DA3 /* Hive.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACE425C32AF000351DA3 /* Hive.swift */; };
 		AA09ACEA25C32BF500351DA3 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACE925C32BF500351DA3 /* Frame.swift */; };
+		AA86177125C71FFE006D1F50 /* HiveListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA86177025C71FFE006D1F50 /* HiveListRow.swift */; };
+		AA86177625C7218D006D1F50 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA86177525C7218D006D1F50 /* ModelData.swift */; };
+		AA86177B25C7270F006D1F50 /* hiveData.json in Resources */ = {isa = PBXBuildFile; fileRef = AA86177A25C7270F006D1F50 /* hiveData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		AA09ACDD25C3262900351DA3 /* HiveListUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HiveListUI.swift; path = "/Users/user190078/Desktop/CS 470/Honey Aggregator/Honey Aggregator/HiveListUI.swift"; sourceTree = "<absolute>"; };
 		AA09ACE425C32AF000351DA3 /* Hive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hive.swift; sourceTree = "<group>"; };
 		AA09ACE925C32BF500351DA3 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		AA86177025C71FFE006D1F50 /* HiveListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveListRow.swift; sourceTree = "<group>"; };
+		AA86177525C7218D006D1F50 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		AA86177A25C7270F006D1F50 /* hiveData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hiveData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,16 +111,12 @@
 		AA09AC9725C31F2600351DA3 /* Honey Aggregator */ = {
 			isa = PBXGroup;
 			children = (
-				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
-				AA09ACDC25C3262900351DA3 /* FrameCreator.swift */,
-				AA09ACDB25C3262800351DA3 /* HiveCreator.swift */,
-				AA09ACDD25C3262900351DA3 /* HiveListUI.swift */,
-				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
+				AA86178125C7283C006D1F50 /* Model */,
+				AA86178025C72836006D1F50 /* Views */,
+				AA86177F25C727E9006D1F50 /* Resources */,
 				AA09AC9C25C31F2700351DA3 /* Assets.xcassets */,
 				AA09ACA125C31F2700351DA3 /* Info.plist */,
 				AA09AC9E25C31F2700351DA3 /* Preview Content */,
-				AA09ACE425C32AF000351DA3 /* Hive.swift */,
-				AA09ACE925C32BF500351DA3 /* Frame.swift */,
 			);
 			path = "Honey Aggregator";
 			sourceTree = "<group>";
@@ -143,6 +145,37 @@
 				AA09ACB725C31F2700351DA3 /* Info.plist */,
 			);
 			path = "Honey AggregatorUITests";
+			sourceTree = "<group>";
+		};
+		AA86177F25C727E9006D1F50 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA86177A25C7270F006D1F50 /* hiveData.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AA86178025C72836006D1F50 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
+				AA09ACDC25C3262900351DA3 /* FrameCreator.swift */,
+				AA09ACDB25C3262800351DA3 /* HiveCreator.swift */,
+				AA09ACDD25C3262900351DA3 /* HiveListUI.swift */,
+				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
+				AA86177025C71FFE006D1F50 /* HiveListRow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA86178125C7283C006D1F50 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AA86177525C7218D006D1F50 /* ModelData.swift */,
+				AA09ACE425C32AF000351DA3 /* Hive.swift */,
+				AA09ACE925C32BF500351DA3 /* Frame.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +283,7 @@
 			files = (
 				AA09ACA025C31F2700351DA3 /* Preview Assets.xcassets in Resources */,
 				AA09AC9D25C31F2700351DA3 /* Assets.xcassets in Resources */,
+				AA86177B25C7270F006D1F50 /* hiveData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,8 +310,10 @@
 			files = (
 				AA09ACDF25C3262900351DA3 /* FrameCreator.swift in Sources */,
 				AA09ACE025C3262900351DA3 /* HiveCreator.swift in Sources */,
+				AA86177625C7218D006D1F50 /* ModelData.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
 				AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */,
+				AA86177125C71FFE006D1F50 /* HiveListRow.swift in Sources */,
 				AA09ACEA25C32BF500351DA3 /* Frame.swift in Sources */,
 				AA09ACDE25C3262900351DA3 /* HiveListUI.swift in Sources */,
 				AA09ACE525C32AF000351DA3 /* Hive.swift in Sources */,

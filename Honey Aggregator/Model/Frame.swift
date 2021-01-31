@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Frame {
+struct Frame: Hashable, Codable, Identifiable {
     let id : Int
     let height : Float
     let width : Float

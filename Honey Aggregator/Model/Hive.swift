@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Hive : Identifiable{
-    let id : UUID
+struct Hive: Hashable, Codable, Identifiable{
+    
+    let id : Int
     let hiveName : String	
     let honeyTotal : Float
-    let frames = [Frame]()
+    var frames = [Frame]()
 }

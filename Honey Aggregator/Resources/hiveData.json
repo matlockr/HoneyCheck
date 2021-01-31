@@ -1,0 +1,41 @@
+[
+    {
+        "id": 0,
+        "hiveName": "Example Hive 0",
+        "honeyTotal": 0.0,
+        "frames": [
+            {
+                "id": 0,
+                "height": 0.0,
+                "width": 0.0,
+                "honeyAmount": 0.0
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "hiveName": "Example Hive 1",
+        "honeyTotal": 0.0,
+        "frames": [
+            {
+                "id": 0,
+                "height": 0.0,
+                "width": 0.0,
+                "honeyAmount": 0.0
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "hiveName": "Example Hive 2",
+        "honeyTotal": 0.0,
+        "frames": [
+            {
+                "id": 0,
+                "height": 0.0,
+                "width": 0.0,
+                "honeyAmount": 0.0
+            }
+        ]
+    }
+]

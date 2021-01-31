@@ -17,6 +17,8 @@ struct FrameCreator: View {
     //For Debugger purposes
     @State private var saveFrame = false
     
+    @Environment(\.presentationMode) var presentation
+    	
     var body: some View {
         VStack{
             Text("Frame Creator")
@@ -24,7 +26,7 @@ struct FrameCreator: View {
                 .bold()
                 .padding()
             Divider()
-            Text("Template Selection")
+            Text("Template Selection")	
                 .font(.title2)
                 Section {
                     Picker(selection: $templateSelected, label: Text("Template")) {
@@ -72,13 +74,8 @@ struct FrameCreator: View {
                     }
                 }
             }
-            Button(action: {self.saveFrame.toggle()}) {
-                Text("Save Frame")
-                    .padding()
-            }
-            
-            if saveFrame {//Do nothing
-                
+            Button("Save Frame") {
+                self.presentation.wrappedValue.dismiss()
             }
 
         }

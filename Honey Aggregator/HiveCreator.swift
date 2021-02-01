@@ -53,7 +53,10 @@ struct HiveCreator: View {
                     NavigationLink(destination: FrameCreator()){
                         Text("Add Frame")
                     }.buttonStyle(PlainButtonStyle())
-                    Button("Save"){ self.presentation.wrappedValue.dismiss()
+                    Button("Save"){
+                        let newHive = Hive(id: 3, hiveName: "Test", honeyTotal: 0.0, frames:[])
+                        save(filename:"hiveData.json", newHive: newHive)
+                        self.presentation.wrappedValue.dismiss()
                     }
                     
                 }
@@ -65,5 +68,20 @@ struct HiveCreator: View {
 struct HiveCreator_Previews: PreviewProvider {
     static var previews: some View {
         HiveCreator()
+    }
+}
+
+func save(filename: String, newHive: Hive){
+    
+    hives.append(newHive)
+    
+    do {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(hives)
+        if let file = FileHandle(forWritingAtPath:filename) {
+            file.write(data)
+        }
+    } catch {
+        fatalError("Couldn't save data to \(filename)")
     }
 }

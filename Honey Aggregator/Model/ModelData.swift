@@ -7,7 +7,8 @@
 
 import Foundation
 
-var hives: [Hive] = load("hiveData.json")
+let mainJSONFileName = "hiveData.json"
+var hives: [Hive] = load(mainJSONFileName)
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data

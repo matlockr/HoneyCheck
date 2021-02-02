@@ -10,27 +10,14 @@ import SwiftUI
 struct HiveListUI: View {
     var body: some View {
         
-            VStack{
+            VStack{	
                 Text("Hive List")
                     .font(.title)
                     .bold()
                     .padding()
                 Divider()
-                List{
-                    //Example Hive entry
-                    HStack{
-                        Image("comb")
-                            .resizable()
-                            .frame(width: 50, height: 50, alignment: .center)
-                            .padding(.all)
-                            .clipShape(Circle())
-                        Spacer()
-                        Text("My Hive!")
-                            .fontWeight(.regular)
-                            .multilineTextAlignment(.center)
-                            .scaledToFill()
-                        Spacer()
-                    }
+                List(hives) { hive in
+                    HiveListRow(hive: hive)
                 }
                 Spacer()
                 Divider()

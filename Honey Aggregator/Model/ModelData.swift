@@ -2,7 +2,7 @@
 //  ModelData.swift
 //  Honey Aggregator
 //
-//  Created by user190078 on 1/31/21.
+//  Model Data decoder
 //
 
 import Foundation

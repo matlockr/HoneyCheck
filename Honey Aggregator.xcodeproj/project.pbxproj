@@ -21,6 +21,8 @@
 		AA86177125C71FFE006D1F50 /* HiveListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA86177025C71FFE006D1F50 /* HiveListRow.swift */; };
 		AA86177625C7218D006D1F50 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA86177525C7218D006D1F50 /* ModelData.swift */; };
 		AA86177B25C7270F006D1F50 /* hiveData.json in Resources */ = {isa = PBXBuildFile; fileRef = AA86177A25C7270F006D1F50 /* hiveData.json */; };
+		AA9B050425CA0531005092DB /* BeeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9B050325CA0531005092DB /* BeeBox.swift */; };
+		AA9B050925CA0E6E005092DB /* BoxListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9B050825CA0E6E005092DB /* BoxListRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		AA86177025C71FFE006D1F50 /* HiveListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveListRow.swift; sourceTree = "<group>"; };
 		AA86177525C7218D006D1F50 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		AA86177A25C7270F006D1F50 /* hiveData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hiveData.json; sourceTree = "<group>"; };
+		AA9B050325CA0531005092DB /* BeeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeBox.swift; sourceTree = "<group>"; };
+		AA9B050825CA0E6E005092DB /* BoxListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxListRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,7 @@
 				AA09ACDD25C3262900351DA3 /* HiveListUI.swift */,
 				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
 				AA86177025C71FFE006D1F50 /* HiveListRow.swift */,
+				AA9B050825CA0E6E005092DB /* BoxListRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 				AA86177525C7218D006D1F50 /* ModelData.swift */,
 				AA09ACE425C32AF000351DA3 /* Hive.swift */,
 				AA09ACE925C32BF500351DA3 /* Frame.swift */,
+				AA9B050325CA0531005092DB /* BeeBox.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -308,11 +314,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA9B050425CA0531005092DB /* BeeBox.swift in Sources */,
 				AA09ACDF25C3262900351DA3 /* FrameCreator.swift in Sources */,
 				AA09ACE025C3262900351DA3 /* HiveCreator.swift in Sources */,
 				AA86177625C7218D006D1F50 /* ModelData.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
 				AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */,
+				AA9B050925CA0E6E005092DB /* BoxListRow.swift in Sources */,
 				AA86177125C71FFE006D1F50 /* HiveListRow.swift in Sources */,
 				AA09ACEA25C32BF500351DA3 /* Frame.swift in Sources */,
 				AA09ACDE25C3262900351DA3 /* HiveListUI.swift in Sources */,

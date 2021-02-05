@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HiveCreator: View {
     
+    var hiveIndex: Int
+    
     // State variable for holding hive name
     @State private var tempHiveName = ""
     
@@ -31,16 +33,28 @@ struct HiveCreator: View {
                     Text("Hive Name:")
                         .padding()
                     Spacer()
-                    TextField("Hive Name", text: $tempHiveName)
-                        .padding(.all)
+                    
+                    if (hiveIndex != -1){
+                        TextField("\(hives[hiveIndex].hiveName)", text: $tempHiveName)
+                            .padding()
+                    } else {
+                        TextField("Hive Name", text: $tempHiveName)
+                            .padding(.all)
+                    }
                 }
                 
                 Spacer()
                 
                 // List shows each of the boxes in the hive
                 // Currently just gives a default box for now
-                List(hives[0].beeBoxes) { box in
-                        BoxListRow(box: box)
+                
+                if (hiveIndex != -1){
+                    List(hives[hiveIndex].beeBoxes) { box in
+                        NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: box.id)){
+                        
+                            BoxListRow(box: box)
+                        }
+                    }
                 }
                 
                 Divider()
@@ -50,9 +64,9 @@ struct HiveCreator: View {
                     
                     // Navigation link that sends user to FrameCreator View
                     // at this time.
-                    NavigationLink(destination: FrameCreator()){
+                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: -1)){
                         Text("Add Box")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.orange)
                     }.buttonStyle(PlainButtonStyle())
                     
                     // Button that saves the hive to the model data
@@ -63,8 +77,8 @@ struct HiveCreator: View {
                             save(filename:"hiveData.json", newHive: newHive)
                             self.presentation.wrappedValue.dismiss()
                         }
-                    }
-                }
+                    }.foregroundColor(.orange)
+                }.padding()
             }
 
     }
@@ -72,7 +86,7 @@ struct HiveCreator: View {
 
 struct HiveCreator_Previews: PreviewProvider {
     static var previews: some View {
-        HiveCreator()
+        HiveCreator(hiveIndex: -1)
     }
 }
 

@@ -9,6 +9,10 @@ import SwiftUI
 
 struct FrameCreator: View {
     
+    var hiveIndex: Int
+    var beeBoxIndex: Int
+    var frameIndex: Int
+    
     // Names of templates that are shown on the PickerWheel
     var templates = ["Langstroth Deep", "Langstroth Medium", "Langstroth Shallow"]
     
@@ -18,22 +22,16 @@ struct FrameCreator: View {
     @State private var heightFieldText = ""
     @State private var widthFieldText = ""
     
-    // Triggers screen to go back to Hive Creator
-    // Will eventually send back to box creator
-    @State private var saveFrame = false
-    
     // Enviormental variable for programmatically navigating
     // backwards.
     @Environment(\.presentationMode) var presentation
     	
     var body: some View {
         VStack{
-            
             // Title of view
             Text("Frame Creator")
                 .font(.title)
                 .bold()
-                .padding()
             
             Divider()
             
@@ -47,7 +45,6 @@ struct FrameCreator: View {
                     Picker(selection: $templateSelected, label: Text("Template")) {
                         ForEach(0 ..< templates.count) {
                             Text(self.templates[$0])
-
                         }
                     }
                     
@@ -59,10 +56,6 @@ struct FrameCreator: View {
             Section{
                 
                 Divider()
-                
-                // Title for section
-                Text("OR Manual Entry")
-                    .font(.title2)
                 
                 // Hstack for getting the Height entered information
                 HStack{
@@ -81,7 +74,6 @@ struct FrameCreator: View {
                 }
             }
             
-            Spacer()
             
             // Section for the Image getter
             Section{
@@ -90,7 +82,6 @@ struct FrameCreator: View {
                 
                 // Title to section
                 Text("Frame Picture")
-                    .padding()
                     .font(.title2)
                 
                 // Hstack for the frame picture and a button for
@@ -98,14 +89,12 @@ struct FrameCreator: View {
                 HStack{
                     Image("comb")
                         .resizable()
-                        .frame(width: 100, height: 100, alignment: .center)
-                        .padding()
+                        .frame(width: 50, height: 50, alignment: .center)
                     ZStack{
                         Image(systemName: "circle")
-                            .font(.system(size: 100.0))
+                            .font(.system(size: 70.0))
                         Image(systemName: "camera")
-                            .font(.system(size: 56.0))
-                            .padding()
+                            .font(.system(size: 40.0))
                     }
                 }
             }
@@ -122,6 +111,6 @@ struct FrameCreator: View {
 
 struct FrameCreator_Previews: PreviewProvider {
     static var previews: some View {
-        FrameCreator()
+        FrameCreator(hiveIndex: -1, beeBoxIndex: -1, frameIndex: -1)
     }
 }

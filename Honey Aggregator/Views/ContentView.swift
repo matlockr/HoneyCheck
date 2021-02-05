@@ -39,7 +39,7 @@ struct ContentView: View {
                     
                     // Navigation Link for sending user to
                     // HiveCreator View apon clicking button
-                    NavigationLink(destination: HiveCreator()){
+                    NavigationLink(destination: HiveCreator(hiveIndex: -1)){
                         Text("New Hive")
                             .font(.title)
                             .bold()
@@ -52,6 +52,7 @@ struct ContentView: View {
                         Text("Hive List")
                             .font(.title)
                             .bold()
+                            .padding(.bottom)
                         }.buttonStyle(PlainButtonStyle())
                 }
                 

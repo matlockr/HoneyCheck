@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Honey Aggregator
 //
-//  Created by user190078 on 1/20/21.
+//  Main Screen of the app
 //
 
 import SwiftUI
@@ -10,8 +10,12 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         
+        // NavigationView is the base to the navigation framework
+        // for navigating between views
         NavigationView{
             VStack {
+                
+                // Main title of app
                 Text("Honey\nAggregator")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
@@ -19,9 +23,10 @@ struct ContentView: View {
                     .multilineTextAlignment(.center)
                     .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 
-                
+                // Spacers spread UI elements apart
                 Spacer()
                 
+                // Default image for logo of app
                 Image("comb")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -29,21 +34,33 @@ struct ContentView: View {
                 
                 Spacer()
                 
+                // Second Vstack to hold the main menu buttons
                 VStack{
-                    NavigationLink(destination: HiveCreator()){
+                    
+                    // Navigation Link for sending user to
+                    // HiveCreator View apon clicking button
+                    NavigationLink(destination: HiveCreator(hiveIndex: -1)){
                         Text("New Hive")
                             .font(.title)
                             .bold()
                             .padding(.all)
                         }.buttonStyle(PlainButtonStyle())
+                    
+                    // Navigation Link for sending user to
+                    // HiveListUI View apon clicking button
                     NavigationLink(destination: HiveListUI()){
                         Text("Hive List")
                             .font(.title)
                             .bold()
+                            .padding(.bottom)
                         }.buttonStyle(PlainButtonStyle())
                 }
+                
+                // Modifiers for NavigationView
                 .navigationBarTitle("", displayMode: .inline)
                 .foregroundColor(.orange)
+                
+                Spacer()
             }
         }
     }

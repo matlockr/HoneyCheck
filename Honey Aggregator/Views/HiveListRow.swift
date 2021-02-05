@@ -2,20 +2,25 @@
 //  HiveListRow.swift
 //  Honey Aggregator
 //
-//  Created by user190078 on 1/31/21.
+//  Used for HiveListUI list of hives
 //
 
 import SwiftUI
 
 struct HiveListRow: View {
+    // Create a hive object
     var hive: Hive
     
     var body: some View {
+        
+        // Hstack takes existing hive information and formats it
+        // into a single UI element for a list
         HStack{
-            Image("comb")
+            Image("comb")	
                 .resizable()
                 .frame(width: 50, height: 50, alignment: .center)
             Text(hive.hiveName)
+            
             Spacer()
         }
     }
@@ -23,6 +28,7 @@ struct HiveListRow: View {
 
 struct HiveListRow_Previews: PreviewProvider {
     static var previews: some View {
+        // For preview, show the first hive in the list
         HiveListRow(hive: hives[0])
     }
 }

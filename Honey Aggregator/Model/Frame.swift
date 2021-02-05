@@ -2,7 +2,7 @@
 //  Frame.swift
 //  Honey Aggregator
 //
-//  Created by user190078 on 1/28/21.
+//  Model for Frame
 //
 
 import Foundation

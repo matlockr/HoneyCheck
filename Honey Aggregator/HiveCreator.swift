@@ -2,64 +2,83 @@
 //  HiveCreator.swift
 //  Honey Aggregator
 //
-//  Created by user190078 on 1/26/21.
+//  Screen for editing a hive and adding bee boxes
 //
 
 import SwiftUI
 
 struct HiveCreator: View {
+    
+    var hiveIndex: Int
+    
+    // State variable for holding hive name
     @State private var tempHiveName = ""
     
+    // Enviorment variable for handeling navigation
     @Environment(\.presentationMode) var presentation
-    
-    private var columns: [GridItem] = [
-            GridItem(.adaptive(minimum: 100, maximum: 100), spacing: 16),
-    ]
     
     var body: some View {
             VStack{
+                
+                // Title for view
                 Text("Hive Creator")
                     .font(.title)
                     .bold()
-                    .padding()
+                
+                // Dividers add a line to help seperate elements
                 Divider()
+                
+                // Hstack for the showing and getting hive name
                 HStack{
                     Text("Hive Name:")
                         .padding()
                     Spacer()
-                    TextField("Enter Name", text: $tempHiveName)
-                        .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                }
-                Divider()
-                Spacer()
-                ScrollView {
-                            LazyVGrid(
-                                columns: columns,
-                                alignment: .center,
-                                spacing: 16,
-                                pinnedViews: [.sectionHeaders, .sectionFooters]
-                            ) {
-                                Section(header: Text("Frames").font(.title)) {
-                                    ForEach(0..<10, id: \.self) { index in
-                                        Image("comb")
-                                            .resizable()
-                                            .frame(width: 100, height: 100, alignment: .center)
-                                    }
-                                }
-                            }
-                        }
-                Divider()
-                HStack{
-                    NavigationLink(destination: FrameCreator()){
-                        Text("Add Frame")
-                    }.buttonStyle(PlainButtonStyle())
-                    Button("Save"){
-                        let newHive = Hive(id: 3, hiveName: "Test", honeyTotal: 0.0, frames:[])
-                        save(filename:"hiveData.json", newHive: newHive)
-                        self.presentation.wrappedValue.dismiss()
-                    }
                     
+                    if (hiveIndex != -1){
+                        TextField("\(hives[hiveIndex].hiveName)", text: $tempHiveName)
+                            .padding()
+                    } else {
+                        TextField("Hive Name", text: $tempHiveName)
+                            .padding(.all)
+                    }
                 }
+                
+                Spacer()
+                
+                // List shows each of the boxes in the hive
+                // Currently just gives a default box for now
+                
+                if (hiveIndex != -1){
+                    List(hives[hiveIndex].beeBoxes) { box in
+                        NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: box.id)){
+                        
+                            BoxListRow(box: box)
+                        }
+                    }
+                }
+                
+                Divider()
+                
+                // Hstack for buttons at bottom of screen
+                HStack{
+                    
+                    // Navigation link that sends user to FrameCreator View
+                    // at this time.
+                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: -1)){
+                        Text("Add Box")
+                            .foregroundColor(.orange)
+                    }.buttonStyle(PlainButtonStyle())
+                    
+                    // Button that saves the hive to the model data
+                    // Currently just saves a empty hive with the name provided above
+                    Button("Save"){
+                        if (tempHiveName != ""){
+                            let newHive = Hive(id: 3, hiveName: tempHiveName, honeyTotal: 0.0, beeBoxes: [])
+                            save(filename:"hiveData.json", newHive: newHive)
+                            self.presentation.wrappedValue.dismiss()
+                        }
+                    }.foregroundColor(.orange)
+                }.padding()
             }
 
     }
@@ -67,10 +86,12 @@ struct HiveCreator: View {
 
 struct HiveCreator_Previews: PreviewProvider {
     static var previews: some View {
-        HiveCreator()
+        HiveCreator(hiveIndex: -1)
     }
 }
 
+// save function encodes the hive information and saves it to
+// a JSON file. Currently has no way to overwrite existing hives.
 func save(filename: String, newHive: Hive){
     
     hives.append(newHive)

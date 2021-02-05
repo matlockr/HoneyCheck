@@ -2,24 +2,34 @@
 //  HiveListUI.swift
 //  Honey Aggregator
 //
-//  Created by user190078 on 1/24/21.
+//  Screen for showing list of saved hives
 //
 
 import SwiftUI
 
 struct HiveListUI: View {
     var body: some View {
-        
-            VStack{	
+            VStack{
+                
+                // Title for view
                 Text("Hive List")
                     .font(.title)
                     .bold()
                     .padding()
+                
                 Divider()
+                
+                // List for showing each of the hives saved in the
+                // JSON file
                 List(hives) { hive in
-                    HiveListRow(hive: hive)
+                    NavigationLink(destination: HiveCreator(hiveIndex: hive.id)){
+                    
+                        HiveListRow(hive: hive)
+                    }
                 }
+                
                 Spacer()
+                
                 Divider()
             }
     }

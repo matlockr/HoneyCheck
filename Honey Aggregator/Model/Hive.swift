@@ -11,7 +11,8 @@ import SwiftUI
 struct Hive: Hashable, Codable, Identifiable{
     
     let id : Int
-    let hiveName : String	
-    let honeyTotal : Float
+    var hiveName : String
+    var honeyTotal : Float
     var beeBoxes = [BeeBox]()
+    
 }

@@ -27,12 +27,9 @@ struct BeeBoxCreator: View {
                 Spacer()
                 
                 // List shows each of the boxes in the hive
-                // Currently just gives a default box for now
-                if (beeBoxIndex != -1){
-                    List(hives[0].beeBoxes[0].frames) { frame in
-                        NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frame.id)){
-                            FrameListRow(frame: frame)
-                        }
+                List(hives[hiveIndex].beeBoxes[beeBoxIndex].frames) { frame in
+                    NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frame.id)){
+                        FrameListRow(frame: frame)
                     }
                 }
                 
@@ -41,18 +38,16 @@ struct BeeBoxCreator: View {
                 // Hstack for buttons at bottom of screen
                 HStack{
                     
-                    // Navigation link that sends user to FrameCreator View
-                    // at this time.
-                    NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: -1)){
-                        Text("Add Frame")
-                            .foregroundColor(.orange)
-                    }.buttonStyle(PlainButtonStyle())
+                    // Button to add a new frame to the box
+                    Button("Add Frame"){
+                        let newFrame = Frame(id: hives[hiveIndex].beeBoxes[beeBoxIndex].frames.count, height: 0.0, width: 0.0, honeyAmount: 0.0)
+                        hives[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
+                    }.foregroundColor(.orange)
                     
                     // Button that saves the hive to the model data
                     // Currently just saves a empty hive with the name provided above
                     Button("Save"){
-                        let newHive = Hive(id: 3, hiveName: "NULL", honeyTotal: 0.0, beeBoxes: [])
-                        save(filename:"hiveData.json", newHive: newHive)
+                        save(hiveIndex: hiveIndex)
                     }.foregroundColor(.orange)
                 }.padding()
             }
@@ -62,7 +57,7 @@ struct BeeBoxCreator: View {
 
 struct BeeBoxCreator_Previews: PreviewProvider {
     static var previews: some View {
-        BeeBoxCreator(hiveIndex: -1, beeBoxIndex: -1)
+        BeeBoxCreator(hiveIndex: 0, beeBoxIndex: 0)
     }
 }
 

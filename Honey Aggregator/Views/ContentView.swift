@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var isActive: Bool = false;
+    @State private var navLinkHiveIndex = -1;
+    
     var body: some View {
         
         // NavigationView is the base to the navigation framework
@@ -39,20 +43,22 @@ struct ContentView: View {
                     
                     // Navigation Link for sending user to
                     // HiveCreator View apon clicking button
-                    NavigationLink(destination: HiveCreator(hiveIndex: -1)){
-                        Text("New Hive")
-                            .font(.title)
-                            .bold()
-                            .padding(.all)
-                        }.buttonStyle(PlainButtonStyle())
+                    NavigationLink(destination: HiveCreator(hiveIndex: navLinkHiveIndex), isActive: self.$isActive){
+                    }
+                    
+                    Button("New Hive") {
+                        let newHive = Hive(id: hives.count, hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
+                        hives.append(newHive)
+                        navLinkHiveIndex = hives.count - 1
+                        self.isActive = true;
+                    }
                     
                     // Navigation Link for sending user to
                     // HiveListUI View apon clicking button
                     NavigationLink(destination: HiveListUI()){
                         Text("Hive List")
-                            .font(.title)
-                            .bold()
-                            .padding(.bottom)
+                            .font(.none)
+                            .padding(.all)
                         }.buttonStyle(PlainButtonStyle())
                 }
                 

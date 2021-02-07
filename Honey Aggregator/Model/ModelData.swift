@@ -31,3 +31,18 @@ func load<T: Decodable>(_ filename: String) -> T {
         fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
     }
 }
+
+// save function encodes the hive information and saves it to
+// a JSON file. Currently has no way to overwrite existing hives.
+func save(hiveIndex: Int){
+    
+    do {
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(hives)
+        if let file = FileHandle(forWritingAtPath:mainJSONFileName) {
+            file.write(data)
+        }
+    } catch {
+        fatalError("Couldn't save data to \(mainJSONFileName)")
+    }
+}

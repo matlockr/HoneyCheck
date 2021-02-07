@@ -19,7 +19,6 @@ struct HiveCreator: View {
     
     var body: some View {
             VStack{
-                
                 // Title for view
                 Text("Hive Creator")
                     .font(.title)
@@ -34,49 +33,37 @@ struct HiveCreator: View {
                         .padding()
                     Spacer()
                     
-                    if (hiveIndex != -1){
-                        TextField("\(hives[hiveIndex].hiveName)", text: $tempHiveName)
-                            .padding()
-                    } else {
-                        TextField("Hive Name", text: $tempHiveName)
-                            .padding(.all)
-                    }
+                    TextField("Hive Name", text: $tempHiveName)
+                        .padding(.all)
                 }
                 
                 Spacer()
                 
                 // List shows each of the boxes in the hive
-                // Currently just gives a default box for now
-                
-                if (hiveIndex != -1){
-                    List(hives[hiveIndex].beeBoxes) { box in
-                        NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: box.id)){
-                        
-                            BoxListRow(box: box)
-                        }
+                List(hives[hiveIndex].beeBoxes) { box in
+                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: box.id)){
+                    
+                        BoxListRow(box: box)
                     }
                 }
+            
                 
                 Divider()
                 
                 // Hstack for buttons at bottom of screen
                 HStack{
                     
-                    // Navigation link that sends user to FrameCreator View
-                    // at this time.
-                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: -1)){
-                        Text("Add Box")
-                            .foregroundColor(.orange)
-                    }.buttonStyle(PlainButtonStyle())
+                    // Button that creates a box for the hive
+                    Button("Add BeeBox"){
+                        let newBeeBox = BeeBox(id: hives[hiveIndex].beeBoxes.count, honeyTotal: 0.0, frames: [])
+                        hives[hiveIndex].beeBoxes.append(newBeeBox)
+                    }.foregroundColor(.orange)
                     
                     // Button that saves the hive to the model data
                     // Currently just saves a empty hive with the name provided above
                     Button("Save"){
-                        if (tempHiveName != ""){
-                            let newHive = Hive(id: 3, hiveName: tempHiveName, honeyTotal: 0.0, beeBoxes: [])
-                            save(filename:"hiveData.json", newHive: newHive)
-                            self.presentation.wrappedValue.dismiss()
-                        }
+                        hives[hiveIndex].hiveName = tempHiveName
+                        save(hiveIndex: hiveIndex)
                     }.foregroundColor(.orange)
                 }.padding()
             }
@@ -86,23 +73,6 @@ struct HiveCreator: View {
 
 struct HiveCreator_Previews: PreviewProvider {
     static var previews: some View {
-        HiveCreator(hiveIndex: -1)
-    }
-}
-
-// save function encodes the hive information and saves it to
-// a JSON file. Currently has no way to overwrite existing hives.
-func save(filename: String, newHive: Hive){
-    
-    hives.append(newHive)
-    
-    do {
-        let encoder = JSONEncoder()
-        let data = try encoder.encode(hives)
-        if let file = FileHandle(forWritingAtPath:filename) {
-            file.write(data)
-        }
-    } catch {
-        fatalError("Couldn't save data to \(filename)")
+        HiveCreator(hiveIndex: 0)
     }
 }

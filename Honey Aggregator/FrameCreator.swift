@@ -111,6 +111,6 @@ struct FrameCreator: View {
 
 struct FrameCreator_Previews: PreviewProvider {
     static var previews: some View {
-        FrameCreator(hiveIndex: -1, beeBoxIndex: -1, frameIndex: -1)
+        FrameCreator(hiveIndex: 0, beeBoxIndex: 0, frameIndex: 0)
     }
 }

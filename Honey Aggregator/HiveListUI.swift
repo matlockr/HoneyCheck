@@ -22,7 +22,7 @@ struct HiveListUI: View {
                 // List for showing each of the hives saved in the
                 // JSON file
                 List(hives) { hive in
-                    NavigationLink(destination: HiveCreator(hiveIndex: hive.id)){
+                    NavigationLink(destination: HiveCreator(hiveIndex: hives.firstIndex(of: hive)!)){
                         HiveListRow(hive: hive)
                     }
                 }

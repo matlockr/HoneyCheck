@@ -1,22 +1,3 @@
 [
-    {
-        "id": 0,
-        "hiveName": "Example Hive 0",
-        "honeyTotal": 0.0,
-        "beeBoxes": [
-            {
-            "id": 0,
-            "honeyTotal": 0.0,
-            "frames": [
-                {
-                    "id": 0,
-                    "height": 0.0,
-                    "width": 0.0,
-                    "honeyAmount": 0.0
-                }
-                ]
-            }
-        ]
-        
-    }
+    
 ]

@@ -19,7 +19,6 @@ struct BoxListRow: View {
             Image("comb")
                 .resizable()
                 .frame(width: 50, height: 50, alignment: .center)
-            Text("Box " + String(box.id))
             Spacer()
         }
     }

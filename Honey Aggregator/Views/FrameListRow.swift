@@ -20,7 +20,6 @@ struct FrameListRow: View {
             Image("comb")
                 .resizable()
                 .frame(width: 50, height: 50, alignment: .center)
-            Text("Frame " + String(frame.id))
             Spacer()
         }
     }

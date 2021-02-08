@@ -20,7 +20,6 @@ struct HiveListRow: View {
                 .resizable()
                 .frame(width: 50, height: 50, alignment: .center)
             Text(hive.hiveName)
-            
             Spacer()
         }
     }

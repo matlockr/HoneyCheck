@@ -28,7 +28,7 @@ struct BeeBoxCreator: View {
                 
                 // List shows each of the boxes in the hive
                 List(hives[hiveIndex].beeBoxes[beeBoxIndex].frames) { frame in
-                    NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frame.id)){
+                    NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: hives[hiveIndex].beeBoxes[beeBoxIndex].frames.firstIndex(of: frame)!)){
                         FrameListRow(frame: frame)
                     }
                 }
@@ -40,7 +40,7 @@ struct BeeBoxCreator: View {
                     
                     // Button to add a new frame to the box
                     Button("Add Frame"){
-                        let newFrame = Frame(id: hives[hiveIndex].beeBoxes[beeBoxIndex].frames.count, height: 0.0, width: 0.0, honeyAmount: 0.0)
+                        let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
                         hives[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
                     }.foregroundColor(.orange)
                     

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Hive: Hashable, Codable, Identifiable{
     
-    let id : Int
+    var id = UUID()
     var hiveName : String
     var honeyTotal : Float
     var beeBoxes = [BeeBox]()

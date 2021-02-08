@@ -33,7 +33,7 @@ struct HiveCreator: View {
                         .padding()
                     Spacer()
                     
-                    TextField("Hive Name", text: $tempHiveName)
+                    TextField("\(hives[hiveIndex].hiveName)", text: $tempHiveName)
                         .padding(.all)
                 }
                 
@@ -41,7 +41,7 @@ struct HiveCreator: View {
                 
                 // List shows each of the boxes in the hive
                 List(hives[hiveIndex].beeBoxes) { box in
-                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: box.id)){
+                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives[hiveIndex].beeBoxes.firstIndex(of: box)!)){
                     
                         BoxListRow(box: box)
                     }
@@ -55,15 +55,18 @@ struct HiveCreator: View {
                     
                     // Button that creates a box for the hive
                     Button("Add BeeBox"){
-                        let newBeeBox = BeeBox(id: hives[hiveIndex].beeBoxes.count, honeyTotal: 0.0, frames: [])
+                        let newBeeBox = BeeBox(honeyTotal: 0.0, frames: [])
                         hives[hiveIndex].beeBoxes.append(newBeeBox)
+                        save()
                     }.foregroundColor(.orange)
                     
                     // Button that saves the hive to the model data
                     // Currently just saves a empty hive with the name provided above
                     Button("Save"){
-                        hives[hiveIndex].hiveName = tempHiveName
-                        save(hiveIndex: hiveIndex)
+                        if (tempHiveName != ""){
+                            hives[hiveIndex].hiveName = tempHiveName
+                        }
+                        save()
                     }.foregroundColor(.orange)
                 }.padding()
             }

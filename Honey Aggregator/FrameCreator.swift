@@ -33,12 +33,13 @@ struct FrameCreator: View {
                 .font(.title)
                 .bold()
             
-            Divider()
-            
+            /*Divider()
+            // TODO
             // Template title
-            Text("Template Selection")	
+            Text("Template Selection")
                 .font(.title2)
-            
+                
+
                 // Sections group elements together
                 // In this case it is used to contain the UI Picker
                 Section {
@@ -51,7 +52,8 @@ struct FrameCreator: View {
                         // Modifier for the UI Picker
                         .pickerStyle(WheelPickerStyle())
                 }
-            
+            */
+            Spacer()
             // Section for holding the manually entered dimensions
             Section{
                 
@@ -61,16 +63,19 @@ struct FrameCreator: View {
                 HStack{
                     Text("Height")
                         .padding()
-                    TextField("",  text: $heightFieldText)
+                        
+                    TextField("\(String(hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height))", text: $heightFieldText)
                         .padding()
+                        .keyboardType(.decimalPad)
                 }
                 
                 // Hstack for getting the Width entered information
                 HStack{
                     Text("Width")
                         .padding()
-                    TextField("",  text: $widthFieldText)
+                    TextField("\(String(hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width))", text: $widthFieldText)
                         .padding()
+                        .keyboardType(.decimalPad)
                 }
             }
             
@@ -87,23 +92,32 @@ struct FrameCreator: View {
                 // Hstack for the frame picture and a button for
                 // getting the picture.
                 HStack{
-                    Image("comb")
+                    Spacer()
+                    Image("frame" + String(Int.random(in: 1...7)))
                         .resizable()
-                        .frame(width: 50, height: 50, alignment: .center)
+                        .frame(width: 100, height: 100, alignment: .center)
+                    Spacer()
                     ZStack{
                         Image(systemName: "circle")
                             .font(.system(size: 70.0))
+                        
                         Image(systemName: "camera")
                             .font(.system(size: 40.0))
                     }
+                    Spacer()
                 }
             }
             
             // Save button for saving the frame
             // Currently just sends user back to last screen.
             Button("Save Frame") {
-                self.presentation.wrappedValue.dismiss()
-            }
+                if (widthFieldText != "" && heightFieldText != ""){
+                    hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = Float(heightFieldText) ?? 0.0
+                    hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = Float(widthFieldText) ?? 0.0
+                }
+                save()
+            }.padding()
+            .foregroundColor(.orange)
 
         }
     }

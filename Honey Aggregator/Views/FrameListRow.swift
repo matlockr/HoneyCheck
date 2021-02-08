@@ -17,10 +17,9 @@ struct FrameListRow: View {
         // Hstack takes existing frane information and formats it
         // into a single UI element for a list
         HStack{
-            Image("comb")
+            Image("frame" + String(Int.random(in: 1...7)))
                 .resizable()
-                .frame(width: 50, height: 50, alignment: .center)
-            Text("Frame " + String(frame.id))
+                .frame(width: 100, height: 100, alignment: .center)
             Spacer()
         }
     }

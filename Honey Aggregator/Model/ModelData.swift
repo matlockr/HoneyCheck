@@ -41,6 +41,7 @@ func save(hiveIndex: Int){
         let data = try encoder.encode(hives)
         if let file = FileHandle(forWritingAtPath:mainJSONFileName) {
             file.write(data)
+            print(hives)
         }
     } catch {
         fatalError("Couldn't save data to \(mainJSONFileName)")

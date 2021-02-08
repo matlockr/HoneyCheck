@@ -66,6 +66,7 @@ struct HiveCreator: View {
                             hives[hiveIndex].hiveName = tempHiveName
                         }
                         save(hiveIndex: hiveIndex)
+                        print(hives)
                     }.foregroundColor(.orange)
                 }.padding()
             }

@@ -1,3 +1,23 @@
+
 [
-    
+    {
+        "id": "D3DD2945-C661-41C5-9D69-34EF2CC2C3EE",
+        "hiveName": "Example Hive 0",
+        "honeyTotal": 0.0,
+        "beeBoxes": [
+            {
+            "id": "B3F49617-B502-4108-A71E-312951BD1165",
+            "honeyTotal": 0.0,
+            "frames": [
+                {
+                    "id": "E354BF06-311A-42A3-AAF2-98865758EA99",
+                    "height": 0.0,
+                    "width": 0.0,
+                    "honeyAmount": 0.0
+                }
+                ]
+            }
+        ]
+        
+    }
 ]

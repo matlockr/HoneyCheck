@@ -93,9 +93,9 @@ struct FrameCreator: View {
                 // getting the picture.
                 HStack{
                     Spacer()
-                    Image("comb")
+                    Image("frame" + String(Int.random(in: 1...7)))
                         .resizable()
-                        .frame(width: 50, height: 50, alignment: .center)
+                        .frame(width: 100, height: 100, alignment: .center)
                     Spacer()
                     ZStack{
                         Image(systemName: "circle")

@@ -42,12 +42,13 @@ struct BeeBoxCreator: View {
                     Button("Add Frame"){
                         let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
                         hives[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
+                        save()
                     }.foregroundColor(.orange)
                     
                     // Button that saves the hive to the model data
                     // Currently just saves a empty hive with the name provided above
                     Button("Save"){
-                        save(hiveIndex: hiveIndex)
+                        save()
                     }.foregroundColor(.orange)
                 }.padding()
             }

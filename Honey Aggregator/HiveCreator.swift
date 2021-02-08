@@ -57,6 +57,7 @@ struct HiveCreator: View {
                     Button("Add BeeBox"){
                         let newBeeBox = BeeBox(honeyTotal: 0.0, frames: [])
                         hives[hiveIndex].beeBoxes.append(newBeeBox)
+                        save()
                     }.foregroundColor(.orange)
                     
                     // Button that saves the hive to the model data
@@ -65,8 +66,7 @@ struct HiveCreator: View {
                         if (tempHiveName != ""){
                             hives[hiveIndex].hiveName = tempHiveName
                         }
-                        save(hiveIndex: hiveIndex)
-                        print(hives)
+                        save()
                     }.foregroundColor(.orange)
                 }.padding()
             }

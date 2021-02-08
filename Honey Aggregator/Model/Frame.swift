@@ -9,7 +9,7 @@ import Foundation
 
 struct Frame: Hashable, Codable, Identifiable {
     var id = UUID()
-    let height : Float
-    let width : Float
-    let honeyAmount : Float
+    var height : Float
+    var width : Float
+    var honeyAmount : Float
 }

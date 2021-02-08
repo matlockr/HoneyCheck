@@ -34,7 +34,7 @@ func load<T: Decodable>(_ filename: String) -> T {
 
 // save function encodes the hive information and saves it to
 // a JSON file. Currently has no way to overwrite existing hives.
-func save(hiveIndex: Int){
+func save(){
     
     do {
         let encoder = JSONEncoder()

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @EnvironmentObject var hives:Hives
+    
     @State private var isActive: Bool = false;
     @State private var navLinkHiveIndex = -1;
     
@@ -43,19 +45,19 @@ struct ContentView: View {
                     
                     // Navigation Link for sending user to
                     // HiveCreator View apon clicking button
-                    NavigationLink(destination: HiveCreator(hiveIndex: navLinkHiveIndex), isActive: self.$isActive){
+                    NavigationLink(destination: HiveCreator(hiveIndex: navLinkHiveIndex).environmentObject(hives), isActive: self.$isActive){
                     }
                     
                     Button("New Hive") {
                         let newHive = Hive(hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
-                        hives.append(newHive)
-                        navLinkHiveIndex = hives.count - 1
+                        hives.hiveList.append(newHive)
+                        navLinkHiveIndex = hives.hiveList.count - 1
                         self.isActive = true;
                     }
                     
                     // Navigation Link for sending user to
                     // HiveListUI View apon clicking button
-                    NavigationLink(destination: HiveListUI()){
+                    NavigationLink(destination: HiveListUI().environmentObject(hives)){
                         Text("Hive List")
                             .font(.none)
                             .padding(.all)
@@ -67,8 +69,8 @@ struct ContentView: View {
                 .foregroundColor(.orange)
                 .onAppear(perform: {
                     //Debug Purposes
-                    if (hives.isEmpty){
-                        hives.append(Hive(hiveName: "Example", honeyTotal: 0.0, beeBoxes: [BeeBox(honeyTotal: 0.0, frames: [Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)])]))
+                    if (hives.hiveList.isEmpty){
+                        hives.hiveList.append(Hive(hiveName: "Example", honeyTotal: 0.0, beeBoxes: [BeeBox(honeyTotal: 0.0, frames: [Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)])]))
                     }
 
                 })
@@ -80,7 +82,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(Hives())
             
     }
 }

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Honey_AggregatorApp: App {
+    
+    let hives = Hives()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(hives)
         }
     }
 }

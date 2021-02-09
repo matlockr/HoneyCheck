@@ -19,7 +19,7 @@ struct FrameListRow: View {
         HStack{
             Image("frame" + String(Int.random(in: 1...7)))
                 .resizable()
-                .frame(width: 100, height: 100, alignment: .center)
+                .frame(width: 75, height: 75, alignment: .center)
             Spacer()
         }
     }
@@ -27,6 +27,6 @@ struct FrameListRow: View {
 
 struct FrameListRow_Previews: PreviewProvider {
     static var previews: some View {
-        FrameListRow(frame: hives[0].beeBoxes[0].frames[0])
+        FrameListRow(frame: Hives().hiveList[0].beeBoxes[0].frames[0])
     }
 }

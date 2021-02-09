@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FrameCreator: View {
     
+    @EnvironmentObject var hives:Hives
+    
     var hiveIndex: Int
     var beeBoxIndex: Int
     var frameIndex: Int
@@ -21,10 +23,6 @@ struct FrameCreator: View {
     @State private var templateSelected = 0
     @State private var heightFieldText = ""
     @State private var widthFieldText = ""
-    
-    // Enviormental variable for programmatically navigating
-    // backwards.
-    @Environment(\.presentationMode) var presentation
     	
     var body: some View {
         VStack{
@@ -64,7 +62,7 @@ struct FrameCreator: View {
                     Text("Height")
                         .padding()
                         
-                    TextField("\(String(hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height))", text: $heightFieldText)
+                    TextField("\(String(hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height))", text: $heightFieldText)
                         .padding()
                         .keyboardType(.decimalPad)
                 }
@@ -73,7 +71,7 @@ struct FrameCreator: View {
                 HStack{
                     Text("Width")
                         .padding()
-                    TextField("\(String(hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width))", text: $widthFieldText)
+                    TextField("\(String(hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width))", text: $widthFieldText)
                         .padding()
                         .keyboardType(.decimalPad)
                 }
@@ -112,10 +110,10 @@ struct FrameCreator: View {
             // Currently just sends user back to last screen.
             Button("Save Frame") {
                 if (widthFieldText != "" && heightFieldText != ""){
-                    hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = Float(heightFieldText) ?? 0.0
-                    hives[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = Float(widthFieldText) ?? 0.0
+                    hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = Float(heightFieldText) ?? 0.0
+                    hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = Float(widthFieldText) ?? 0.0
                 }
-                save()
+                hives.save()
             }.padding()
             .foregroundColor(.orange)
 
@@ -125,6 +123,6 @@ struct FrameCreator: View {
 
 struct FrameCreator_Previews: PreviewProvider {
     static var previews: some View {
-        FrameCreator(hiveIndex: 0, beeBoxIndex: 0, frameIndex: 0)
+        FrameCreator(hiveIndex: 0, beeBoxIndex: 0, frameIndex: 0).environmentObject(Hives())
     }
 }

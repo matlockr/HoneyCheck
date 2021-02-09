@@ -18,7 +18,7 @@ struct HiveListRow: View {
         HStack{
             Image("frame" + String(Int.random(in: 1...7)))
                 .resizable()
-                .frame(width: 100, height: 100, alignment: .center)
+                .frame(width: 75, height: 75, alignment: .center)
             Text(hive.hiveName)
             Spacer()
         }
@@ -28,6 +28,6 @@ struct HiveListRow: View {
 struct HiveListRow_Previews: PreviewProvider {
     static var previews: some View {
         // For preview, show the first hive in the list
-        HiveListRow(hive: hives[0])
+        HiveListRow(hive: Hives().hiveList[0])
     }
 }

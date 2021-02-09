@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HiveListUI: View {
+    
+    @EnvironmentObject var hives:Hives
+    
     var body: some View {
             VStack{
                 
@@ -21,8 +24,8 @@ struct HiveListUI: View {
                 
                 // List for showing each of the hives saved in the
                 // JSON file
-                List(hives) { hive in
-                    NavigationLink(destination: HiveCreator(hiveIndex: hives.firstIndex(of: hive)!)){
+                List(hives.hiveList) { hive in
+                    NavigationLink(destination: HiveCreator(hiveIndex: hives.hiveList.firstIndex(of: hive)!).environmentObject(hives)){
                         HiveListRow(hive: hive)
                     }
                 }
@@ -36,6 +39,6 @@ struct HiveListUI: View {
 
 struct HiveListUI_Previews: PreviewProvider {
     static var previews: some View {
-        HiveListUI()
+        HiveListUI().environmentObject(Hives())
     }
 }

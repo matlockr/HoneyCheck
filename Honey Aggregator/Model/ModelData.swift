@@ -10,34 +10,35 @@ import Foundation
 class Hives: ObservableObject{
 
     let mainJSONFileName = "hiveData.json"
+    let dir: URL
     @Published var hiveList = [Hive]()
     
     init(){
-        hiveList = load(mainJSONFileName)
-    }
-
-    func load<T: Decodable>(_ filename: String) -> T {
-        let data: Data
-
-        guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
-        else {
-            fatalError("Couldn't find \(filename) in main bundle.")
-        }
-
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        dir = paths[0]
+        let fileURL = dir.appendingPathComponent(mainJSONFileName)
+        
+        // Test read to see if file is empty, if so then add a base to json file
         do {
-            data = try Data(contentsOf: file)
+            let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
+            if fileTxt == ""{
+                let baseJSON = "[]"
+                try baseJSON.write(to: fileURL, atomically: false, encoding: .utf8)
+            }
         } catch {
-            fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
+            fatalError("Couldn't read \(mainJSONFileName) \(error)")
         }
-
+        
+        // Decode file information and set it to hiveList
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(T.self, from: data)
+            hiveList = try decoder.decode([Hive].self, from: try Data(contentsOf: fileURL))
         } catch {
-            fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
+            fatalError("Couldn't parse \(mainJSONFileName) as [Hive] :\n\(error)")
         }
+        
     }
-
+    
     // save function encodes the hive information and saves it to
     // a JSON file. Currently has no way to overwrite existing hives.
     func save(){
@@ -45,9 +46,17 @@ class Hives: ObservableObject{
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(hiveList)
-            if let file = FileHandle(forWritingAtPath:mainJSONFileName) {
-                file.write(data)
+            
+            let fileURL = dir.appendingPathComponent(mainJSONFileName)
+            
+            // write
+            do {
+                try data.write(to: fileURL)
+            } catch {
+                //error
             }
+            
+            
         } catch {
             fatalError("Couldn't save data to \(mainJSONFileName)")
         }

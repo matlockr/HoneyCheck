@@ -23,6 +23,11 @@ struct FrameCreator: View {
     @State private var templateSelected = 0
     @State private var heightFieldText = ""
     @State private var widthFieldText = ""
+    
+    // State variables for image handeling
+    @State private var image: Image?
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
     	
     var body: some View {
         VStack{
@@ -91,9 +96,15 @@ struct FrameCreator: View {
                 // getting the picture.
                 HStack{
                     Spacer()
-                    Image("frame" + String(Int.random(in: 1...7)))
-                        .resizable()
-                        .frame(width: 100, height: 100, alignment: .center)
+                    if image != nil{
+                        image?
+                            .resizable()
+                            .scaledToFit()
+                    } else {
+                        Image("comb")
+                            .resizable()
+                            .frame(width: 100, height: 100, alignment: .center)
+                    }
                     Spacer()
                     ZStack{
                         Image(systemName: "circle")
@@ -101,6 +112,9 @@ struct FrameCreator: View {
                         
                         Image(systemName: "camera")
                             .font(.system(size: 40.0))
+                    }
+                    .onTapGesture {
+                        self.showingImagePicker = true
                     }
                     Spacer()
                 }
@@ -117,7 +131,14 @@ struct FrameCreator: View {
             }.padding()
             .foregroundColor(.orange)
 
+        }.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+            ImagePicker(image: self.$inputImage)
         }
+    }
+    
+    func loadImage(){
+        guard let inputImage = inputImage else {return}
+        image = Image(uiImage: inputImage)
     }
 }
 

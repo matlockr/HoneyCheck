@@ -18,6 +18,11 @@ class Hives: ObservableObject{
         dir = paths[0]
         let fileURL = dir.appendingPathComponent(mainJSONFileName)
         
+        //Test if file exists
+        do {
+            
+        }
+        
         // Test read to see if file is empty, if so then add a base to json file
         do {
             let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
@@ -25,8 +30,14 @@ class Hives: ObservableObject{
                 let baseJSON = "[]"
                 try baseJSON.write(to: fileURL, atomically: false, encoding: .utf8)
             }
+        } catch is CocoaError{
+            do {
+                try "[]".write(to: fileURL, atomically: false, encoding: .utf8)
+            } catch {
+                fatalError("Couldn't write to \(mainJSONFileName) \(error)\n\n\(type(of: error))\n\n")
+            }
         } catch {
-            fatalError("Couldn't read \(mainJSONFileName) \(error)")
+            fatalError("Couldn't read \(mainJSONFileName) \(error)\n\n\(type(of: error))\n\n")
         }
         
         // Decode file information and set it to hiveList

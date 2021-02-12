@@ -147,7 +147,7 @@ class Hives: ObservableObject{
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData = data
     }
     
-    func getPictureData(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Data{
-        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData!
+    func getPictureData(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Data?{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData
     }
 }

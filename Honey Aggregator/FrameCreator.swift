@@ -46,7 +46,7 @@ struct FrameCreator: View {
                     Text("Height")
                         .padding()
                         
-                    TextField("\(String(hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height))", text: $heightFieldText)
+                    TextField("\(String(hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $heightFieldText)
                         .padding()
                         .keyboardType(.decimalPad)
                 }
@@ -55,7 +55,7 @@ struct FrameCreator: View {
                 HStack{
                     Text("Width")
                         .padding()
-                    TextField("\(String(hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width))", text: $widthFieldText)
+                    TextField("\(String(hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $widthFieldText)
                         .padding()
                         .keyboardType(.decimalPad)
                 }
@@ -103,13 +103,13 @@ struct FrameCreator: View {
             // Currently just sends user back to last screen.
             Button("Save Frame") {
                 if (widthFieldText != "" && heightFieldText != ""){
-                    hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = Float(heightFieldText) ?? 0.0
-                    hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = Float(widthFieldText) ?? 0.0
+                    hives.setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: Float(heightFieldText) ?? 0.0)
+                    hives.setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: Float(widthFieldText) ?? 0.0)
                 }
                 
                 if (inputImage != nil){
                     if let data = inputImage?.jpegData(compressionQuality: 0.5){
-                        hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData = data
+                        hives.setPictureData(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, data: data)
                     }
                 }
                 hives.save()
@@ -123,7 +123,7 @@ struct FrameCreator: View {
     }
     
     func convertImageFromData(){
-        if let picData =  hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData {
+        if let picData =  hives.getPictureData(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex){
             image = Image(uiImage: UIImage(data: picData)!)
         }
     }

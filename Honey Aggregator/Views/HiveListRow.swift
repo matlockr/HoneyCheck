@@ -19,7 +19,10 @@ struct HiveListRow: View {
             Image("frame" + String(Int.random(in: 1...7)))
                 .resizable()
                 .frame(width: 75, height: 75, alignment: .center)
-            Text(hive.hiveName)
+            VStack{
+                Text(hive.hiveName)
+                Text("Honey Amount: " + String(hive.honeyTotal))
+            }
             Spacer()
         }
     }

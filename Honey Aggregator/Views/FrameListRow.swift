@@ -20,6 +20,7 @@ struct FrameListRow: View {
             Image("frame" + String(Int.random(in: 1...7)))
                 .resizable()
                 .frame(width: 75, height: 75, alignment: .center)
+            Text("Honey Amount: " + String(frame.honeyAmount))
             Spacer()
         }
     }

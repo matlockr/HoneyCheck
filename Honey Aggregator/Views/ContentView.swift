@@ -68,7 +68,7 @@ struct ContentView: View {
                 .navigationBarTitle("", displayMode: .inline)
                 .foregroundColor(.orange)
                 .onAppear(perform: {
-                    //Debug Purposes
+                    //Debug Purposes if there is no hives to start
                     if (hives.hiveList.isEmpty){
                         hives.hiveList.append(Hive(hiveName: "Example", honeyTotal: 0.0, beeBoxes: [BeeBox(honeyTotal: 0.0, frames: [Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)])]))
                     }

@@ -35,28 +35,7 @@ struct FrameCreator: View {
             Text("Frame Creator")
                 .font(.title)
                 .bold()
-            
-            /*Divider()
-            // TODO
-            // Template title
-            Text("Template Selection")
-                .font(.title2)
-                
-
-                // Sections group elements together
-                // In this case it is used to contain the UI Picker
-                Section {
-                    Picker(selection: $templateSelected, label: Text("Template")) {
-                        ForEach(0 ..< templates.count) {
-                            Text(self.templates[$0])
-                        }
-                    }
-                    
-                        // Modifier for the UI Picker
-                        .pickerStyle(WheelPickerStyle())
-                }
-            */
-            Spacer()
+    
             // Section for holding the manually entered dimensions
             Section{
                 
@@ -127,12 +106,25 @@ struct FrameCreator: View {
                     hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = Float(heightFieldText) ?? 0.0
                     hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = Float(widthFieldText) ?? 0.0
                 }
+                
+                if (inputImage != nil){
+                    if let data = inputImage?.jpegData(compressionQuality: 0.5){
+                        hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData = data
+                    }
+                }
                 hives.save()
             }.padding()
             .foregroundColor(.orange)
 
         }.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
             ImagePicker(image: self.$inputImage)
+        }
+        .onAppear{convertImageFromData()}
+    }
+    
+    func convertImageFromData(){
+        if let picData =  hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData {
+            image = Image(uiImage: UIImage(data: picData)!)
         }
     }
     

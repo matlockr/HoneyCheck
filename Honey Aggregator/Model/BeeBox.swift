@@ -11,6 +11,6 @@ import SwiftUI
 struct BeeBox: Hashable, Codable, Identifiable{
     
     var id = UUID()
-    let honeyTotal: Float
+    var honeyTotal: Float
     var frames = [Frame]()
 }

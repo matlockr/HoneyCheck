@@ -67,4 +67,87 @@ class Hives: ObservableObject{
             fatalError("Couldn't save data to \(fileName)")
         }
     }
+    
+    // HiveList Functions
+    func addHive(){
+        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
+        hiveList.append(newHive)
+    }
+    
+    // Hive Functions
+    func getHiveName(hiveIndex: Int) -> String{
+        return hiveList[hiveIndex].hiveName
+    }
+    
+    func setHiveName(hiveIndex: Int, name: String){
+        hiveList[hiveIndex].hiveName = name
+    }
+    
+    func getHiveHoneyTotal(hiveIndex: Int) -> Float{
+        return hiveList[hiveIndex].honeyTotal
+    }
+    
+    func setHiveHoneyTotal(hiveIndex: Int, honeyTotal: Float){
+        hiveList[hiveIndex].honeyTotal = honeyTotal
+    }
+    
+    func getHiveBeeBoxes(hiveIndex: Int) -> [BeeBox]{
+        return hiveList[hiveIndex].beeBoxes
+    }
+    
+    func addBeeBox(hiveIndex: Int){
+        let newBeeBox = BeeBox(honeyTotal: 0.0, frames: [])
+        hiveList[hiveIndex].beeBoxes.append(newBeeBox)
+    }
+    
+    // BeeBox Functions
+    func getBeeBoxHoneyTotal(hiveIndex: Int, beeBoxIndex: Int) -> Float{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].honeyTotal
+    }
+    
+    func setBeeBoxHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, honeyTotal: Float) {
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].honeyTotal = honeyTotal
+    }
+    
+    func getBeeBoxFrames(hiveIndex: Int, beeBoxIndex: Int) -> [Frame]{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames
+    }
+    
+    func addFrame(hiveIndex: Int, beeBoxIndex: Int){
+        let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
+    }
+    
+    // Frame Functions
+    func setFrameHeight(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, height: Float){
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = height
+    }
+    
+    func getFrameHeight(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height
+    }
+    
+    func setFrameWidth(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, width: Float){
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = width
+    }
+    
+    func getFrameWidth(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width
+    }
+    
+    func setHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, honeyTotal: Float){
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount = honeyTotal
+    }
+    
+    func getHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount
+    }
+    
+    func setPictureData(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, data: Data){
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData = data
+    }
+    
+    func getPictureData(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Data{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData!
+    }
 }

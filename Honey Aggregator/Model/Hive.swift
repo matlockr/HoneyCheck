@@ -14,6 +14,5 @@ struct Hive: Hashable, Codable, Identifiable{
     var hiveName: String
     var honeyTotal: Float
     var beeBoxes = [BeeBox]()
-    
-    
+
 }

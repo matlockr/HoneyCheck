@@ -32,7 +32,7 @@ struct HiveCreator: View {
                         .padding()
                     Spacer()
                     
-                    TextField("\(hives.hiveList[hiveIndex].hiveName)", text: $hives.hiveList[hiveIndex].hiveName)
+                    TextField("\(hives.getHiveName(hiveIndex: hiveIndex))", text: $hives.hiveList[hiveIndex].hiveName)
                         .padding(.all)
                 }
                 

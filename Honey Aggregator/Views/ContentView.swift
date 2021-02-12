@@ -49,8 +49,7 @@ struct ContentView: View {
                     }
                     
                     Button("New Hive") {
-                        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
-                        hives.hiveList.append(newHive)
+                        hives.addHive()
                         navLinkHiveIndex = hives.hiveList.count - 1
                         self.isActive = true;
                     }
@@ -68,11 +67,11 @@ struct ContentView: View {
                 .navigationBarTitle("", displayMode: .inline)
                 .foregroundColor(.orange)
                 .onAppear(perform: {
+                    
                     //Debug Purposes if there is no hives to start
                     if (hives.hiveList.isEmpty){
                         hives.hiveList.append(Hive(hiveName: "Example", honeyTotal: 0.0, beeBoxes: [BeeBox(honeyTotal: 0.0, frames: [Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)])]))
                     }
-
                 })
                 Spacer()
             }

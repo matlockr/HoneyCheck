@@ -16,6 +16,8 @@ struct HiveCreator: View {
     // Enviorment variable for handeling navigation
     @Environment(\.presentationMode) var presentation
     
+    @State private var tempHiveName = "None"
+    
     var body: some View {
             VStack{
                 // Title for view
@@ -32,15 +34,17 @@ struct HiveCreator: View {
                         .padding()
                     Spacer()
                     
-                    TextField("\(hives.getHiveName(hiveIndex: hiveIndex))", text: $hives.hiveList[hiveIndex].hiveName)
+                    TextField("\(hives.getHiveName(hiveIndex: hiveIndex))",
+                              text: $hives.hiveList[hiveIndex].hiveName)
                         .padding(.all)
+                        
                 }
                 
                 Spacer()
                 
                 // List shows each of the boxes in the hive
                 List(hives.hiveList[hiveIndex].beeBoxes) { box in
-                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives.hiveList[hiveIndex].beeBoxes.firstIndex(of: box)!).environmentObject(hives)){
+                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives.getHiveBeeBoxes(hiveIndex: hiveIndex).firstIndex(of: box)!).environmentObject(hives)){
                     
                         BoxListRow(box: box)
                     }
@@ -54,14 +58,14 @@ struct HiveCreator: View {
                     
                     // Button that creates a box for the hive
                     Button("Add BeeBox"){
-                        let newBeeBox = BeeBox(honeyTotal: 0.0, frames: [])
-                        hives.hiveList[hiveIndex].beeBoxes.append(newBeeBox)
+                        hives.addBeeBox(hiveIndex: hiveIndex)
                         hives.save()
                     }.foregroundColor(.orange)
                     
                     // Button that saves the hive to the model data
                     // Currently just saves a empty hive with the name provided above
                     Button("Save"){
+                        hives.setHiveName(hiveIndex: hiveIndex, name: tempHiveName)
                         hives.save()
                     }.foregroundColor(.orange)
                 }.padding()

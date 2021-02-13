@@ -69,9 +69,10 @@ struct ContentView: View {
                 .onAppear(perform: {
                     
                     //Debug Purposes if there is no hives to start
+                    /*
                     if (hives.hiveList.isEmpty){
                         hives.hiveList.append(Hive(hiveName: "Example", honeyTotal: 0.0, beeBoxes: [BeeBox(honeyTotal: 0.0, frames: [Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)])]))
-                    }
+                    }*/
                 })
                 Spacer()
             }

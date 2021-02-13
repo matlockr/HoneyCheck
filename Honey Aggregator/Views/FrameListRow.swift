@@ -11,17 +11,30 @@ struct FrameListRow: View {
     
     // Create a Frame object
     var frame: Frame
+    @State private var image: Image?
     
     var body: some View {
         
         // Hstack takes existing frane information and formats it
         // into a single UI element for a list
         HStack{
-            Image("frame" + String(Int.random(in: 1...7)))
-                .resizable()
-                .frame(width: 75, height: 75, alignment: .center)
+            if image != nil{
+                image?
+                    .resizable()
+                    .frame(width: 75, height: 75, alignment: .center)
+            } else {
+                Image("comb")
+                    .resizable()
+                    .frame(width: 75, height: 75, alignment: .center)
+            }
             Text("Honey Amount: " + String(frame.honeyAmount))
             Spacer()
+        }.onAppear{convertImageFromData()}
+    }
+    
+    func convertImageFromData(){
+        if let picData = frame.getPictureData(){
+            image = Image(uiImage: UIImage(data: picData)!)
         }
     }
 }

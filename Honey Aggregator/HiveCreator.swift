@@ -43,11 +43,24 @@ struct HiveCreator: View {
                 Spacer()
                 
                 // List shows each of the boxes in the hive
+                /*
                 List(hives.hiveList[hiveIndex].beeBoxes) { box in
                     NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives.getHiveBeeBoxes(hiveIndex: hiveIndex).firstIndex(of: box)!).environmentObject(hives)){
                     
                         BoxListRow(box: box)
                     }
+                }
+                */
+                List{
+                    ForEach(hives.hiveList[hiveIndex].beeBoxes) { box in
+                        NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives.getHiveBeeBoxes(hiveIndex: hiveIndex).firstIndex(of: box)!).environmentObject(hives)){
+                        
+                            BoxListRow(box: box)
+                        }
+                    }.onDelete(perform: { indexSet in
+                        hives.hiveList[hiveIndex].beeBoxes.remove(atOffsets: indexSet)
+                        hives.save()
+                    })
                 }
             
                 

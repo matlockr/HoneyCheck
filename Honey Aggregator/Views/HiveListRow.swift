@@ -10,22 +10,36 @@ import SwiftUI
 struct HiveListRow: View {
     // Create a hive object
     var hive: Hive
+    @State private var image: Image?
     
     var body: some View {
         
         // Hstack takes existing hive information and formats it
         // into a single UI element for a list
         HStack{
-            Image("frame" + String(Int.random(in: 1...7)))
-                .resizable()
-                .frame(width: 75, height: 75, alignment: .center)
+            if image != nil{
+                image?
+                    .resizable()
+                    .frame(width: 75, height: 75, alignment: .center)
+            } else {
+                Image("comb")
+                    .resizable()
+                    .frame(width: 75, height: 75, alignment: .center)
+            }
             VStack{
                 Text(hive.hiveName)
                 Text("Honey Amount: " + String(hive.honeyTotal))
             }
             Spacer()
+        }.onAppear{convertImageFromData()}
+    }
+    
+    func convertImageFromData(){
+        if let picData = hive.getPictureData(){
+            image = Image(uiImage: UIImage(data: picData)!)
         }
     }
+
 }
 
 struct HiveListRow_Previews: PreviewProvider {

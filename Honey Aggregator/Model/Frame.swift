@@ -13,4 +13,8 @@ struct Frame: Hashable, Codable, Identifiable {
     var width: Float
     var honeyAmount: Float
     var pictureData: Data?
+    
+    func getPictureData() -> Data?{
+        return pictureData
+    }
 }

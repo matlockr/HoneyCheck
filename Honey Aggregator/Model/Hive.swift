@@ -14,5 +14,12 @@ struct Hive: Hashable, Codable, Identifiable{
     var hiveName: String
     var honeyTotal: Float
     var beeBoxes = [BeeBox]()
-
+    
+    func getPictureData() -> Data?{
+        if !beeBoxes.isEmpty{
+            return beeBoxes.first?.getPictureData()
+        }
+        
+        return nil
+    }
 }

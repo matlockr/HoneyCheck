@@ -28,7 +28,7 @@ struct FrameCreator: View {
     @State private var image: Image?
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
-    	
+        	
     var body: some View {
         VStack{
             // Title of view
@@ -99,6 +99,7 @@ struct FrameCreator: View {
                 }
             }
             
+
             // Save button for saving the frame
             // Currently just sends user back to last screen.
             Button("Save Frame") {
@@ -108,10 +109,16 @@ struct FrameCreator: View {
                 }
                 
                 if (inputImage != nil){
-                    if let data = inputImage?.jpegData(compressionQuality: 0.5){
+                    if let data = inputImage?.jpegData(compressionQuality: 0.1){
                         hives.setPictureData(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, data: data)
                     }
                 }
+                
+                // Get the frame square inches
+                let frameSquareInches = hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex) * hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)
+                
+                hives.setHoneyTotal(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, honeyTotal: Float.random(in: (0.1)...1) * frameSquareInches * 0.0149)
+                hives.setBeeBoxHoney(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)
                 hives.save()
             }.padding()
             .foregroundColor(.orange)
@@ -125,6 +132,7 @@ struct FrameCreator: View {
     func convertImageFromData(){
         if let picData =  hives.getPictureData(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex){
             image = Image(uiImage: UIImage(data: picData)!)
+            
         }
     }
     
@@ -139,3 +147,4 @@ struct FrameCreator_Previews: PreviewProvider {
         FrameCreator(hiveIndex: 0, beeBoxIndex: 0, frameIndex: 0).environmentObject(Hives())
     }
 }
+

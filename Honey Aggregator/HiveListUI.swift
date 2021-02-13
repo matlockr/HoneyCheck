@@ -24,10 +24,15 @@ struct HiveListUI: View {
                 
                 // List for showing each of the hives saved in the
                 // JSON file
-                List(hives.hiveList) { hive in
-                    NavigationLink(destination: HiveCreator(hiveIndex: hives.hiveList.firstIndex(of: hive)!).environmentObject(hives)){
-                        HiveListRow(hive: hive)
-                    }
+                List{
+                    ForEach(hives.hiveList) { hive in
+                        NavigationLink(destination: HiveCreator(hiveIndex: hives.hiveList.firstIndex(of: hive)!).environmentObject(hives)){
+                            HiveListRow(hive: hive)
+                        }
+                    }.onDelete(perform: { indexSet in
+                        hives.hiveList.remove(atOffsets: indexSet)
+                        hives.save()
+                    })
                 }
                 
                 Spacer()

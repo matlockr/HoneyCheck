@@ -13,6 +13,9 @@ class Hives: ObservableObject{
     let dir: URL
     @Published var hiveList = [Hive]()
     
+    // Variable to reset file for testing purposes
+    let fileReset = true
+    
     init(){
         
         // Get directory path for where to save files
@@ -24,6 +27,8 @@ class Hives: ObservableObject{
         do {
             let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
             if fileTxt == ""{
+                try "[]".write(to: fileURL, atomically: false, encoding: .utf8)
+            } else if (fileReset){
                 try "[]".write(to: fileURL, atomically: false, encoding: .utf8)
             }
         } catch is CocoaError{ // This error is for when there is no existing file
@@ -149,5 +154,24 @@ class Hives: ObservableObject{
     
     func getPictureData(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Data?{
         return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData
+    }
+    
+    // Honey Calculation Functions
+    func setBeeBoxHoney(hiveIndex: Int, beeBoxIndex: Int){
+        var frameHoneyTotal: Float = 0.0
+        for frame in hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames{
+            frameHoneyTotal += frame.honeyAmount
+        }
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].honeyTotal = frameHoneyTotal
+        
+        self.setHiveHoneyTotal(hiveIndex: hiveIndex)
+    }
+    
+    func setHiveHoneyTotal(hiveIndex: Int){
+        var boxesHoneyTotal: Float = 0.0
+        for box in hiveList[hiveIndex].beeBoxes{
+            boxesHoneyTotal += box.honeyTotal
+        }
+        hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
 }

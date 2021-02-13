@@ -29,10 +29,15 @@ struct BeeBoxCreator: View {
                 Spacer()
                 
                 // List shows each of the boxes in the hive
-                List(hives.getBeeBoxFrames(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)) { frame in
-                    NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: hives.getBeeBoxFrames(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex).firstIndex(of: frame)!).environmentObject(hives)){
-                        FrameListRow(frame: frame)
-                    }
+                List{
+                    ForEach(hives.getBeeBoxFrames(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)) { frame in
+                        NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: hives.getBeeBoxFrames(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex).firstIndex(of: frame)!).environmentObject(hives)){
+                            FrameListRow(frame: frame)
+                        }
+                    }.onDelete(perform: { indexSet in
+                        hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.remove(atOffsets: indexSet)
+                        hives.save()
+                    })
                 }
                 
                 Divider()

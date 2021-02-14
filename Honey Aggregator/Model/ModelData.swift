@@ -9,12 +9,12 @@ import Foundation
 
 class Hives: ObservableObject{
 
-    let fileName = "hiveData.json"
+    let fileName = "hives.json"
     let dir: URL
     @Published var hiveList = [Hive]()
     
     // Variable to reset file for testing purposes
-    let fileReset = true
+    let fileReset = false
     
     init(){
         
@@ -25,19 +25,24 @@ class Hives: ObservableObject{
         
         // Test read to see if file is empty, if so then add a base to json file
         do {
+            
             let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
+            
             if fileTxt == ""{
                 try "[]".write(to: fileURL, atomically: false, encoding: .utf8)
             } else if (fileReset){
                 try "[]".write(to: fileURL, atomically: false, encoding: .utf8)
             }
+            
         } catch is CocoaError{ // This error is for when there is no existing file
+            
             // Write to the file for the first time and give it the base JSON structure
             do {
                 try "[]".write(to: fileURL, atomically: false, encoding: .utf8)
             } catch {
                 fatalError("Couldn't write to \(fileName) \(error)\n\n\(type(of: error))\n\n")
             }
+            
         } catch { // Any other error should stop the app
             fatalError("Couldn't read \(fileName) \(error)\n\n\(type(of: error))\n\n")
         }
@@ -45,7 +50,9 @@ class Hives: ObservableObject{
         // Decode file information and set it to hiveList
         do {
             let decoder = JSONDecoder()
+            
             hiveList = try decoder.decode([Hive].self, from: try Data(contentsOf: fileURL))
+            
         } catch {
             fatalError("Couldn't parse \(fileName) as [Hive] :\n\(error)")
         }
@@ -101,7 +108,7 @@ class Hives: ObservableObject{
     }
     
     func addBeeBox(hiveIndex: Int){
-        let newBeeBox = BeeBox(honeyTotal: 0.0, frames: [])
+        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, frames: [])
         hiveList[hiveIndex].beeBoxes.append(newBeeBox)
     }
     
@@ -121,6 +128,14 @@ class Hives: ObservableObject{
     func addFrame(hiveIndex: Int, beeBoxIndex: Int){
         let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
+    }
+    
+    func getBeeBoxName(hiveIndex: Int, beeBoxIndex: Int) -> String{
+        return hiveList[hiveIndex].beeBoxes[beeBoxIndex].name
+    }
+    
+    func setBeeBoxName(hiveIndex: Int, beeBoxIndex: Int, name: String) {
+        hiveList[hiveIndex].beeBoxes[beeBoxIndex].name = name
     }
     
     // Frame Functions

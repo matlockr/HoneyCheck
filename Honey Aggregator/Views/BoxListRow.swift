@@ -27,7 +27,12 @@ struct BoxListRow: View {
                     .resizable()
                     .frame(width: 75, height: 75, alignment: .center)
             }
-            Text("Honey Amount: " + String(box.honeyTotal))
+            VStack{
+                Text("Box Name: \(box.name)")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Honey: \(box.honeyTotal, specifier: "%.2f") lbs")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
             Spacer()
         }.onAppear{convertImageFromData()}
     }

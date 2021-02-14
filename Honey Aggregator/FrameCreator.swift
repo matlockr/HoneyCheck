@@ -15,12 +15,7 @@ struct FrameCreator: View {
     var beeBoxIndex: Int
     var frameIndex: Int
     
-    // Names of templates that are shown on the PickerWheel
-    var templates = ["Langstroth Deep", "Langstroth Medium", "Langstroth Shallow"]
-    
     // State variables for holding information about textfields
-    // and which template is selected
-    @State private var templateSelected = 0
     @State private var heightFieldText = ""
     @State private var widthFieldText = ""
     
@@ -31,15 +26,13 @@ struct FrameCreator: View {
         	
     var body: some View {
         VStack{
-            // Title of view
-            Text("Frame Creator")
-                .font(.title)
-                .bold()
-    
+            Spacer()
             // Section for holding the manually entered dimensions
             Section{
                 
-                Divider()
+                // Title to section
+                Text("Dimensions")
+                    .font(.title)
                 
                 // Hstack for getting the Height entered information
                 HStack{
@@ -49,27 +42,35 @@ struct FrameCreator: View {
                     TextField("\(String(hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $heightFieldText)
                         .padding()
                         .keyboardType(.decimalPad)
+                        
+                    
+                    Text("inches")
+                        .padding()
                 }
                 
                 // Hstack for getting the Width entered information
                 HStack{
-                    Text("Width")
+                    Text("Width ")
                         .padding()
+                    
                     TextField("\(String(hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $widthFieldText)
                         .padding()
                         .keyboardType(.decimalPad)
+                    
+                    Text("inches")
+                        .padding()
                 }
             }
             
+            Spacer()
             
             // Section for the Image getter
             Section{
                 
-                Divider()
                 
                 // Title to section
-                Text("Frame Picture")
-                    .font(.title2)
+                Text("Picture")
+                    .font(.title)
                 
                 // Hstack for the frame picture and a button for
                 // getting the picture.
@@ -98,8 +99,8 @@ struct FrameCreator: View {
                     Spacer()
                 }
             }
+            Spacer()
             
-
             // Save button for saving the frame
             // Currently just sends user back to last screen.
             Button("Save Frame") {
@@ -127,6 +128,8 @@ struct FrameCreator: View {
             ImagePicker(image: self.$inputImage)
         }
         .onAppear{convertImageFromData()}
+        .navigationBarTitle("Frame Creator")
+        
     }
     
     func convertImageFromData(){

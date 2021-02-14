@@ -15,18 +15,11 @@ struct HiveCreator: View {
     
     // Enviorment variable for handeling navigation
     @Environment(\.presentationMode) var presentation
-    
-    @State private var tempHiveName = "None"
+        
+    @State private var showingAlert = false
     
     var body: some View {
             VStack{
-                // Title for view
-                Text("Hive Creator")
-                    .font(.title)
-                    .bold()
-                
-                // Dividers add a line to help seperate elements
-                Divider()
                 
                 // Hstack for the showing and getting hive name
                 HStack{
@@ -40,17 +33,13 @@ struct HiveCreator: View {
                         
                 }
                 
-                Spacer()
+                Divider()
+                
+                Text("BeeBoxes")
+                    .font(.title2)
+                
                 
                 // List shows each of the boxes in the hive
-                /*
-                List(hives.hiveList[hiveIndex].beeBoxes) { box in
-                    NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives.getHiveBeeBoxes(hiveIndex: hiveIndex).firstIndex(of: box)!).environmentObject(hives)){
-                    
-                        BoxListRow(box: box)
-                    }
-                }
-                */
                 List{
                     ForEach(hives.hiveList[hiveIndex].beeBoxes) { box in
                         NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives.getHiveBeeBoxes(hiveIndex: hiveIndex).firstIndex(of: box)!).environmentObject(hives)){
@@ -63,11 +52,13 @@ struct HiveCreator: View {
                     })
                 }
             
-                
                 Divider()
+                
                 
                 // Hstack for buttons at bottom of screen
                 HStack{
+                    
+                    Spacer()
                     
                     // Button that creates a box for the hive
                     Button("Add BeeBox"){
@@ -75,15 +66,18 @@ struct HiveCreator: View {
                         hives.save()
                     }.foregroundColor(.orange)
                     
+                    Spacer()
+                    
                     // Button that saves the hive to the model data
-                    // Currently just saves a empty hive with the name provided above
                     Button("Save"){
-                        hives.setHiveName(hiveIndex: hiveIndex, name: tempHiveName)
                         hives.save()
                     }.foregroundColor(.orange)
+                    
+                    Spacer()
                 }.padding()
             }
-
+            
+            .navigationBarTitle("Hive Creator")
     }
 }
 

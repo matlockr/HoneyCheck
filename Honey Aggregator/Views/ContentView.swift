@@ -18,7 +18,7 @@ struct ContentView: View {
         
         // NavigationView is the base to the navigation framework
         // for navigating between views
-        NavigationView{
+        NavigationView {
             VStack {
                 
                 // Main title of app
@@ -27,7 +27,7 @@ struct ContentView: View {
                     .fontWeight(.heavy)
                     .foregroundColor(Color.orange)
                     .multilineTextAlignment(.center)
-                    .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                    .padding(.all)
                 
                 // Spacers spread UI elements apart
                 Spacer()
@@ -66,14 +66,6 @@ struct ContentView: View {
                 // Modifiers for NavigationView
                 .navigationBarTitle("", displayMode: .inline)
                 .foregroundColor(.orange)
-                .onAppear(perform: {
-                    
-                    //Debug Purposes if there is no hives to start
-                    /*
-                    if (hives.hiveList.isEmpty){
-                        hives.hiveList.append(Hive(hiveName: "Example", honeyTotal: 0.0, beeBoxes: [BeeBox(honeyTotal: 0.0, frames: [Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)])]))
-                    }*/
-                })
                 Spacer()
             }
         }

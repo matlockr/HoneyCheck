@@ -27,7 +27,8 @@ struct FrameListRow: View {
                     .resizable()
                     .frame(width: 75, height: 75, alignment: .center)
             }
-            Text("Honey Amount: " + String(frame.honeyAmount))
+            Text("Honey: \(frame.honeyAmount, specifier: "%.2f") lbs")
+                .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
         }.onAppear{convertImageFromData()}
     }

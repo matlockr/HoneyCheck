@@ -27,8 +27,10 @@ struct HiveListRow: View {
                     .frame(width: 75, height: 75, alignment: .center)
             }
             VStack{
-                Text(hive.hiveName)
-                Text("Honey Amount: " + String(hive.honeyTotal))
+                Text("Name: " + hive.hiveName)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Honey: \(hive.honeyTotal, specifier: "%.2f") lbs")
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             Spacer()
         }.onAppear{convertImageFromData()}

@@ -14,12 +14,6 @@ struct HiveListUI: View {
     var body: some View {
             VStack{
                 
-                // Title for view
-                Text("Hive List")
-                    .font(.title)
-                    .bold()
-                    .padding()
-                
                 Divider()
                 
                 // List for showing each of the hives saved in the
@@ -39,6 +33,7 @@ struct HiveListUI: View {
                 
                 Divider()
             }
+            .navigationBarTitle("Hives")
     }
 }
 

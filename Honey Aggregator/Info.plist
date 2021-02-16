@@ -39,6 +39,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>HoneyAggregator would like to use your camera.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>HoneyAggregator would like to use your photo library.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

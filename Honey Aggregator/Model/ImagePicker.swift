@@ -24,9 +24,11 @@ struct ImagePicker: UIViewControllerRepresentable{
             parent.presentationMode.wrappedValue.dismiss()
         }
     }
-    
+    // sourceType is what allows the user to choose between the camera or the photo library
+    var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @Environment(\.presentationMode) var presentationMode
     @Binding var image: UIImage?
+    
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -35,6 +37,7 @@ struct ImagePicker: UIViewControllerRepresentable{
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
+        picker.sourceType = sourceType
         return picker
     }
     

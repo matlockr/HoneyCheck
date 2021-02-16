@@ -23,6 +23,8 @@ struct FrameCreator: View {
     @State private var image: Image?
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    @State private var shouldPresentCamera = false
+    @State private var shouldPresentActionScheet = false
         	
     var body: some View {
         VStack{
@@ -94,7 +96,10 @@ struct FrameCreator: View {
                             .font(.system(size: 40.0))
                     }
                     .onTapGesture {
-                        self.showingImagePicker = true
+                        //dis line is cancir
+                        //recommend removing commented out line
+                        //self.showingImagePicker = true
+                        self.shouldPresentActionScheet = true
                     }
                     Spacer()
                 }
@@ -124,8 +129,18 @@ struct FrameCreator: View {
             }.padding()
             .foregroundColor(.orange)
 
-        }.sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
-            ImagePicker(image: self.$inputImage)
+        }
+        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+            ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$inputImage)
+        }
+        .actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
+            ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
+                self.showingImagePicker = true
+                self.shouldPresentCamera = true
+            }), ActionSheet.Button.default(Text("Photo Library"), action: {
+                self.showingImagePicker = true
+                self.shouldPresentCamera = false
+            }), ActionSheet.Button.cancel()])
         }
         .onAppear{convertImageFromData()}
         .navigationBarTitle("Frame Creator")

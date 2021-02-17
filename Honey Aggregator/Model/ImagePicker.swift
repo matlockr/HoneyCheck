@@ -4,6 +4,7 @@
 //
 //  Created by Robert Matlock on 2/9/21.
 //  Based on tutorial by [Insert Name Here]
+//  Additional thanks to @karthickselvaraj from Medium.com for sourceType information https://medium.com/better-programming/how-to-pick-an-image-from-camera-or-photo-library-in-swiftui-a596a0a2ece
 
 import SwiftUI
 
@@ -37,6 +38,7 @@ struct ImagePicker: UIViewControllerRepresentable{
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
+        //this lets the constructor designate the sourceType
         picker.sourceType = sourceType
         return picker
     }

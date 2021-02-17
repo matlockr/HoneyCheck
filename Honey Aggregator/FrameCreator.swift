@@ -4,6 +4,7 @@
 //
 //  Screen for creating and editing frames for each
 //  BeeBox
+//  Additional thanks to @karthickselvaraj from Medium.com for sourceType information https://medium.com/better-programming/how-to-pick-an-image-from-camera-or-photo-library-in-swiftui-a596a0a2ece
 
 import SwiftUI
 
@@ -23,8 +24,10 @@ struct FrameCreator: View {
     @State private var image: Image?
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    //Bool used to trigger the camera in the ImagePicker
     @State private var shouldPresentCamera = false
-    @State private var shouldPresentActionScheet = false
+    //Bool used to trigger user choice for image selection
+    @State private var shouldPresentActionSheet = false
         	
     var body: some View {
         VStack{
@@ -99,7 +102,8 @@ struct FrameCreator: View {
                         //dis line is cancir
                         //recommend removing commented out line
                         //self.showingImagePicker = true
-                        self.shouldPresentActionScheet = true
+                        //will allow Action Sheet to be toggled on
+                        self.shouldPresentActionSheet = true
                     }
                     Spacer()
                 }
@@ -131,16 +135,33 @@ struct FrameCreator: View {
 
         }
         .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+            //This call to the constructor brings up the ImagePicker
+            //sourceType uses the ? to set up an if else condition for variable shouldPresentCamera: Bool
             ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$inputImage)
         }
-        .actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
+        //Call to Action Sheet constructor isPresented is a Bool value which calls Binding<Bool> shouldPresentActionSheet
+        //Action Sheet lists buttons in top down order, i.e. Camera is at top, cancel is at bottom
+        .actionSheet(isPresented: $shouldPresentActionSheet) {
+            //This creates the action sheet
+            () -> ActionSheet in
+            //This gives the Action Sheet a title
+            //This gives the action sheet a message for the user to read
+            //The syntax "action:" is used to define any behavior that pressing a button will perform in the code
             ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
+                //This will toggle the ImagePicker on
                 self.showingImagePicker = true
+                //This will cause ImagePicker to toggle the camera on
                 self.shouldPresentCamera = true
-            }), ActionSheet.Button.default(Text("Photo Library"), action: {
+            }),
+            //This creates a "Photo Library" button
+            ActionSheet.Button.default(Text("Photo Library"), action: {
+                //This toggles the ImagePicker on
                 self.showingImagePicker = true
+                //This prevents the camera from toggling on
                 self.shouldPresentCamera = false
-            }), ActionSheet.Button.cancel()])
+            }),
+            //This creates a "Cancel" button
+            ActionSheet.Button.cancel()])
         }
         .onAppear{convertImageFromData()}
         .navigationBarTitle("Frame Creator")

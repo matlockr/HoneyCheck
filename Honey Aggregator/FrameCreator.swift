@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct FrameCreator: View {
-    
+    @ObservedObject var input = Numerical()
+
     @EnvironmentObject var hives:Hives
     
     var hiveIndex: Int

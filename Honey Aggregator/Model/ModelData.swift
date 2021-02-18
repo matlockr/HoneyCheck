@@ -189,4 +189,17 @@ class Hives: ObservableObject{
         }
         hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
+    
+}
+//This limits the input of something to number only values
+class Numerical: ObservableObject {
+    @Published var value = "" {
+        didSet {
+            let filtered = value.filter { $0.isNumber }
+                
+            if value != filtered {
+                value = filtered
+            }
+        }
+    }
 }

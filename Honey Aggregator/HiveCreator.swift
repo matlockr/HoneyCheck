@@ -46,8 +46,7 @@ struct HiveCreator: View {
                         }
                     )
                 }
-                
-                .frame(height: 80, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(height: 70)
                 .clipped()
                 
                 Divider()

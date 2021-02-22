@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct FrameCreator: View {
-    @ObservedObject var input = Numerical()
+    //@ObservedObject var input = Numerical()
 
     @EnvironmentObject var hives:Hives
     
@@ -29,10 +29,17 @@ struct FrameCreator: View {
     @State private var shouldPresentCamera = false
     //Bool used to trigger user choice for image selection
     @State private var shouldPresentActionSheet = false
-        	
+    //Bool used to trigger drop down menu
+    
+    
     var body: some View {
         VStack{
+            
+        }
+        VStack{
+            
             Spacer()
+            
             // Section for holding the manually entered dimensions
             Section{
                 

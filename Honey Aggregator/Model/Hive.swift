@@ -11,8 +11,12 @@ import SwiftUI
 struct Hive: Hashable, Codable, Identifiable{
     
     var id = UUID()
+    //determines the displayed units
+    var unit : Int
     var hiveName: String
     var honeyTotal: Float
+    //contains metric data for the weight of the honey
+    var honeyTotalKG: Float
     var beeBoxes = [BeeBox]()
     
     func getPictureData() -> Data?{
@@ -21,5 +25,14 @@ struct Hive: Hashable, Codable, Identifiable{
         }
         
         return nil
+    }
+    
+    //this sets the unit type for the
+    mutating func setUnitType(type: Int){
+        self.unit = type
+    }
+    //this displays the unit type
+    func dispUnitType() -> Int{
+        return self.unit
     }
 }

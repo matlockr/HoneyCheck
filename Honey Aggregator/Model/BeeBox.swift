@@ -13,6 +13,8 @@ struct BeeBox: Hashable, Codable, Identifiable{
     var id = UUID()
     var name: String
     var honeyTotal: Float
+    //contains metric data for the weight of the honey
+    var honeyTotalKG: Float
     var frames = [Frame]()
     
     func getPictureData() -> Data?{

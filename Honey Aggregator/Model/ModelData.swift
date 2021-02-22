@@ -82,7 +82,7 @@ class Hives: ObservableObject{
     
     // HiveList Functions
     func addHive(){
-        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
+        let newHive = Hive(unit: 0, hiveName: "None", honeyTotal: 0.0, honeyTotalKG: 0.0,  beeBoxes: [])
         hiveList.append(newHive)
     }
     
@@ -108,7 +108,7 @@ class Hives: ObservableObject{
     }
     
     func addBeeBox(hiveIndex: Int){
-        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, frames: [])
+        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, honeyTotalKG: 0.0, frames: [])
         hiveList[hiveIndex].beeBoxes.append(newBeeBox)
     }
     
@@ -126,7 +126,7 @@ class Hives: ObservableObject{
     }
     
     func addFrame(hiveIndex: Int, beeBoxIndex: Int){
-        let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
+        let newFrame = Frame(height: 0.0, heightMet: 0.0, width: 0.0, widthMet: 0.0, honeyAmount: 0.0, honeyAmountMet: 0.0)
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
     }
     
@@ -190,7 +190,15 @@ class Hives: ObservableObject{
         hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
     
+    func convertUnitType(hiveIndex: Int){
+        
+    }
+    func convertUnitValue(hiveIndex: Int){
+        
+    }
 }
+//Unassigned Topic
+/*
 //This limits the input of something to number only values
 class Numerical: ObservableObject {
     @Published var value = "" {
@@ -203,3 +211,4 @@ class Numerical: ObservableObject {
         }
     }
 }
+*/

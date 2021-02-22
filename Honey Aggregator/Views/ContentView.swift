@@ -19,6 +19,7 @@ struct ContentView: View {
         // NavigationView is the base to the navigation framework
         // for navigating between views
         NavigationView {
+            
             VStack {
                 
                 // Main title of app

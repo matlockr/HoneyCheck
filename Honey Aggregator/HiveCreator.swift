@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HiveCreator: View {
-    
+
     @EnvironmentObject var hives:Hives
     
     var hiveIndex: Int
@@ -17,8 +17,12 @@ struct HiveCreator: View {
     @Environment(\.presentationMode) var presentation
         
     @State private var showingAlert = false
+    //contains the unit type for hive
+    @State private var selectedUnitType = 0
+    
     
     var body: some View {
+        
             VStack{
                 
                 // Hstack for the showing and getting hive name
@@ -32,6 +36,19 @@ struct HiveCreator: View {
                         .padding(.all)
                         
                 }
+                Form{
+                    Picker(selection: $selectedUnitType, label: Text("Measurement System"), content: {
+                            Text("Imperial: in/oz/lb").tag(0)
+                            Text("Metric: mm/g/KG").tag(1)
+                            Text("Metric: cm/g/KG").tag(2)
+                            Text("Metric: dm/g/KG").tag(3)
+                            Text("Metric: m/g/KG").tag(4)
+                        }
+                    )
+                }
+                
+                .frame(height: 80, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .clipped()
                 
                 Divider()
                 

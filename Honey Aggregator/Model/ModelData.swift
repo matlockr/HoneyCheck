@@ -90,6 +90,10 @@ class Hives: ObservableObject{
     func getHiveName(hiveIndex: Int) -> String{
         return hiveList[hiveIndex].hiveName
     }
+    //setHiveUnitType sets a unit type for a hive
+    func setHiveUnitType(hiveIndex: Int, unit: Int){
+        hiveList[hiveIndex].setUnitType(type: unit)
+    }
     
     func setHiveName(hiveIndex: Int, name: String){
         hiveList[hiveIndex].hiveName = name

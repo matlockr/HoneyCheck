@@ -242,7 +242,15 @@ class Hives: ObservableObject{
         var send: String
         switch unit {
         case 0:
-            send = "Imperial"
+            send = "Imperial: in/oz/lb"
+        case 1:
+            send = "Metric: mm/g/KG"
+        case 2:
+            send = "Metric: cm/g/KG"
+        case 3:
+            send = "Metric: dm/g/KG"
+        case 4:
+            send = "Metric: m/g/KG"
         default:
             send = "Metric"
         }

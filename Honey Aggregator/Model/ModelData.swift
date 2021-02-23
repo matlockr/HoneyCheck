@@ -200,6 +200,54 @@ class Hives: ObservableObject{
     func convertUnitValue(hiveIndex: Int){
         
     }
+    func nameUnitFramePreview(unit: Int)->String{
+        var send: String
+        switch unit {
+        case 0:
+            send = "oz"
+        default:
+            send = "g"
+        }
+        return send
+    }
+    func nameUnitFrameActual(unit: Int)->String{
+        var send: String
+        switch unit {
+        case 0:
+            send = "in"
+        case 2:
+            send = "cm"
+        case 3:
+            send = "dm"
+        case 4:
+            send = "m"
+        default:
+            send = "mm"
+        }
+        return send
+    }
+    func setUnitReadout(unit: Int, area: Int)->String{
+        var send: String
+        switch area{
+            case 0:
+                send = nameUnitFramePreview(unit: unit)
+            case 1:
+                send = nameUnitFrameActual(unit: unit)
+            default:
+                send = "KG"
+            }
+            return send
+    }
+    func unitSys(unit: Int)->String{
+        var send: String
+        switch unit {
+        case 0:
+            send = "Imperial"
+        default:
+            send = "Metric"
+        }
+        return send
+    }
 }
 //Unassigned Topic
 /*

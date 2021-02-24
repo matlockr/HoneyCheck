@@ -12,7 +12,6 @@ class Hives: ObservableObject{
     let fileName = "hives.json"
     let dir: URL
     @Published var hiveList = [Hive]()
-    
     // Variable to reset file for testing purposes
     let fileReset = false
     
@@ -22,7 +21,6 @@ class Hives: ObservableObject{
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         dir = paths[0]
         let fileURL = dir.appendingPathComponent(fileName)
-        
         // Test read to see if file is empty, if so then add a base to json file
         do {
             
@@ -82,7 +80,7 @@ class Hives: ObservableObject{
     
     // HiveList Functions
     func addHive(){
-        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
+        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, honeyTotalKG: 0.0,  beeBoxes: [])
         hiveList.append(newHive)
     }
     
@@ -108,7 +106,7 @@ class Hives: ObservableObject{
     }
     
     func addBeeBox(hiveIndex: Int){
-        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, frames: [])
+        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, honeyTotalKG: 0.0, frames: [])
         hiveList[hiveIndex].beeBoxes.append(newBeeBox)
     }
     
@@ -126,7 +124,7 @@ class Hives: ObservableObject{
     }
     
     func addFrame(hiveIndex: Int, beeBoxIndex: Int){
-        let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
+        let newFrame = Frame(height: 0.0, heightMet: 0.0, width: 0.0, widthMet: 0.0, honeyAmount: 0.0, honeyAmountMet: 0.0)
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
     }
     
@@ -189,4 +187,93 @@ class Hives: ObservableObject{
         }
         hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
+    //this func converts between unit values ie: oz to lbs, lbs to kg
+    func convertUnitType(unit: Int, hiveIndex: Int){
+        
+    }
+    //this func saves the data to the metric unit variable
+    func convertUnitValue(hiveIndex: Int){
+        
+    }
+    //this sets the unit name for the frame previews
+    func nameUnitFramePreview(unit: Int)->String{
+        var send: String
+        switch unit {
+        case 0:
+            send = "oz"
+        default:
+            send = "g"
+        }
+        return send
+    }
+    //this sets the unit name for the frame dimensions
+    func nameUnitFrameActual(unit: Int)->String{
+        var send: String
+        switch unit {
+        case 0:
+            send = "in"
+        case 2:
+            send = "cm"
+        case 3:
+            send = "dm"
+        case 4:
+            send = "m"
+        default:
+            send = "mm"
+        }
+        return send
+    }
+    //this function sets the string that is the unit name
+    func setUnitReadout(unit: Int, area: Int)->String{
+        var send: String
+        switch area{
+        //special case that is for frame weight
+            case 0:
+                send = nameUnitFramePreview(unit: unit)
+        //special case that is for frame dimensions
+            case 1:
+                send = nameUnitFrameActual(unit: unit)
+            default:
+                switch unit {
+                case 0:
+                    send = "lb"
+                default:
+                    send =  "KG"
+            }
+        }
+        return send
+    }
+    //this func sends the unit formatting
+    func unitSys(unit: Int)->String{
+        var send: String
+        switch unit {
+        case 0:
+            send = "Imperial: in/oz/lb"
+        case 2:
+            send = "Metric: cm/g/KG"
+        case 3:
+            send = "Metric: dm/g/KG"
+        case 4:
+            send = "Metric: m/g/KG"
+        default:
+            send = "Metric: mm/g/KG"
+        }
+        return send
+    }
 }
+//Unassigned Topic
+/*
+//This limits the input of something to number only values
+class Numerical: ObservableObject {
+    @Published var value = "" {
+        didSet {
+            let filtered = value.filter { $0.isNumber }
+                
+            if value != filtered {
+                value = filtered
+            }
+        }
+    }
+}
+*/
+

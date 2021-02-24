@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct FrameCreator: View {
-    
+    //@ObservedObject var input = Numerical()
+
     @EnvironmentObject var hives:Hives
     
     var hiveIndex: Int
@@ -28,10 +29,19 @@ struct FrameCreator: View {
     @State private var shouldPresentCamera = false
     //Bool used to trigger user choice for image selection
     @State private var shouldPresentActionSheet = false
-        	
+    //used to store the unit type for each hive
+    @State private var unitName = ""
+    
     var body: some View {
+        HStack{}.onAppear(perform: {
+            //this is the call for the unitName to be parsed
+            //The area value must be 1
+            unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 1)
+        })
         VStack{
+            
             Spacer()
+            
             // Section for holding the manually entered dimensions
             Section{
                 
@@ -48,8 +58,8 @@ struct FrameCreator: View {
                         .padding()
                         .keyboardType(.decimalPad)
                         
-                    
-                    Text("inches")
+                    //this is where the name of the unit is displayed
+                    Text("\(unitName)")
                         .padding()
                 }
                 
@@ -61,8 +71,8 @@ struct FrameCreator: View {
                     TextField("\(String(hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $widthFieldText)
                         .padding()
                         .keyboardType(.decimalPad)
-                    
-                    Text("inches")
+                    //this is where the name of the unit is displayed
+                    Text("\(unitName)")
                         .padding()
                 }
             }

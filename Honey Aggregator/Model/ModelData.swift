@@ -12,7 +12,6 @@ class Hives: ObservableObject{
     let fileName = "hives.json"
     let dir: URL
     @Published var hiveList = [Hive]()
-    
     // Variable to reset file for testing purposes
     let fileReset = false
     
@@ -22,7 +21,6 @@ class Hives: ObservableObject{
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         dir = paths[0]
         let fileURL = dir.appendingPathComponent(fileName)
-        
         // Test read to see if file is empty, if so then add a base to json file
         do {
             
@@ -82,17 +80,13 @@ class Hives: ObservableObject{
     
     // HiveList Functions
     func addHive(){
-        let newHive = Hive(unit: 0, hiveName: "None", honeyTotal: 0.0, honeyTotalKG: 0.0,  beeBoxes: [])
+        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, honeyTotalKG: 0.0,  beeBoxes: [])
         hiveList.append(newHive)
     }
     
     // Hive Functions
     func getHiveName(hiveIndex: Int) -> String{
         return hiveList[hiveIndex].hiveName
-    }
-    //setHiveUnitType sets a unit type for a hive
-    func setHiveUnitType(hiveIndex: Int, unit: Int){
-        hiveList[hiveIndex].setUnitType(type: unit)
     }
     
     func setHiveName(hiveIndex: Int, name: String){
@@ -193,13 +187,15 @@ class Hives: ObservableObject{
         }
         hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
-    
-    func convertUnitType(hiveIndex: Int){
+    //this func converts between unit values ie: oz to lbs, lbs to kg
+    func convertUnitType(unit: Int, hiveIndex: Int){
         
     }
+    //this func saves the data to the metric unit variable
     func convertUnitValue(hiveIndex: Int){
         
     }
+    //this sets the unit name for the frame previews
     func nameUnitFramePreview(unit: Int)->String{
         var send: String
         switch unit {
@@ -210,6 +206,7 @@ class Hives: ObservableObject{
         }
         return send
     }
+    //this sets the unit name for the frame dimensions
     func nameUnitFrameActual(unit: Int)->String{
         var send: String
         switch unit {
@@ -226,25 +223,32 @@ class Hives: ObservableObject{
         }
         return send
     }
+    //this function sets the string that is the unit name
     func setUnitReadout(unit: Int, area: Int)->String{
         var send: String
         switch area{
+        //special case that is for frame weight
             case 0:
                 send = nameUnitFramePreview(unit: unit)
+        //special case that is for frame dimensions
             case 1:
                 send = nameUnitFrameActual(unit: unit)
             default:
-                send = "KG"
+                switch unit {
+                case 0:
+                    send = "lb"
+                default:
+                    send =  "KG"
             }
-            return send
+        }
+        return send
     }
+    //this func sends the unit formatting
     func unitSys(unit: Int)->String{
         var send: String
         switch unit {
         case 0:
             send = "Imperial: in/oz/lb"
-        case 1:
-            send = "Metric: mm/g/KG"
         case 2:
             send = "Metric: cm/g/KG"
         case 3:
@@ -252,7 +256,7 @@ class Hives: ObservableObject{
         case 4:
             send = "Metric: m/g/KG"
         default:
-            send = "Metric"
+            send = "Metric: mm/g/KG"
         }
         return send
     }
@@ -272,3 +276,4 @@ class Numerical: ObservableObject {
     }
 }
 */
+

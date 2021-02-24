@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HiveCreator: View {
-
+    //shares singleton
     @EnvironmentObject var hives:Hives
     
     var hiveIndex: Int
@@ -17,8 +17,7 @@ struct HiveCreator: View {
     @Environment(\.presentationMode) var presentation
         
     @State private var showingAlert = false
-    //contains the unit type for hive
-    @State private var selectedUnitType = 0
+    //contains the unit type name
     @State private var unitName = ""
     
     var body: some View {
@@ -36,31 +35,18 @@ struct HiveCreator: View {
                         .padding(.all)
                         
                 }
-                
+                //This is where the units of measurement explanation is placed
                 HStack{
                     Text("Measurement System:")
                         .onAppear(perform: {
-                            unitName = hives.unitSys(unit: hives.hiveList[hiveIndex].dispUnitType())
+                            //this sets the value of unitName to explain what units are being shown
+                            unitName = hives.unitSys(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"))
                         })
                         .padding(.horizontal)
                     Text("\(unitName)")
                     
                 }
-                Form{
-                    Picker(selection: $selectedUnitType, label: Text("Measurement System"), content: {
-                            Text("Imperial: in/oz/lb").tag(0)
-                            Text("Metric: mm/g/KG").tag(1)
-                            Text("Metric: cm/g/KG").tag(2)
-                            Text("Metric: dm/g/KG").tag(3)
-                            Text("Metric: m/g/KG").tag(4)
-                        }
-                    )
-                }
-                .onChange(of: self.selectedUnitType, perform: { value in
-                    hives.hiveList[hiveIndex].setUnitType(type: self.selectedUnitType)
-                })
-                .frame(height: 70)
-                .clipped()
+                
                 Divider()
                 
                 Text("BeeBoxes")

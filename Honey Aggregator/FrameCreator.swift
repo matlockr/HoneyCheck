@@ -28,6 +28,8 @@ struct FrameCreator: View {
     @State private var shouldPresentCamera = false
     //Bool used to trigger user choice for image selection
     @State private var shouldPresentActionSheet = false
+    
+    @State private var shouldShowImageDrawer = false
         	
     var body: some View {
         VStack{
@@ -81,15 +83,18 @@ struct FrameCreator: View {
                 // getting the picture.
                 HStack{
                     Spacer()
-                    if image != nil{
-                        image?
-                            .resizable()
-                            .scaledToFit()
-                    } else {
-                        Image("comb")
-                            .resizable()
-                            .frame(width: 100, height: 100, alignment: .center)
+                    ZStack{
+                        if image != nil{
+                            image?
+                                .resizable()
+                                .scaledToFit()
+                        } else {
+                            Image("comb")
+                                .resizable()
+                                .frame(width: 100, height: 100, alignment: .center)
+                        }
                     }
+                    
                     Spacer()
                     ZStack{
                         Image(systemName: "circle")
@@ -109,6 +114,13 @@ struct FrameCreator: View {
                 }
             }
             Spacer()
+            /*
+            Button("Draw Honey"){
+                if (image != nil){
+                    //Navigation Link for imageDrawer
+                    NavigationLink(destination: ImageDrawer(backgroundImage: image!, shouldShowImageDrawer: $shouldShowImageDrawer), isActive: $shouldShowImageDrawer){}
+                }
+            }*/
             
             // Save button for saving the frame
             // Currently just sends user back to last screen.

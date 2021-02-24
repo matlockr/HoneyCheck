@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HiveCreator: View {
-    
+    //shares singleton
     @EnvironmentObject var hives:Hives
     
     var hiveIndex: Int
@@ -17,8 +17,11 @@ struct HiveCreator: View {
     @Environment(\.presentationMode) var presentation
         
     @State private var showingAlert = false
+    //contains the unit type name
+    @State private var unitName = ""
     
     var body: some View {
+
             VStack{
                 
                 // Hstack for the showing and getting hive name
@@ -31,6 +34,17 @@ struct HiveCreator: View {
                               text: $hives.hiveList[hiveIndex].hiveName)
                         .padding(.all)
                         
+                }
+                //This is where the units of measurement explanation is placed
+                HStack{
+                    Text("Measurement System:")
+                        .onAppear(perform: {
+                            //this sets the value of unitName to explain what units are being shown
+                            unitName = hives.unitSys(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"))
+                        })
+                        .padding(.horizontal)
+                    Text("\(unitName)")
+                    
                 }
                 
                 Divider()

@@ -20,7 +20,7 @@ struct FrameListRow: View {
         //This sets unitName for the weight of the honey in each frame
         //The area value must be 0
         HStack{}.onAppear(perform: {
-            unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 0)
+            unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 3)
         })
         // Hstack takes existing frane information and formats it
         // into a single UI element for a list

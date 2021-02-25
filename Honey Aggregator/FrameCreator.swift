@@ -32,6 +32,10 @@ struct FrameCreator: View {
     //used to store the unit type for each hive
     @State private var unitName = ""
     
+    @State private var shouldShowImageDrawer = false
+    @State private var honeyPercent: Float = 0.0
+    
+        	
     var body: some View {
         HStack{}.onAppear(perform: {
             //this is the call for the unitName to be parsed
@@ -91,15 +95,18 @@ struct FrameCreator: View {
                 // getting the picture.
                 HStack{
                     Spacer()
-                    if image != nil{
-                        image?
-                            .resizable()
-                            .scaledToFit()
-                    } else {
-                        Image("comb")
-                            .resizable()
-                            .frame(width: 100, height: 100, alignment: .center)
+                    ZStack{
+                        if image != nil{
+                            image?
+                                .resizable()
+                                .scaledToFit()
+                        } else {
+                            Image("comb")
+                                .resizable()
+                                .frame(width: 100, height: 100, alignment: .center)
+                        }
                     }
+                    
                     Spacer()
                     ZStack{
                         Image(systemName: "circle")
@@ -109,16 +116,22 @@ struct FrameCreator: View {
                             .font(.system(size: 40.0))
                     }
                     .onTapGesture {
-                        //dis line is cancir
-                        //recommend removing commented out line
-                        //self.showingImagePicker = true
                         //will allow Action Sheet to be toggled on
                         self.shouldPresentActionSheet = true
                     }
                     Spacer()
                 }
-            }
+                
+            }.disabled(false)
             Spacer()
+            
+            NavigationLink(destination: ImageDrawer(backgroundImage: image ?? nil, honeyPercent: $honeyPercent), isActive: self.$shouldShowImageDrawer){}
+            
+            Button("Draw Details"){
+                if (widthFieldText != "" && heightFieldText != ""){
+                    shouldShowImageDrawer = true
+                }
+            }
             
             // Save button for saving the frame
             // Currently just sends user back to last screen.
@@ -137,7 +150,7 @@ struct FrameCreator: View {
                 // Get the frame square inches
                 let frameSquareInches = hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex) * hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)
                 
-                hives.setHoneyTotal(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, honeyTotal: Float.random(in: (0.1)...1) * frameSquareInches * 0.0149)
+                hives.setHoneyTotal(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, honeyTotal: honeyPercent * frameSquareInches * 0.017)
                 hives.setBeeBoxHoney(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)
                 hives.save()
             }.padding()
@@ -173,7 +186,10 @@ struct FrameCreator: View {
             //This creates a "Cancel" button
             ActionSheet.Button.cancel()])
         }
-        .onAppear{convertImageFromData()}
+        .onAppear{
+            convertImageFromData()
+            shouldShowImageDrawer = false
+        }
         .navigationBarTitle("Frame Creator")
         
     }

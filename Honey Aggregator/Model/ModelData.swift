@@ -187,13 +187,75 @@ class Hives: ObservableObject{
         }
         hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
-    //this func converts between unit values ie: oz to lbs, lbs to kg
-    func convertUnitType(unit: Int, hiveIndex: Int){
-        
+    //This function takes a metric unit and converts it to another metric unit
+    //You specify which conversion takes place with UserDefaults.standard.integer(forKey: "unitTypeGlobal")
+    func convertUnitMetro(unit: Int, value: Float, area: Int)->Float{
+        var send: Float
+        send = 0.0
+        switch area {
+        //This should only be used for the FrameListRow
+        //This converts kg to grams
+        case 0:
+            send = value * 1000
+        default:
+            //This should only be used inside the FrameCreator
+            switch unit {
+            //This turns meters to mm
+            case 1:
+                send = value * 1000
+            //This turns meters to cm
+            case 2:
+                send = value * 100
+            //This turns meters to dm
+            case 3:
+                send = value * 10
+            //This returns meters
+            default:
+                send = value
+            }
+        }
+        return send
     }
-    //this func saves the data to the metric unit variable
-    func convertUnitValue(hiveIndex: Int){
-        
+    //This mostly just transforms lbs to oz but incase I made any logical mistakes to make sure that inches get returned
+    func convertUnitImp(unit: Int, value: Float, area: Int)->Float{
+        var send: Float
+        send = 0.0
+        switch area {
+        case 0:
+            send = value * 16
+        default:
+            send = value
+        }
+        return send
+    }
+    //this func converts between unit values ie: oz to lbs, lbs to kg
+    //unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area 0 should be used in FrameListRow any other value will cause the
+    func convertUnitType(unit: Int, value: Float, area: Int)->Float{
+        var send: Float
+        send = 0.0
+        switch unit {
+        case 0:
+            send = convertUnitImp(unit: unit, value: value, area: area)
+        default:
+            send = convertUnitMetro(unit: unit, value: value, area: area)
+        }
+        return send
+    }
+    //this func takes the value of the honeyTotal var or a length dimension and saves the data to the metric unit variable
+    //You must specify whether you are sending weight or length data.  Use scale: 0 for length
+    func convertUnitValue(value: Float, scale: Int)->Float{
+        var send: Float
+        var kg: Float
+        var m: Float
+        kg = (0.453592)
+        m = (0.0254)
+        switch scale {
+        case 0:
+            send = value * m
+        default:
+            send = value * kg
+        }
+        return send
     }
     //this sets the unit name for the frame previews
     func nameUnitFramePreview(unit: Int)->String{

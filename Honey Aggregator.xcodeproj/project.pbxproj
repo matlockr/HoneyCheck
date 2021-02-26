@@ -13,6 +13,7 @@
 		2B8C69F925CCC5030050F0BB /* FrameCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C69F625CCC5030050F0BB /* FrameCreator.swift */; };
 		2B8C69FA25CCC5030050F0BB /* HiveCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C69F725CCC5030050F0BB /* HiveCreator.swift */; };
 		2B93EA8125D355B100601273 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B93EA8025D355B100601273 /* ImagePicker.swift */; };
+		2BC7D67C25E86EB400485D79 /* SettingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC7D67B25E86EB400485D79 /* SettingMenu.swift */; };
 		2BC81BEE25E57DB9003EE8C0 /* ImageDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC81BED25E57DB9003EE8C0 /* ImageDrawer.swift */; };
 		2BC81BF425E57FBC003EE8C0 /* SwiftImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2BC81BF325E57FBC003EE8C0 /* SwiftImage */; };
 		AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */; };
@@ -54,6 +55,7 @@
 		2B8C69F625CCC5030050F0BB /* FrameCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameCreator.swift; path = "Honey Aggregator/FrameCreator.swift"; sourceTree = SOURCE_ROOT; };
 		2B8C69F725CCC5030050F0BB /* HiveCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HiveCreator.swift; path = "Honey Aggregator/HiveCreator.swift"; sourceTree = SOURCE_ROOT; };
 		2B93EA8025D355B100601273 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		2BC7D67B25E86EB400485D79 /* SettingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMenu.swift; sourceTree = "<group>"; };
 		2BC81BED25E57DB9003EE8C0 /* ImageDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDrawer.swift; sourceTree = "<group>"; };
 		AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honey Aggregator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorApp.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				2B64F22625CDDAF2005B649B /* BeeBoxCreator.swift */,
 				2B64F22B25CDDCAB005B649B /* FrameListRow.swift */,
 				2BC81BED25E57DB9003EE8C0 /* ImageDrawer.swift */,
+				2BC7D67B25E86EB400485D79 /* SettingMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				2B8C69FA25CCC5030050F0BB /* HiveCreator.swift in Sources */,
 				AA09ACE525C32AF000351DA3 /* Hive.swift in Sources */,
 				2B64F22725CDDAF2005B649B /* BeeBoxCreator.swift in Sources */,
+				2BC7D67C25E86EB400485D79 /* SettingMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

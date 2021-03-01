@@ -125,12 +125,14 @@ struct FrameCreator: View {
             }.disabled(false)
             Spacer()
             
-            NavigationLink(destination: ImageDrawer(backgroundImage: image ?? nil, honeyPercent: $honeyPercent), isActive: self.$shouldShowImageDrawer){}
+            if let picdata = hives.getPictureData(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex){
+                NavigationLink(destination: ImageDrawer(backgroundImage: UIImage(data: picdata) ?? nil, honeyPercent: $honeyPercent), isActive: self.$shouldShowImageDrawer){}
+            }
+            
+            
             
             Button("Draw Details"){
-                if (widthFieldText != "" && heightFieldText != ""){
-                    shouldShowImageDrawer = true
-                }
+                shouldShowImageDrawer = true
             }
             
             // Save button for saving the frame

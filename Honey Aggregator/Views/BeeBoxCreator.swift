@@ -45,6 +45,7 @@ struct BeeBoxCreator: View {
                         
                     }.onDelete(perform: { indexSet in
                         hives.hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.remove(atOffsets: indexSet)
+                        hives.setBeeBoxHoney(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)
                         hives.save()
                     })
                 }

@@ -154,6 +154,7 @@ struct FrameCreator: View {
                 
                 hives.setHoneyTotal(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, honeyTotal: honeyPercent * frameSquareInches * 0.017)
                 hives.setBeeBoxHoney(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)
+                hives.setHiveHoneyTotal(hiveIndex: hiveIndex)
                 hives.save()
             }.padding()
             .foregroundColor(.orange)

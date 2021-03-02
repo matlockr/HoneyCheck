@@ -62,6 +62,7 @@ struct HiveCreator: View {
                         }
                     }.onDelete(perform: { indexSet in
                         hives.hiveList[hiveIndex].beeBoxes.remove(atOffsets: indexSet)
+                        hives.setHiveHoneyTotal(hiveIndex: hiveIndex)
                         hives.save()
                     })
                 }

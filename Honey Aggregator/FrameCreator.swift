@@ -31,6 +31,7 @@ struct FrameCreator: View {
     @State private var shouldPresentActionSheet = false
     //used to store the unit type for each hive
     @State private var unitName = ""
+    //This stores the user's frame dimensions currently supports one frame type per user
     @State private var frameDims = UserDefaults.standard.integer(forKey: "globalFrameFormat")
     @State private var shouldShowImageDrawer = false
     @State private var honeyPercent: Float = 0.0
@@ -42,9 +43,11 @@ struct FrameCreator: View {
             unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 1)
             switch UserDefaults.standard.integer(forKey: "unitTypeGlobal"){
             case 0:
+                //this returns inches for frame dimensions
                 self.heightFieldText = String(hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex))
                 self.widthFieldText = String(hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex))
             default:
+                //this returns metric values for frame dimensions
                 self.heightFieldText = String(hives.convertUnitValue(value: hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex), direc: "in2\(unitName)"))
                 self.widthFieldText = String(hives.convertUnitValue(value: hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex), direc: "in2\(unitName)"))
             }
@@ -59,6 +62,7 @@ struct FrameCreator: View {
                 Form{
                     Picker("Available Frame Formats", selection: $frameDims){
                         Group{
+                            //These are frame standards
                             Text("American Langstroth").tag(0)
                             Text("Californian Langstroth").tag(1)
                             Text("Australian Langstroth").tag(2)
@@ -80,11 +84,13 @@ struct FrameCreator: View {
                             Text("Custom").tag(16)
                         }
                     }
+                    //checks if user selected a new frame format
                     .onChange(of: self.frameDims){_ in
                         if(self.frameDims < 16){
                             UserDefaults.standard.set(self.frameDims, forKey: "globalFrameFormat")
                             hives.frameIndicator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, value: UserDefaults.standard.integer(forKey: "globalFrameFormat"))
                         }
+                        //this handles custom formats
                         else{
                             UserDefaults.standard.set(self.frameDims, forKey: "globalFrameFormat")
                             if(unitName != "in"){
@@ -108,9 +114,11 @@ struct FrameCreator: View {
                         .padding()
                         
                     TextField("\(String(hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $heightFieldText, onEditingChanged: { didBegin in
+                        //onEditingChanged checks to see if edits are being performed
                         if (didBegin){
                             //print("\(heightFieldText)")
                         }
+                        //This is where custom dimensions are saved
                         else{
                             print("\(heightFieldText)")
                             if(self.frameDims > 15){
@@ -136,9 +144,11 @@ struct FrameCreator: View {
                         .padding()
                     
                     TextField("\(String(hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $widthFieldText, onEditingChanged: { didBegin in
+                              //onEditingChanged checks to see if edits are being performed
                               if (didBegin){
                                   //print("\(widthFieldText)")
                               }
+                              //This is where custom dimensions are saved
                               else{
                                   print("\(widthFieldText)")
                                   if(self.frameDims > 15){
@@ -220,13 +230,10 @@ struct FrameCreator: View {
                         hives.setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: Float(heightFieldText) ?? 0.0)
                         hives.setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: Float(widthFieldText) ?? 0.0)
                     default:
+                        //this saves 
                         hives.setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: hives.convertUnitValue(value: Float(heightFieldText) ?? 0.0, direc: "\(unitName)2in"))
                         hives.setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: hives.convertUnitValue(value: Float(widthFieldText) ?? 0.0, direc: "\(unitName)2in"))
                     }
-                    /*
-                    hives.setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: Float(heightFieldText) ?? 0.0)
-                    hives.setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: Float(widthFieldText) ?? 0.0)
- */
                 }
                 
                 if (inputImage != nil){

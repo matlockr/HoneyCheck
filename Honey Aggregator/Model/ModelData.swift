@@ -14,6 +14,7 @@ class Hives: ObservableObject{
     @Published var hiveList = [Hive]()
     // Variable to reset file for testing purposes
     let fileReset = false
+    //this holds the frame standards in inches
     var dimDict = [
         (height: Float(18.2677264), width: Float(16.3779616)),
         (height: Float(18.503947), width: Float(16.2598513)),
@@ -32,6 +33,7 @@ class Hives: ObservableObject{
         (height: Float(18.7795377), width: Float(15.9448905)),
         (height: Float(18.2677264), width: Float(20.0000108))
     ]
+    //this holds the conversion values between units
     var convDict = [
         (name: "in2mm", rate: Float(25.4)),
         (name: "in2cm", rate: Float(2.54)),
@@ -45,6 +47,7 @@ class Hives: ObservableObject{
         (name: "m2in", rate: Float(39.3701)),
         (name: "lb2oz", rate: Float(16)),
         (name: "lb2kg", rate: Float(0.453592)),
+        (name: "lb2g", rate: Float(453.592)),
         (name: "kg2gram", rate: Float(1000))
     ]
     init(){
@@ -112,7 +115,7 @@ class Hives: ObservableObject{
     
     // HiveList Functions
     func addHive(){
-        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, honeyTotalKG: 0.0,  beeBoxes: [])
+        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
         hiveList.append(newHive)
     }
     
@@ -138,7 +141,7 @@ class Hives: ObservableObject{
     }
     
     func addBeeBox(hiveIndex: Int){
-        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, honeyTotalKG: 0.0, frames: [])
+        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, frames: [])
         hiveList[hiveIndex].beeBoxes.append(newBeeBox)
     }
     
@@ -156,7 +159,7 @@ class Hives: ObservableObject{
     }
     
     func addFrame(hiveIndex: Int, beeBoxIndex: Int){
-        let newFrame = Frame(height: 0.0, heightMet: 0.0, width: 0.0, widthMet: 0.0, honeyAmount: 0.0, honeyAmountMet: 0.0)
+        let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
     }
     
@@ -171,7 +174,7 @@ class Hives: ObservableObject{
     // Frame Functions
     func setFrameHeight(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, height: Float){
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = height
-        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].heightMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height, direc: "in2m")
+        //hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].heightMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height, direc: "in2m")
     }
     //returns the height of a frame
     func getFrameHeight(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
@@ -180,7 +183,7 @@ class Hives: ObservableObject{
     
     func setFrameWidth(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, width: Float){
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = width
-        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].widthMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width, direc: "in2m")
+        //hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].widthMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width, direc: "in2m")
     }
     
     func getFrameWidth(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
@@ -189,7 +192,7 @@ class Hives: ObservableObject{
     
     func setHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, honeyTotal: Float){
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount = honeyTotal
-        hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmountMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount, direc: "lb2kg")
+        //hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmountMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount, direc: "lb2kg")
     }
     
     func getHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
@@ -226,9 +229,11 @@ class Hives: ObservableObject{
     func convertUnitValue(value: Float, direc: String)->Float{
         var send: Float
         send = 0.0
+        //this searches the dictionary for the conversion rate
         let found = convDict.firstIndex(where: {$0.name == direc})
         if ((found) != nil){
             let rate = convDict[found!].rate
+            //this converts the unit values
             send = value * rate
         }
         return send

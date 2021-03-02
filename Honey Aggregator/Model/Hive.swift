@@ -14,7 +14,7 @@ struct Hive: Hashable, Codable, Identifiable{
     var hiveName: String
     var honeyTotal: Float
     //contains metric data for the weight of the honey
-    var honeyTotalKG: Float
+    //var honeyTotalKG: Float
     var beeBoxes = [BeeBox]()
     
     func getPictureData() -> Data?{

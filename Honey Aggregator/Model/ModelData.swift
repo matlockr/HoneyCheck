@@ -14,7 +14,42 @@ class Hives: ObservableObject{
     @Published var hiveList = [Hive]()
     // Variable to reset file for testing purposes
     let fileReset = false
-    
+    //this holds the frame standards in inches
+    var dimDict = [
+        (height: Float(18.2677264), width: Float(16.3779616)),
+        (height: Float(18.503947), width: Float(16.2598513)),
+        (height: Float(18.2677264), width: Float(15.9842606)),
+        (height: Float(18.4645769), width: Float(16.4567018)),
+        (height: Float(18.2677264), width: Float(16.2598513)),
+        (height: Float(18.2677264), width: Float(14.8031576)),
+        (height: Float(18.2677264), width: Float(18.4252068)),
+        (height: Float(18.2677264), width: Float(15.9842606)),
+        (height: Float(18.3070965), width: Float(15.9448905)),
+        (height: Float(18.3070965), width: Float(13.8976453)),
+        (height: Float(17.7952852), width: Float(19.9212706)),
+        (height: Float(18.2283563), width: Float(17.716545)),
+        (height: Float(18.3070965), width: Float(20.0000108)),
+        (height: Float(18.3070965), width: Float(16.4173317)),
+        (height: Float(18.7795377), width: Float(15.9448905)),
+        (height: Float(18.2677264), width: Float(20.0000108))
+    ]
+    //this holds the conversion values between units
+    var convDict = [
+        (name: "in2mm", rate: Float(25.4)),
+        (name: "in2cm", rate: Float(2.54)),
+        (name: "in2dm", rate: Float(0.254)),
+        //where m is meter
+        (name: "in2m", rate: Float(0.0254)),
+        (name: "mm2in", rate: Float(0.0393701)),
+        (name: "cm2in", rate: Float(0.393701)),
+        (name: "dm2in", rate: Float(3.93701)),
+        //where m is meter
+        (name: "m2in", rate: Float(39.3701)),
+        (name: "lb2oz", rate: Float(16)),
+        (name: "lb2kg", rate: Float(0.453592)),
+        (name: "lb2g", rate: Float(453.592)),
+        (name: "kg2gram", rate: Float(1000))
+    ]
     init(){
         
         // Get directory path for where to save files
@@ -80,7 +115,7 @@ class Hives: ObservableObject{
     
     // HiveList Functions
     func addHive(){
-        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, honeyTotalKG: 0.0,  beeBoxes: [])
+        let newHive = Hive(hiveName: "None", honeyTotal: 0.0, beeBoxes: [])
         hiveList.append(newHive)
     }
     
@@ -106,7 +141,7 @@ class Hives: ObservableObject{
     }
     
     func addBeeBox(hiveIndex: Int){
-        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, honeyTotalKG: 0.0, frames: [])
+        let newBeeBox = BeeBox(name: "None", honeyTotal: 0.0, frames: [])
         hiveList[hiveIndex].beeBoxes.append(newBeeBox)
     }
     
@@ -124,7 +159,7 @@ class Hives: ObservableObject{
     }
     
     func addFrame(hiveIndex: Int, beeBoxIndex: Int){
-        let newFrame = Frame(height: 0.0, heightMet: 0.0, width: 0.0, widthMet: 0.0, honeyAmount: 0.0, honeyAmountMet: 0.0)
+        let newFrame = Frame(height: 0.0, width: 0.0, honeyAmount: 0.0)
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames.append(newFrame)
     }
     
@@ -139,14 +174,16 @@ class Hives: ObservableObject{
     // Frame Functions
     func setFrameHeight(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, height: Float){
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height = height
+        //hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].heightMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height, direc: "in2m")
     }
-    
+    //returns the height of a frame
     func getFrameHeight(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
         return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].height
     }
     
     func setFrameWidth(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, width: Float){
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width = width
+        //hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].widthMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].width, direc: "in2m")
     }
     
     func getFrameWidth(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
@@ -155,6 +192,7 @@ class Hives: ObservableObject{
     
     func setHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, honeyTotal: Float){
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount = honeyTotal
+        //hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmountMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount, direc: "lb2kg")
     }
     
     func getHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
@@ -168,7 +206,6 @@ class Hives: ObservableObject{
     func getPictureData(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Data?{
         return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData
     }
-    
     // Honey Calculation Functions
     func setBeeBoxHoney(hiveIndex: Int, beeBoxIndex: Int){
         var frameHoneyTotal: Float = 0.0
@@ -187,13 +224,19 @@ class Hives: ObservableObject{
         }
         hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
-    //this func converts between unit values ie: oz to lbs, lbs to kg
-    func convertUnitType(unit: Int, hiveIndex: Int){
-        
-    }
-    //this func saves the data to the metric unit variable
-    func convertUnitValue(hiveIndex: Int){
-        
+    //This func can convert a value
+    //Direc indicates what the unit being converted is i.e. "in2mm"
+    func convertUnitValue(value: Float, direc: String)->Float{
+        var send: Float
+        send = 0.0
+        //this searches the dictionary for the conversion rate
+        let found = convDict.firstIndex(where: {$0.name == direc})
+        if ((found) != nil){
+            let rate = convDict[found!].rate
+            //this converts the unit values
+            send = value * rate
+        }
+        return send
     }
     //this sets the unit name for the frame previews
     func nameUnitFramePreview(unit: Int)->String{
@@ -259,6 +302,10 @@ class Hives: ObservableObject{
             send = "Metric: mm/g/KG"
         }
         return send
+    }
+    func frameIndicator(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, value: Int){
+        setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: dimDict[value].height)
+        setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: dimDict[value].width)
     }
 }
 //Unassigned Topic

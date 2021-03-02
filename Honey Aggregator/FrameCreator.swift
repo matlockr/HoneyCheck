@@ -225,12 +225,13 @@ struct FrameCreator: View {
             // Currently just sends user back to last screen.
             Button("Save Frame") {
                 if (widthFieldText != "" && heightFieldText != ""){
+                    //This 
                     switch UserDefaults.standard.integer(forKey: "unitTypeGlobal") {
                     case 0:
                         hives.setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: Float(heightFieldText) ?? 0.0)
                         hives.setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: Float(widthFieldText) ?? 0.0)
                     default:
-                        //this saves 
+                        //this saves custom metric values as inches
                         hives.setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: hives.convertUnitValue(value: Float(heightFieldText) ?? 0.0, direc: "\(unitName)2in"))
                         hives.setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: hives.convertUnitValue(value: Float(widthFieldText) ?? 0.0, direc: "\(unitName)2in"))
                     }

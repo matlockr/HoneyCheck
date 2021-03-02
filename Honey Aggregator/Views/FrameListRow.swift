@@ -35,10 +35,12 @@ struct FrameListRow: View {
                     .frame(width: 75, height: 75, alignment: .center)
             }
             //This converts the weights displayed based on the UserDefaults unitTypeGlobal
+            //This returns oz
             if(UserDefaults.standard.integer(forKey: "userTypeGlobal") == 0){
                 Text("Honey: \(hives.convertUnitValue(value: frame.honeyAmount, direc: "lb2oz"), specifier: "%.2f") \(unitName)")
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
+            //This returns grams
             else{
                 Text("Honey: \(hives.convertUnitValue(value: frame.honeyAmount, direc: "lb2g"), specifier: "%.2f") \(unitName)")
                     .frame(maxWidth: .infinity, alignment: .leading)

@@ -37,10 +37,12 @@ struct BoxListRow: View {
                 Text("Box Name: \(box.name)")
                     .frame(maxWidth: .infinity, alignment: .leading)
                 //This returns the weight in lb or kg based on UserDefaults unitTypeGlobal
+                //This returns lb
                 if(UserDefaults.standard.integer(forKey: "unitTypeGlobal") == 0){
                     Text("Honey: \(box.honeyTotal, specifier: "%.2f") \(unitName)")
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                //This returns kg
                 else{
                     Text("Honey: \(hives.convertUnitValue(value: box.honeyTotal, direc: "lb2kg"), specifier: "%.2f") \(unitName)")
                         .frame(maxWidth: .infinity, alignment: .leading)

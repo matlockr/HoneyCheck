@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HiveListUI: View {
     
+    // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
     var body: some View {
@@ -30,15 +31,8 @@ struct HiveListUI: View {
                 }
                 
                 Spacer()
-                
                 Divider()
             }
             .navigationBarTitle("Hives")
-    }
-}
-
-struct HiveListUI_Previews: PreviewProvider {
-    static var previews: some View {
-        HiveListUI().environmentObject(Hives())
     }
 }

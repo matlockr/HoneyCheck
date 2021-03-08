@@ -8,12 +8,17 @@
 import Foundation
 
 class Hives: ObservableObject{
-
+    
+    // File name of where the hive data is saved
     let fileName = "hives.json"
     let dir: URL
+    
+    // Setup for the singleton object for the hive list
     @Published var hiveList = [Hive]()
+    
     // Variable to reset file for testing purposes
     let fileReset = false
+    
     //this holds the frame standards in inches
     var dimDict = [
         (height: Float(18.2677264), width: Float(16.3779616)),
@@ -33,6 +38,7 @@ class Hives: ObservableObject{
         (height: Float(18.7795377), width: Float(15.9448905)),
         (height: Float(18.2677264), width: Float(20.0000108))
     ]
+    
     //this holds the conversion values between units
     var convDict = [
         (name: "in2mm", rate: Float(25.4)),
@@ -50,15 +56,16 @@ class Hives: ObservableObject{
         (name: "lb2g", rate: Float(453.592)),
         (name: "kg2gram", rate: Float(1000))
     ]
+    
     init(){
-        
         // Get directory path for where to save files
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         dir = paths[0]
+    
         let fileURL = dir.appendingPathComponent(fileName)
+        
         // Test read to see if file is empty, if so then add a base to json file
         do {
-            
             let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
             
             if fileTxt == ""{
@@ -68,14 +75,12 @@ class Hives: ObservableObject{
             }
             
         } catch is CocoaError{ // This error is for when there is no existing file
-            
             // Write to the file for the first time and give it the base JSON structure
             do {
                 try "[]".write(to: fileURL, atomically: false, encoding: .utf8)
             } catch {
                 fatalError("Couldn't write to \(fileName) \(error)\n\n\(type(of: error))\n\n")
             }
-            
         } catch { // Any other error should stop the app
             fatalError("Couldn't read \(fileName) \(error)\n\n\(type(of: error))\n\n")
         }
@@ -192,7 +197,6 @@ class Hives: ObservableObject{
     
     func setHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, honeyTotal: Float){
         hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount = honeyTotal
-        //hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmountMet = convertUnitValue(value: hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].honeyAmount, direc: "lb2kg")
     }
     
     func getHoneyTotal(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Float{
@@ -206,6 +210,7 @@ class Hives: ObservableObject{
     func getPictureData(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int) -> Data?{
         return hiveList[hiveIndex].beeBoxes[beeBoxIndex].frames[frameIndex].pictureData
     }
+    
     // Honey Calculation Functions
     func setBeeBoxHoney(hiveIndex: Int, beeBoxIndex: Int){
         var frameHoneyTotal: Float = 0.0
@@ -224,20 +229,24 @@ class Hives: ObservableObject{
         }
         hiveList[hiveIndex].honeyTotal = boxesHoneyTotal
     }
+    
     //This func can convert a value
     //Direc indicates what the unit being converted is i.e. "in2mm"
     func convertUnitValue(value: Float, direc: String)->Float{
         var send: Float
         send = 0.0
+    
         //this searches the dictionary for the conversion rate
         let found = convDict.firstIndex(where: {$0.name == direc})
         if ((found) != nil){
             let rate = convDict[found!].rate
+        
             //this converts the unit values
             send = value * rate
         }
         return send
     }
+    
     //this sets the unit name for the frame previews
     func nameUnitFramePreview(unit: Int)->String{
         var send: String
@@ -249,6 +258,7 @@ class Hives: ObservableObject{
         }
         return send
     }
+    
     //this sets the unit name for the frame dimensions
     func nameUnitFrameActual(unit: Int)->String{
         var send: String
@@ -266,13 +276,16 @@ class Hives: ObservableObject{
         }
         return send
     }
+    
     //this function sets the string that is the unit name
     func setUnitReadout(unit: Int, area: Int)->String{
         var send: String
         switch area{
+    
         //special case that is for frame weight
             case 0:
                 send = nameUnitFramePreview(unit: unit)
+        
         //special case that is for frame dimensions
             case 1:
                 send = nameUnitFrameActual(unit: unit)
@@ -281,11 +294,12 @@ class Hives: ObservableObject{
                 case 0:
                     send = "lb"
                 default:
-                    send =  "KG"
+                    send =  "kg"
             }
         }
         return send
     }
+    
     //this func sends the unit formatting
     func unitSys(unit: Int)->String{
         var send: String
@@ -293,16 +307,17 @@ class Hives: ObservableObject{
         case 0:
             send = "Imperial: in/oz/lb"
         case 2:
-            send = "Metric: cm/g/KG"
+            send = "Metric: cm/g/kg"
         case 3:
-            send = "Metric: dm/g/KG"
+            send = "Metric: dm/g/kg"
         case 4:
-            send = "Metric: m/g/KG"
+            send = "Metric: m/g/kg"
         default:
-            send = "Metric: mm/g/KG"
+            send = "Metric: mm/g/kg"
         }
         return send
     }
+    
     func frameIndicator(hiveIndex: Int, beeBoxIndex: Int, frameIndex: Int, value: Int){
         setFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, height: dimDict[value].height)
         setFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, width: dimDict[value].width)

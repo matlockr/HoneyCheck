@@ -11,17 +11,23 @@ struct FrameListRow: View {
     
     // Create a Frame object
     var frame: Frame
+    
     @State private var image: Image?
+    
     //used in this file to call singleton level functions
     @EnvironmentObject var hives:Hives
+    
     //used to store the unit type name
     @State private var unitName = ""
+    
     var body: some View {
+    
         //This sets unitName for the weight of the honey in each frame
         //The area value must be 0
         HStack{}.onAppear(perform: {
-            unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 3)
+            unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 0)
         })
+        
         // Hstack takes existing frane information and formats it
         // into a single UI element for a list
         HStack{
@@ -34,6 +40,7 @@ struct FrameListRow: View {
                     .resizable()
                     .frame(width: 75, height: 75, alignment: .center)
             }
+        
             //This converts the weights displayed based on the UserDefaults unitTypeGlobal
             //This returns oz
             if(UserDefaults.standard.integer(forKey: "userTypeGlobal") == 0){
@@ -45,19 +52,16 @@ struct FrameListRow: View {
                 Text("Honey: \(hives.convertUnitValue(value: frame.honeyAmount, direc: "lb2g"), specifier: "%.2f") \(unitName)")
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+            
             Spacer()
         }.onAppear{convertImageFromData()}
     }
     
+    // Takes the Data type variable in the Frame object and
+    // converts it into a Swift Image type for placing in View
     func convertImageFromData(){
         if let picData = frame.getPictureData(){
             image = Image(uiImage: UIImage(data: picData)!)
         }
-    }
-}
-
-struct FrameListRow_Previews: PreviewProvider {
-    static var previews: some View {
-        FrameListRow(frame: Hives().hiveList[0].beeBoxes[0].frames[0])
     }
 }

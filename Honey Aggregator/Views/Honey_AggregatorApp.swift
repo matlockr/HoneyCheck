@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct Honey_AggregatorApp: App {
     
+    // Singleton setup for Hives Class object
     let hives = Hives()
     
     var body: some Scene {

@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // Singleton object that holds hives list
     @EnvironmentObject var hives:Hives
     
+    // State variables for current view
     @State private var isActive: Bool = false;
     @State private var navLinkHiveIndex = -1;
 
@@ -49,6 +51,7 @@ struct ContentView: View {
                     NavigationLink(destination: HiveCreator(hiveIndex: navLinkHiveIndex).environmentObject(hives), isActive: self.$isActive){
                     }
                     
+                    // Button for creating a new hive
                     Button("New Hive") {
                         hives.addHive()
                         navLinkHiveIndex = hives.hiveList.count - 1
@@ -67,6 +70,8 @@ struct ContentView: View {
                 // Modifiers for NavigationView
                 .navigationBarTitle("", displayMode: .inline)
                 .foregroundColor(.orange)
+                
+                // Toolbar for navigating to the setting menu
                 .toolbar{
                     ToolbarItem(){
                         NavigationLink(destination: SettingMenu()){
@@ -75,15 +80,9 @@ struct ContentView: View {
                         }.buttonStyle(PlainButtonStyle())
                     }
                 }
+                
                 Spacer()
             }
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environmentObject(Hives())
-            
     }
 }

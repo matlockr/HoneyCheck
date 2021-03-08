@@ -4,6 +4,7 @@
 //
 //  This file handles that basic version of the image processing using the
 //  the PencilKit and SwiftImage Frameworks
+//  The PencilKit setup was done with help by this tutorial: https://www.raywenderlich.com/12198216-drawing-with-pencilkit-getting-started
 
 import SwiftUI
 import PencilKit
@@ -48,7 +49,14 @@ struct ImageDrawer: View {
         NavigationView{
             
             VStack{
+                
+                // Sets the instruction text UI for providing user information
+                Text(instructionText)
+                    .padding()
+                    .font(.title2)
+                
                 if honeyDrawingState == false{
+                    
                     // Stepper for the width property
                     Stepper("Width Crop: ", onIncrement: {
                         if widthCrop < 100{
@@ -60,7 +68,8 @@ struct ImageDrawer: View {
                             widthCrop -= 1
                             cropBoxWidth = originalBoxWidth * CGFloat(100 - widthCrop * 2) / 100
                         }
-                    })
+                    }).padding()
+                    
                     // Stepper for the height property
                     Stepper("Height Crop: ", onIncrement: {
                         if heightCrop < 100{
@@ -72,12 +81,8 @@ struct ImageDrawer: View {
                             heightCrop -= 1
                             cropBoxHeight = originalBoxHeight * CGFloat(100 - heightCrop * 2) / 100
                         }
-                    })
+                    }).padding()
                 }
-                // Sets the instruction text UI for providing user information
-                Text(instructionText)
-                    .padding()
-                    .font(.title2)
                 
                 Spacer()
                 
@@ -88,10 +93,12 @@ struct ImageDrawer: View {
                             .resizable()
                             .frame(width: currentbackgroundImage?.size.width, height: currentbackgroundImage?.size.height, alignment: .center)
                     }
+                    
                     if honeyDrawingState {
                         DrawingView(canvas: $canvas)
                             .frame(width: currentbackgroundImage?.size.width, height: currentbackgroundImage?.size.height, alignment: .center)
                     }
+                    
                     if !honeyDrawingState{
                         Rectangle()
                             .foregroundColor(Color.clear)
@@ -101,7 +108,6 @@ struct ImageDrawer: View {
                 }
                 
                 Spacer()
-                
                 Divider()
                 
                 HStack{
@@ -164,6 +170,7 @@ struct ImageDrawer: View {
             }
         }
         .onAppear{
+            
             // Since the image is too large, we need to resize the image and then make a copy of it for when we are cropping
             if backgroundImage != nil{
                 originalImage = backgroundImage
@@ -200,13 +207,6 @@ struct ImageDrawer: View {
         }
     }
 }
-
-struct ImageDrawer_Previews: PreviewProvider {
-    static var previews: some View {
-        ImageDrawer(backgroundImage: nil, honeyPercent: .constant(0.0))
-    }
-}
-
 
 // This struct if for handling the canvas view and its properties
 struct DrawingView: UIViewRepresentable {

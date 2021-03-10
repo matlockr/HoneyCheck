@@ -9,23 +9,23 @@ import SwiftUI
 
 struct HiveCreator: View {
     
-    //shares singleton
+    // Shared singleton of main hives list
     @EnvironmentObject var hives:Hives
     
+    // Index of where in the hives list the information should
+    // be coming from.
     var hiveIndex: Int
     
     // Enviorment variable for handeling navigation
     @Environment(\.presentationMode) var presentation
-        
-    @State private var showingAlert = false
-    
-    //contains the unit type name
+            
+    // Contains the unit type name
     @State private var unitName = ""
     
     var body: some View {
     
         VStack{
-            // Hstack for the showing and getting hive name
+            // Hstack for the showing and editing the hive name
             HStack{
                 Text("Hive Name:")
                     .padding()
@@ -47,7 +47,8 @@ struct HiveCreator: View {
             List{
                 ForEach(hives.hiveList[hiveIndex].beeBoxes) { box in
                     NavigationLink(destination: BeeBoxCreator(hiveIndex: hiveIndex, beeBoxIndex: hives.getHiveBeeBoxes(hiveIndex: hiveIndex).firstIndex(of: box)!).environmentObject(hives)){
-                    
+                        
+                        // Displays the subview within this current view
                         BoxListRow(box: box)
                     }
                 }.onDelete(perform: { indexSet in

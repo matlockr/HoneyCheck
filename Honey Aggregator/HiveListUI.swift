@@ -2,7 +2,7 @@
 //  HiveListUI.swift
 //  Honey Aggregator
 //
-//  Screen for showing list of saved hives
+//  Screen for showing list of hives
 //
 
 import SwiftUI

@@ -12,18 +12,19 @@ struct FrameListRow: View {
     // Create a Frame object
     var frame: Frame
     
+    // Used for the image icon on the frame
     @State private var image: Image?
     
-    //used in this file to call singleton level functions
+    // Used in this file to call singleton level functions
     @EnvironmentObject var hives:Hives
     
-    //used to store the unit type name
+    // Used to store the unit type name
     @State private var unitName = ""
     
     var body: some View {
     
-        //This sets unitName for the weight of the honey in each frame
-        //The area value must be 0
+        // This sets unitName for the weight of the honey in each frame
+        // The area value must be 0
         HStack{}.onAppear(perform: {
             unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 0)
         })
@@ -41,13 +42,13 @@ struct FrameListRow: View {
                     .frame(width: 75, height: 75, alignment: .center)
             }
         
-            //This converts the weights displayed based on the UserDefaults unitTypeGlobal
-            //This returns oz
+            // This converts the weights displayed based on the UserDefaults unitTypeGlobal
+            // This returns oz
             if(UserDefaults.standard.integer(forKey: "userTypeGlobal") == 0){
                 Text("Honey: \(hives.convertUnitValue(value: frame.honeyAmount, direc: "lb2oz"), specifier: "%.2f") \(unitName)")
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
-            //This returns grams
+            // This returns grams
             else{
                 Text("Honey: \(hives.convertUnitValue(value: frame.honeyAmount, direc: "lb2g"), specifier: "%.2f") \(unitName)")
                     .frame(maxWidth: .infinity, alignment: .leading)

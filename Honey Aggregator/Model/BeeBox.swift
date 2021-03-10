@@ -15,6 +15,7 @@ struct BeeBox: Hashable, Codable, Identifiable{
     var honeyTotal: Float
     var frames = [Frame]()
     
+    // Get the picture data from the first frame
     func getPictureData() -> Data?{
         if !frames.isEmpty{
             return frames.first?.getPictureData()

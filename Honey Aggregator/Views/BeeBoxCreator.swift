@@ -13,13 +13,15 @@ struct BeeBoxCreator: View {
     // list of hives
     @EnvironmentObject var hives:Hives
     
+    // Index of where in the hives list the information should
+    // be coming from.
     var hiveIndex: Int
     var beeBoxIndex: Int
     
     var body: some View {
             
         VStack{
-            // Hstack for the showing and getting hive name
+            // Hstack for the showing and editing the box name
             HStack{
                 Text("BeeBox Name:")
                     .padding()
@@ -38,7 +40,7 @@ struct BeeBoxCreator: View {
             Text("Frames")
                 .font(.title2)
                             
-            // List shows each of the boxes in the hive
+            // List shows each of the frames in the box
             List{
                 ForEach(hives.getBeeBoxFrames(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)) { frame in
                     NavigationLink(destination: FrameCreator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: hives.getBeeBoxFrames(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex).firstIndex(of: frame)!).environmentObject(hives)){
@@ -66,8 +68,7 @@ struct BeeBoxCreator: View {
                 
                 Spacer()
                 
-                // Button that saves the hive to the model data
-                // Currently just saves a empty hive with the name provided above
+                // Button that saves the box to the data file
                 Button("Save"){
                     hives.save()
                 }.foregroundColor(.orange)

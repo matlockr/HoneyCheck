@@ -20,7 +20,7 @@ struct ImageDrawer: View {
     @State private var currentbackgroundImage: UIImage?
     @State private var originalImage: UIImage?
     
-    // connects the prior view's honeyPercent
+    // Connects the prior view's honeyPercent
     @Binding var honeyPercent: Float
     
     // PencilKit canvas object
@@ -55,6 +55,7 @@ struct ImageDrawer: View {
                     .padding()
                     .font(.title2)
                 
+                // Displays the ui elements based on what the current state of the view is
                 if honeyDrawingState == false{
                     
                     // Stepper for the width property
@@ -86,19 +87,22 @@ struct ImageDrawer: View {
                 
                 Spacer()
                 
-                //This ZStack has a bas of the image, next layer is either the Drawing view or the bounding box used for cropping
+                // This ZStack has a base of the image, next layer is either the Drawing view or the bounding box used for cropping
                 ZStack{
+                    // Background image
                     if currentbackgroundImage != nil{
                         Image(uiImage: currentbackgroundImage!)
                             .resizable()
                             .frame(width: currentbackgroundImage?.size.width, height: currentbackgroundImage?.size.height, alignment: .center)
                     }
                     
+                    // Drawing canvas
                     if honeyDrawingState {
                         DrawingView(canvas: $canvas)
                             .frame(width: currentbackgroundImage?.size.width, height: currentbackgroundImage?.size.height, alignment: .center)
                     }
                     
+                    // Cropping box boundries
                     if !honeyDrawingState{
                         Rectangle()
                             .foregroundColor(Color.clear)
@@ -111,11 +115,11 @@ struct ImageDrawer: View {
                 Divider()
                 
                 HStack{
-                    // This button changes it use despending on what state the image proccessing is in. The first state handles the image cropping and second state handles calculating the honey percentage.
+                    // This button changes it actions despending on what state the image proccessing is in. The first state handles the image cropping and second state handles calculating the honey percentage.
                     Button(action: {
                         if honeyDrawingState{
                             
-                            // Get a screenshot of the current view
+                            // Get a screenshot of the current view based on the current layer
                             var image: UIImage?
                             let currentLayer = UIApplication.shared.keyWindow!.layer
                             let currentScale = UIScreen.main.scale
@@ -127,15 +131,15 @@ struct ImageDrawer: View {
 
                             
                             // Convert that screenshot into SwiftImage Image type
-                            let imageTest = SwiftImage.Image<RGBA<UInt8>>(uiImage: image!)
-                            var bluePixels: Int = 0
+                            let swiftImageData = SwiftImage.Image<RGBA<UInt8>>(uiImage: image!)
+                            var honeyPixels: Int = 0
                             
                             // Go through each pixel of imageTest to see if the pixel is same color as drawing color
-                            for x in 0..<imageTest.width{
-                                for y in 0..<imageTest.height{
-                                    let pixel: String = imageTest[x, y].description
+                            for x in 0..<swiftImageData.width{
+                                for y in 0..<swiftImageData.height{
+                                    let pixel: String = swiftImageData[x, y].description
                                     if (pixel == "#0000FFFF"){
-                                        bluePixels += 1
+                                        honeyPixels += 1
                                     }
                                 }
                             }
@@ -144,16 +148,17 @@ struct ImageDrawer: View {
                             let framePixels = Int((currentbackgroundImage?.size.width)! * (currentbackgroundImage?.size.height)!) * 4
                             
                             // Calculate the honey percentage
-                            if framePixels > 0 && bluePixels > 0{
-                                if framePixels > bluePixels{
-                                    honeyPercent = Float(bluePixels) / Float(framePixels)
+                            if framePixels > 0 && honeyPixels > 0{
+                                if framePixels > honeyPixels{
+                                    honeyPercent = Float(honeyPixels) / Float(framePixels)
                                 } else {
                                     honeyPercent = 1.0
                                 }
                             }
                             
-                            // Dismiss the view and return to FrameCreator
+                            // Dismiss the view and return to the FrameCreator view
                             presentationMode.wrappedValue.dismiss()
+                            
                         } else {
                             
                             // If not in honey drawing state then crop the image and change UI elemnts states and properties
@@ -171,7 +176,8 @@ struct ImageDrawer: View {
         }
         .onAppear{
             
-            // Since the image is too large, we need to resize the image and then make a copy of it for when we are cropping
+            // Since the image is too large, we need to resize the
+            // image and then make a copy of it for reference when cropping
             if backgroundImage != nil{
                 originalImage = backgroundImage
                 let image = SwiftImage.Image<RGBA<UInt8>>(uiImage: originalImage!)
@@ -203,12 +209,11 @@ struct ImageDrawer: View {
             let slice: ImageSlice<RGBA<UInt8>> = croppingImage[xRange, yRange]
             let cropped = SwiftImage.Image<RGBA<UInt8>>(slice)
             currentbackgroundImage = cropped.uiImage
-            
         }
     }
 }
 
-// This struct if for handling the canvas view and its properties
+// This struct if for handling the Drawing canvas view and its setup
 struct DrawingView: UIViewRepresentable {
     
     @Binding var canvas: PKCanvasView

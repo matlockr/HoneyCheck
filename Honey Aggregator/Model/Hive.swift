@@ -15,11 +15,11 @@ struct Hive: Hashable, Codable, Identifiable{
     var honeyTotal: Float
     var beeBoxes = [BeeBox]()
     
+    // Gets the picture data from the first frame in the first box
     func getPictureData() -> Data?{
         if !beeBoxes.isEmpty{
             return beeBoxes.first?.getPictureData()
         }
-        
         return nil
     }
 }

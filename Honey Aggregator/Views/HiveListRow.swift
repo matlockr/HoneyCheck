@@ -12,18 +12,19 @@ struct HiveListRow: View {
     // Create a hive object
     var hive: Hive
     
-    //used in this file to call singleton level functions
+    // Used in this file to call singleton level functions
     @EnvironmentObject var hives:Hives
     
+    // Used to hold the image for the row icon
     @State private var image: Image?
     
-    //used to store the unit type for each hive
+    // Used to store the unit type for each hive
     @State private var unitName = ""
     
     var body: some View {
     
-        //This sets unitName for the weight of the honey in each hive
-        //The area value cannot become 0 or 1
+        // This sets unitName for the weight of the honey in each hive
+        // The area value cannot become 0 or 1
         HStack{}.onAppear(perform: {
             unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: -1)
         })

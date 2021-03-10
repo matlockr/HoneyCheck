@@ -13,7 +13,7 @@ struct ContentView: View {
     @EnvironmentObject var hives:Hives
     
     // State variables for current view
-    @State private var isActive: Bool = false;
+    @State private var isNavigationViewActive: Bool = false;
     @State private var navLinkHiveIndex = -1;
 
     var body: some View {
@@ -48,14 +48,14 @@ struct ContentView: View {
                     
                     // Navigation Link for sending user to
                     // HiveCreator View apon clicking button
-                    NavigationLink(destination: HiveCreator(hiveIndex: navLinkHiveIndex).environmentObject(hives), isActive: self.$isActive){
+                    NavigationLink(destination: HiveCreator(hiveIndex: navLinkHiveIndex).environmentObject(hives), isActive: self.$isNavigationViewActive){
                     }
                     
                     // Button for creating a new hive
                     Button("New Hive") {
                         hives.addHive()
                         navLinkHiveIndex = hives.hiveList.count - 1
-                        self.isActive = true;
+                        self.isNavigationViewActive = true;
                     }
                     
                     // Navigation Link for sending user to

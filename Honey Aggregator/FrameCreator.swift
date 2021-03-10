@@ -13,11 +13,13 @@ struct FrameCreator: View {
     // Singleton for the list of hives
     @EnvironmentObject var hives:Hives
     
+    // Index of where in the hives list the information should
+    // be coming from.
     var hiveIndex: Int
     var beeBoxIndex: Int
     var frameIndex: Int
     
-    // State variables for holding information about textfields
+    // State variables for holding temporary information from textfields
     @State private var heightFieldText = ""
     @State private var widthFieldText = ""
     
@@ -26,27 +28,29 @@ struct FrameCreator: View {
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     
-    //Bool used to trigger the camera in the ImagePicker
+    // Bool used to trigger the camera in the ImagePicker
     @State private var shouldPresentCamera = false
     
-    //Bool used to trigger user choice for image selection
+    // Bool used to trigger user choice for image selection
     @State private var shouldPresentActionSheet = false
     
-    //used to store the unit type for each hive
+    // Used to store the unit type for each hive
     @State private var unitName = ""
     
-    //This stores the user's frame dimensions currently supports one frame type per user
+    // This stores the user's frame dimensions currently supports one frame type per user
     @State private var frameDims = UserDefaults.standard.integer(forKey: "globalFrameFormat")
-    @State private var isCustom: Bool = false
+    @State private var isCustomTemplate: Bool = false
     
+    // State variables for handling when to go to ImageDrawer view and the honeyPecentage to
+    // connect to that view
     @State private var shouldShowImageDrawer = false
     @State private var honeyPercent: Float = 0.0
     
     var body: some View {
         HStack{}.onAppear(perform: {
     
-            //this is the call for the unitName to be parsed
-            //The area value must be 1
+            // This is the call for the unitName to be parsed
+            // The area value must be 1
             unitName = hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 1)
             
             switch UserDefaults.standard.integer(forKey: "unitTypeGlobal"){
@@ -75,7 +79,7 @@ struct FrameCreator: View {
                     Picker("Available Frame Formats", selection: $frameDims){
                         Group{
         
-                            //These are frame standards
+                            // These are frame standards
                             Text("American Langstroth").tag(0)
                             Text("Californian Langstroth").tag(1)
                             Text("Australian Langstroth").tag(2)
@@ -99,17 +103,17 @@ struct FrameCreator: View {
                         }
                     }
                    
-                    //checks if user selected a new frame format
+                    // Checks if user selected a new frame format
                     .onChange(of: self.frameDims){_ in
                         if(self.frameDims < 16){
-                            isCustom = false
+                            isCustomTemplate = false
                             UserDefaults.standard.set(self.frameDims, forKey: "globalFrameFormat")
                             hives.frameIndicator(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, value: UserDefaults.standard.integer(forKey: "globalFrameFormat"))
                         }
                         
-                        //this handles custom formats
+                        // This handles custom formats
                         else{
-                            isCustom = true
+                            isCustomTemplate = true
                             UserDefaults.standard.set(self.frameDims, forKey: "globalFrameFormat")
                             
                             if(unitName != "in"){
@@ -128,7 +132,7 @@ struct FrameCreator: View {
                 .frame(height: 100)
                 .clipped()
                 
-                if isCustom{
+                if isCustomTemplate{
                     
                     // Hstack for getting the Height entered information
                     HStack{
@@ -136,11 +140,11 @@ struct FrameCreator: View {
                             .padding()
                             
                         TextField("\(String(hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))", text: $heightFieldText, onEditingChanged: { didBegin in
-                            //onEditingChanged checks to see if edits are being performed
+                            // onEditingChanged checks to see if edits are being performed
                             if (didBegin){
-                                //do nothing
+                                // do nothing
                             }
-                            //This is where custom dimensions are saved
+                            // This is where custom dimensions are saved
                             else{
                                 if(self.frameDims > 15){
                                     if(UserDefaults.standard.integer(forKey: "unitTypeGlobal") > 0){
@@ -155,7 +159,7 @@ struct FrameCreator: View {
                             .padding()
                             .keyboardType(.decimalPad)
                             
-                        //this is where the name of the unit is displayed
+                        // This is where the name of the unit is displayed
                         Text("\(unitName)")
                             .padding()
                     }
@@ -198,7 +202,7 @@ struct FrameCreator: View {
                         Text("\(String(hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))")
                             .padding()
                         
-                        //this is where the name of the unit is displayed
+                        // This is where the name of the unit is displayed
                         Text("\(unitName)")
                             .padding()
                     }
@@ -210,7 +214,7 @@ struct FrameCreator: View {
                         
                         Text("\(String(hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)))")
                             .padding()
-                        //this is where the name of the unit is displayed
+                        // This is where the name of the unit is displayed
                         Text("\(unitName)")
                             .padding()
                     }
@@ -244,6 +248,8 @@ struct FrameCreator: View {
                     }
                     
                     Spacer()
+                    
+                    // Display the image picker button icon
                     ZStack{
                         Image(systemName: "circle")
                             .font(.system(size: 70.0))
@@ -252,7 +258,7 @@ struct FrameCreator: View {
                             .font(.system(size: 40.0))
                     }
                     .onTapGesture {
-                        //will allow Action Sheet to be toggled on
+                        // Will allow Action Sheet to be toggled on
                         self.shouldPresentActionSheet = true
                     }
                 
@@ -262,6 +268,7 @@ struct FrameCreator: View {
             }.disabled(false)
             Spacer()
             
+            // Get the picture data from frame this view is showing
             if let picdata = hives.getPictureData(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex){
                 NavigationLink(destination: ImageDrawer(backgroundImage: UIImage(data: picdata) ?? nil, honeyPercent: $honeyPercent), isActive: self.$shouldShowImageDrawer){}
             }
@@ -270,6 +277,7 @@ struct FrameCreator: View {
             Divider()
             
             HStack{
+                // Clicking will start process of going to ImageDrawer View
                 Button("Draw Details"){
                     shouldShowImageDrawer = true
                 }.foregroundColor(.orange)
@@ -300,6 +308,7 @@ struct FrameCreator: View {
                     let frameSquareUnits = hives.getFrameWidth(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex) * hives.getFrameHeight(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex)
                     
                     
+                    // Setup what multiplier the honey amount will use based on metric versus imperial
                     var honeyPerSquareUnitMuliplier: Float = 0.0
                     switch hives.setUnitReadout(unit: UserDefaults.standard.integer(forKey: "unitTypeGlobal"), area: 3){
                     case "lb":
@@ -310,9 +319,11 @@ struct FrameCreator: View {
                         honeyPerSquareUnitMuliplier = 0.0
                     }
 
+                    // Set all the honey amounts for the frame, box, and hive
                     hives.setHoneyTotal(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex, frameIndex: frameIndex, honeyTotal: honeyPercent * frameSquareUnits * honeyPerSquareUnitMuliplier)
                     hives.setBeeBoxHoney(hiveIndex: hiveIndex, beeBoxIndex: beeBoxIndex)
                     hives.setHiveHoneyTotal(hiveIndex: hiveIndex)
+                    
                     hives.save()
                 }.padding()
                 .foregroundColor(.orange)
@@ -321,50 +332,50 @@ struct FrameCreator: View {
         }
         .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
             
-            //This call to the constructor brings up the ImagePicker
-            //sourceType uses the ? to set up an if else condition for variable shouldPresentCamera: Bool
+            // This call to the constructor brings up the ImagePicker
+            // sourceType uses the ? to set up an if else condition for variable shouldPresentCamera: Bool
             ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$inputImage)
         }
        
-        //Call to Action Sheet constructor isPresented is a Bool value which calls Binding<Bool> shouldPresentActionSheet
-        //Action Sheet lists buttons in top down order, i.e. Camera is at top, cancel is at bottom
+        // Call to Action Sheet constructor isPresented is a Bool value which calls Binding<Bool> shouldPresentActionSheet
+        // Action Sheet lists buttons in top down order, i.e. Camera is at top, cancel is at bottom
         .actionSheet(isPresented: $shouldPresentActionSheet) {
             
-            //This creates the action sheet
+            // This creates the action sheet
             () -> ActionSheet in
             
-            //This gives the Action Sheet a title
-            //This gives the action sheet a message for the user to read
-            //The syntax "action:" is used to define any behavior that pressing a button will perform in the code
+            // This gives the Action Sheet a title
+            // This gives the action sheet a message for the user to read
+            // The syntax "action:" is used to define any behavior that pressing a button will perform in the code
             ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
             
-                //This will toggle the ImagePicker on
+                // This will toggle the ImagePicker on
                 self.showingImagePicker = true
                 
-                //This will cause ImagePicker to toggle the camera on
+                // This will cause ImagePicker to toggle the camera on
                 self.shouldPresentCamera = true
             }),
             
-            //This creates a "Photo Library" button
+            // This creates a "Photo Library" button
             ActionSheet.Button.default(Text("Photo Library"), action: {
             
-                //This toggles the ImagePicker on
+                // This toggles the ImagePicker on
                 self.showingImagePicker = true
                 
-                //This prevents the camera from toggling on
+                // This prevents the camera from toggling on
                 self.shouldPresentCamera = false
             }),
             
-            //This creates a "Cancel" button
+            // This creates a "Cancel" button
             ActionSheet.Button.cancel()])
         }
         .onAppear{
             convertImageFromData()
             shouldShowImageDrawer = false
             if UserDefaults.standard.integer(forKey: "globalFrameFormat") != 16{
-                isCustom = false
+                isCustomTemplate = false
             } else {
-                isCustom = true
+                isCustomTemplate = true
             }
         }
         .navigationBarTitle("Frame Creator")
@@ -379,6 +390,7 @@ struct FrameCreator: View {
         }
     }
     
+    // Loading image from the input image from camera or photo library
     func loadImage(){
         guard let inputImage = inputImage else {return}
         image = Image(uiImage: inputImage)

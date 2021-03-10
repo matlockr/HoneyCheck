@@ -9,12 +9,13 @@ import SwiftUI
 
 struct SettingMenu: View {
         
-    //holds the value selected in the picker
+    // Holds the value selected in the picker
     @State private var selectedUnitType = UserDefaults.standard.integer(forKey: "unitTypeGlobal")
     
     var body: some View {
         VStack{
             
+            // Title for view
             Text("Unit Type")
                 .font(.title)
                 .padding()

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B347E8E261E0E8700C063E8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E8D261E0E8700C063E8 /* ImagePicker.swift */; };
+		2B347E95261E0EAE00C063E8 /* FrameCreatorSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E92261E0EAE00C063E8 /* FrameCreatorSubViews.swift */; };
+		2B347E96261E0EAE00C063E8 /* SettingsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E93261E0EAE00C063E8 /* SettingsMenu.swift */; };
+		2B347E97261E0EAE00C063E8 /* FrameCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E94261E0EAE00C063E8 /* FrameCreator.swift */; };
+		2B347E9D261E0ECD00C063E8 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E9B261E0ECD00C063E8 /* ModelData.swift */; };
+		2B347E9E261E0ECD00C063E8 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E9C261E0ECD00C063E8 /* Structs.swift */; };
+		2B347EA4261E0F9700C063E8 /* SwiftyDraw in Frameworks */ = {isa = PBXBuildFile; productRef = 2B347EA3261E0F9700C063E8 /* SwiftyDraw */; };
 		2BC81BF425E57FBC003EE8C0 /* SwiftImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2BC81BF325E57FBC003EE8C0 /* SwiftImage */; };
 		AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */; };
 		AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9A25C31F2600351DA3 /* ContentView.swift */; };
@@ -35,6 +42,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B347E8D261E0E8700C063E8 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		2B347E92261E0EAE00C063E8 /* FrameCreatorSubViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCreatorSubViews.swift; sourceTree = "<group>"; };
+		2B347E93261E0EAE00C063E8 /* SettingsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenu.swift; sourceTree = "<group>"; };
+		2B347E94261E0EAE00C063E8 /* FrameCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCreator.swift; sourceTree = "<group>"; };
+		2B347E9B261E0ECD00C063E8 /* ModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		2B347E9C261E0ECD00C063E8 /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honey Aggregator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorApp.swift; sourceTree = "<group>"; };
 		AA09AC9A25C31F2600351DA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B347EA4261E0F9700C063E8 /* SwiftyDraw in Frameworks */,
 				2BC81BF425E57FBC003EE8C0 /* SwiftImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,6 +90,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B347E8A261E0E3F00C063E8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2B347E9B261E0ECD00C063E8 /* ModelData.swift */,
+				2B347E9C261E0ECD00C063E8 /* Structs.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2B347E8B261E0E4600C063E8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
+				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
+				2B347E94261E0EAE00C063E8 /* FrameCreator.swift */,
+				2B347E92261E0EAE00C063E8 /* FrameCreatorSubViews.swift */,
+				2B347E93261E0EAE00C063E8 /* SettingsMenu.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2B347E8C261E0E5200C063E8 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2B347E8D261E0E8700C063E8 /* ImagePicker.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		AA09AC8C25C31F2600351DA3 = {
 			isa = PBXGroup;
 			children = (
@@ -99,8 +142,9 @@
 		AA09AC9725C31F2600351DA3 /* Honey Aggregator */ = {
 			isa = PBXGroup;
 			children = (
-				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
-				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
+				2B347E8C261E0E5200C063E8 /* Utilities */,
+				2B347E8B261E0E4600C063E8 /* Views */,
+				2B347E8A261E0E3F00C063E8 /* Model */,
 				AA86177F25C727E9006D1F50 /* Resources */,
 				AA09AC9C25C31F2700351DA3 /* Assets.xcassets */,
 				AA09ACA125C31F2700351DA3 /* Info.plist */,
@@ -161,6 +205,7 @@
 			name = "Honey Aggregator";
 			packageProductDependencies = (
 				2BC81BF325E57FBC003EE8C0 /* SwiftImage */,
+				2B347EA3261E0F9700C063E8 /* SwiftyDraw */,
 			);
 			productName = "Honey Aggregator";
 			productReference = AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */;
@@ -235,6 +280,7 @@
 			mainGroup = AA09AC8C25C31F2600351DA3;
 			packageReferences = (
 				2BC81BF225E57FBB003EE8C0 /* XCRemoteSwiftPackageReference "swift-image" */,
+				2B347EA2261E0F9700C063E8 /* XCRemoteSwiftPackageReference "SwiftyDraw" */,
 			);
 			productRefGroup = AA09AC9625C31F2600351DA3 /* Products */;
 			projectDirPath = "";
@@ -279,8 +325,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B347E9E261E0ECD00C063E8 /* Structs.swift in Sources */,
+				2B347E95261E0EAE00C063E8 /* FrameCreatorSubViews.swift in Sources */,
+				2B347E96261E0EAE00C063E8 /* SettingsMenu.swift in Sources */,
+				2B347E97261E0EAE00C063E8 /* FrameCreator.swift in Sources */,
+				2B347E8E261E0E8700C063E8 /* ImagePicker.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
 				AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */,
+				2B347E9D261E0ECD00C063E8 /* ModelData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +650,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2B347EA2261E0F9700C063E8 /* XCRemoteSwiftPackageReference "SwiftyDraw" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Awalz/SwiftyDraw";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
 		2BC81BF225E57FBB003EE8C0 /* XCRemoteSwiftPackageReference "swift-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/koher/swift-image.git";
@@ -609,6 +669,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2B347EA3261E0F9700C063E8 /* SwiftyDraw */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2B347EA2261E0F9700C063E8 /* XCRemoteSwiftPackageReference "SwiftyDraw" */;
+			productName = SwiftyDraw;
+		};
 		2BC81BF325E57FBC003EE8C0 /* SwiftImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2BC81BF225E57FBB003EE8C0 /* XCRemoteSwiftPackageReference "swift-image" */;

@@ -9,6 +9,15 @@
           "revision": "c61b8cf4613a7fc80d1c2a84231cef2909e837a1",
           "version": "0.7.1"
         }
+      },
+      {
+        "package": "SwiftyDraw",
+        "repositoryURL": "https://github.com/Awalz/SwiftyDraw",
+        "state": {
+          "branch": null,
+          "revision": "11fae521ff07d5388cc2fe5b6960b1c65ce3f200",
+          "version": "2.4.1"
+        }
       }
     ]
   },

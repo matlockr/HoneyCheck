@@ -7,14 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B64F22725CDDAF2005B649B /* BeeBoxCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B64F22625CDDAF2005B649B /* BeeBoxCreator.swift */; };
-		2B64F22C25CDDCAB005B649B /* FrameListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B64F22B25CDDCAB005B649B /* FrameListRow.swift */; };
-		2B8C69F825CCC5030050F0BB /* HiveListUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C69F525CCC5030050F0BB /* HiveListUI.swift */; };
-		2B8C69F925CCC5030050F0BB /* FrameCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C69F625CCC5030050F0BB /* FrameCreator.swift */; };
-		2B8C69FA25CCC5030050F0BB /* HiveCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C69F725CCC5030050F0BB /* HiveCreator.swift */; };
-		2B93EA8125D355B100601273 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B93EA8025D355B100601273 /* ImagePicker.swift */; };
-		2BC7D67C25E86EB400485D79 /* SettingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC7D67B25E86EB400485D79 /* SettingMenu.swift */; };
-		2BC81BEE25E57DB9003EE8C0 /* ImageDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC81BED25E57DB9003EE8C0 /* ImageDrawer.swift */; };
 		2BC81BF425E57FBC003EE8C0 /* SwiftImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2BC81BF325E57FBC003EE8C0 /* SwiftImage */; };
 		AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */; };
 		AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9A25C31F2600351DA3 /* ContentView.swift */; };
@@ -22,13 +14,7 @@
 		AA09ACA025C31F2700351DA3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA09AC9F25C31F2700351DA3 /* Preview Assets.xcassets */; };
 		AA09ACAB25C31F2700351DA3 /* Honey_AggregatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACAA25C31F2700351DA3 /* Honey_AggregatorTests.swift */; };
 		AA09ACB625C31F2700351DA3 /* Honey_AggregatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACB525C31F2700351DA3 /* Honey_AggregatorUITests.swift */; };
-		AA09ACE525C32AF000351DA3 /* Hive.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACE425C32AF000351DA3 /* Hive.swift */; };
-		AA09ACEA25C32BF500351DA3 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09ACE925C32BF500351DA3 /* Frame.swift */; };
-		AA86177125C71FFE006D1F50 /* HiveListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA86177025C71FFE006D1F50 /* HiveListRow.swift */; };
-		AA86177625C7218D006D1F50 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA86177525C7218D006D1F50 /* ModelData.swift */; };
 		AA86177B25C7270F006D1F50 /* hiveData.json in Resources */ = {isa = PBXBuildFile; fileRef = AA86177A25C7270F006D1F50 /* hiveData.json */; };
-		AA9B050425CA0531005092DB /* BeeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9B050325CA0531005092DB /* BeeBox.swift */; };
-		AA9B050925CA0E6E005092DB /* BoxListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9B050825CA0E6E005092DB /* BoxListRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,14 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2B64F22625CDDAF2005B649B /* BeeBoxCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeBoxCreator.swift; sourceTree = "<group>"; };
-		2B64F22B25CDDCAB005B649B /* FrameListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameListRow.swift; sourceTree = "<group>"; };
-		2B8C69F525CCC5030050F0BB /* HiveListUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HiveListUI.swift; path = "Honey Aggregator/HiveListUI.swift"; sourceTree = SOURCE_ROOT; };
-		2B8C69F625CCC5030050F0BB /* FrameCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrameCreator.swift; path = "Honey Aggregator/FrameCreator.swift"; sourceTree = SOURCE_ROOT; };
-		2B8C69F725CCC5030050F0BB /* HiveCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HiveCreator.swift; path = "Honey Aggregator/HiveCreator.swift"; sourceTree = SOURCE_ROOT; };
-		2B93EA8025D355B100601273 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		2BC7D67B25E86EB400485D79 /* SettingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMenu.swift; sourceTree = "<group>"; };
-		2BC81BED25E57DB9003EE8C0 /* ImageDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDrawer.swift; sourceTree = "<group>"; };
 		AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honey Aggregator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorApp.swift; sourceTree = "<group>"; };
 		AA09AC9A25C31F2600351DA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -69,13 +47,7 @@
 		AA09ACB125C31F2700351DA3 /* Honey AggregatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Honey AggregatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09ACB525C31F2700351DA3 /* Honey_AggregatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorUITests.swift; sourceTree = "<group>"; };
 		AA09ACB725C31F2700351DA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA09ACE425C32AF000351DA3 /* Hive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hive.swift; sourceTree = "<group>"; };
-		AA09ACE925C32BF500351DA3 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
-		AA86177025C71FFE006D1F50 /* HiveListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiveListRow.swift; sourceTree = "<group>"; };
-		AA86177525C7218D006D1F50 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		AA86177A25C7270F006D1F50 /* hiveData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hiveData.json; sourceTree = "<group>"; };
-		AA9B050325CA0531005092DB /* BeeBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeeBox.swift; sourceTree = "<group>"; };
-		AA9B050825CA0E6E005092DB /* BoxListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxListRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +99,8 @@
 		AA09AC9725C31F2600351DA3 /* Honey Aggregator */ = {
 			isa = PBXGroup;
 			children = (
-				AA86178125C7283C006D1F50 /* Model */,
-				AA86178025C72836006D1F50 /* Views */,
+				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
+				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
 				AA86177F25C727E9006D1F50 /* Resources */,
 				AA09AC9C25C31F2700351DA3 /* Assets.xcassets */,
 				AA09ACA125C31F2700351DA3 /* Info.plist */,
@@ -169,36 +141,6 @@
 				AA86177A25C7270F006D1F50 /* hiveData.json */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		AA86178025C72836006D1F50 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				2B8C69F625CCC5030050F0BB /* FrameCreator.swift */,
-				2B8C69F725CCC5030050F0BB /* HiveCreator.swift */,
-				2B8C69F525CCC5030050F0BB /* HiveListUI.swift */,
-				AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */,
-				AA09AC9A25C31F2600351DA3 /* ContentView.swift */,
-				AA86177025C71FFE006D1F50 /* HiveListRow.swift */,
-				AA9B050825CA0E6E005092DB /* BoxListRow.swift */,
-				2B64F22625CDDAF2005B649B /* BeeBoxCreator.swift */,
-				2B64F22B25CDDCAB005B649B /* FrameListRow.swift */,
-				2BC81BED25E57DB9003EE8C0 /* ImageDrawer.swift */,
-				2BC7D67B25E86EB400485D79 /* SettingMenu.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		AA86178125C7283C006D1F50 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2B93EA8025D355B100601273 /* ImagePicker.swift */,
-				AA86177525C7218D006D1F50 /* ModelData.swift */,
-				AA09ACE425C32AF000351DA3 /* Hive.swift */,
-				AA09ACE925C32BF500351DA3 /* Frame.swift */,
-				AA9B050325CA0531005092DB /* BeeBox.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,22 +279,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA9B050425CA0531005092DB /* BeeBox.swift in Sources */,
-				AA86177625C7218D006D1F50 /* ModelData.swift in Sources */,
-				2B64F22C25CDDCAB005B649B /* FrameListRow.swift in Sources */,
-				2B93EA8125D355B100601273 /* ImagePicker.swift in Sources */,
-				2B8C69F925CCC5030050F0BB /* FrameCreator.swift in Sources */,
-				2B8C69F825CCC5030050F0BB /* HiveListUI.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
 				AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */,
-				AA9B050925CA0E6E005092DB /* BoxListRow.swift in Sources */,
-				2BC81BEE25E57DB9003EE8C0 /* ImageDrawer.swift in Sources */,
-				AA86177125C71FFE006D1F50 /* HiveListRow.swift in Sources */,
-				AA09ACEA25C32BF500351DA3 /* Frame.swift in Sources */,
-				2B8C69FA25CCC5030050F0BB /* HiveCreator.swift in Sources */,
-				AA09ACE525C32AF000351DA3 /* Hive.swift in Sources */,
-				2B64F22725CDDAF2005B649B /* BeeBoxCreator.swift in Sources */,
-				2BC7D67C25E86EB400485D79 /* SettingMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

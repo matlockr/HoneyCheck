@@ -4,6 +4,8 @@
 //
 //  All the sub views for the FrameCreator view
 //
+//  Special thanks to John Codeos
+//  https://johncodeos.com/how-to-create-a-popup-window-with-swiftui/
 
 import SwiftUI
 import SwiftyDraw
@@ -11,7 +13,6 @@ import SwiftImage
 
 // View for HiveCreator
 struct HiveCreator: View{
-    
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
@@ -208,7 +209,7 @@ struct TemplateSelector: View{
 }
 
 struct CustomTemplateCreator: View{
-    
+    @State private var showPopUp: Bool = false
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
@@ -242,7 +243,15 @@ struct CustomTemplateCreator: View{
             Button(action: {
                 if let floatHeight = Float(customHeight){
                     if let floatWidth = Float(customWidth){
-                        
+                        if floatWidth <= 0 {
+                            showPopUp.toggle()
+                            
+                        }
+                        else if floatHeight <= 0 {
+                            showPopUp.toggle()
+                            
+                        }
+                        else{
                         // Convert the height and width is the isMetric is true
                         if hives.isMetric{
                             selectedTemplate = Template(name: customName, height: floatHeight / 25.4, width: floatWidth / 25.4)
@@ -252,11 +261,16 @@ struct CustomTemplateCreator: View{
                         
                         state = STATE.Picture1Get
                         titleText = "Side A Picture"
+                        }
+                        
                     }
                 }
             }){
               Text("Next")
             }
+        }
+        ZStack{
+            PopUpView(title: "Error", message: "Sorry, the custom dimensions must be more than zero!", buttonText: "OK", show: $showPopUp)
         }
     }
 }

@@ -66,10 +66,24 @@ struct FrameCreator: View {
                 // Show the PictureHandler view
                 PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount).environmentObject(hives)
                 
+                //Show a current calculation value to monitor changes in the frame calculation. Might remove due to no need to see during state 1, but could be helpful for debugging for now. 
+                if hives.isMetric {
+                    Text("Current Calculation: \(tempHoneyAmount / 2.2) kg")
+                } else {
+                    Text("Current Calculation: \(tempHoneyAmount) lbs")
+                }
+                
             } else if state == STATE.Picture2Get{
                 
                 // Show the PictureHandler view
                 PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount).environmentObject(hives)
+                
+                //Show a current calculation value to monitor changes in the frame calculation.
+                if hives.isMetric {
+                    Text("Current Calculation: \(tempHoneyAmount / 2.2) kg")
+                } else {
+                    Text("Current Calculation: \(tempHoneyAmount) lbs")
+                }
                 
             } else if state == STATE.Finalize{
                 

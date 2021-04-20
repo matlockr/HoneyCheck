@@ -22,21 +22,39 @@ struct HiveCreator: View{
     @Binding var selectedHive: Hive?
     @Binding var titleText: String
     
-    @State private var tmpHiveName: String = ""
+    // Manages length of text box inputs
+    class TextFieldManager: ObservableObject{
+        @Published var text = "" {
+            didSet{
+                if text.count > charLimit && oldValue.count <= charLimit{
+                    text = oldValue
+                }
+            }
+        }
+        
+        let charLimit : Int
+        
+        init(limit: Int = 5){
+            charLimit = limit
+        }
+    }
     
+    // Length Managed Hive Name Variable (Change number to change the length limit)
+    @ObservedObject var tmpHiveName = TextFieldManager(limit: 15)
+
     var body: some View{
         VStack{
             HStack{
                 Text("Hive:")
                     .padding()
-                
+                                
                 // Textfield for editing the new hive name
-                TextField("Enter Name", text: $tmpHiveName)
+                TextField("Enter Name", text: $tmpHiveName.text)
                 
                 // Button for adding the new hive
                 Button(action: {
-                    hives.addHive(name: tmpHiveName)
-                    tmpHiveName = ""
+                    hives.addHive(name: tmpHiveName.text)
+                    tmpHiveName.text = ""
                 }){
                     Image(systemName: "plus")
                         .imageScale(.large)

@@ -10,6 +10,9 @@
 import SwiftUI
 import SwiftyDraw
 import SwiftImage
+import Mantis
+import UIKit
+import CoreML
 
 // View for HiveCreator
 struct HiveCreator: View{
@@ -308,10 +311,7 @@ struct DrawingView: UIViewRepresentable{
 }
 
 struct PictureHandler: View{
-    
-    // Singleton object that holds list of hives
-    @EnvironmentObject var hives:Hives
-    
+        
     var selectedTemplate: Template
     
     // Binding variables that are connected to @State variables
@@ -535,3 +535,296 @@ struct PictureHandler: View{
     }
 }
 
+struct AutomatedPictureHandler: View{
+
+    var selectedTemplate: Template
+    
+    // Binding variables that are connected to @State variables
+    // in FrameCreator
+    @Binding var titleText: String
+    @Binding var state: STATE
+    @Binding var honeyTotal: Float
+    
+    // State variables for image handeling
+    @State private var showingImagePicker = false
+    @State private var inputImage : UIImage?
+    
+    // Bool used to trigger the camera in the ImagePicker
+    @State private var shouldPresentCamera = false
+    
+    // Bool used to trigger user choice for image selection
+    @State private var shouldPresentActionSheet = false
+    
+    @State private var done: Bool = false
+    
+    var body: some View{
+        VStack{
+            
+            if (inputImage != nil){
+                Image(uiImage: inputImage!)
+                    .resizable()
+                    .scaledToFit()
+            }
+            
+            ZStack{
+                Image(systemName: "circle")
+                    .font(.system(size: 70.0))
+                
+                Image(systemName: "camera")
+                    .font(.system(size: 40.0))
+            }
+            .onTapGesture {
+                // Will allow Action Sheet to be toggled on
+                self.shouldPresentActionSheet = true
+            }
+            
+            
+            if (inputImage != nil){
+                NavigationLink(destination: DetailedView(img: $inputImage, honeyTotal: $honeyTotal, done: $done, dimWidth: Int(selectedTemplate.width), dimHeight: Int(selectedTemplate.height)).onDisappear(perform: {
+                    
+                    if done{
+                        if state == STATE.Picture1Get{
+                            state = STATE.Picture2Get
+                            titleText = "Frame Side B"
+                        } else if state == STATE.Picture2Get{
+                            state = STATE.Finalize
+                            titleText = "Finalize"
+                        }
+                    }
+                })
+                ){
+                    Text("Crop Image")
+                }
+                .padding()
+            }
+            
+        }
+    .sheet(isPresented: $showingImagePicker) {
+        
+        // This call to the constructor brings up the ImagePicker
+        // sourceType uses the ? to set up an if else condition for variable shouldPresentCamera: Bool
+        ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$inputImage)
+    }
+   
+    // Call to Action Sheet constructor isPresented is a Bool value which calls Binding<Bool> shouldPresentActionSheet
+    // Action Sheet lists buttons in top down order, i.e. Camera is at top, cancel is at bottom
+    .actionSheet(isPresented: $shouldPresentActionSheet) {
+        
+        // This creates the action sheet
+        () -> ActionSheet in
+        
+        // This gives the Action Sheet a title
+        // This gives the action sheet a message for the user to read
+        // The syntax "action:" is used to define any behavior that pressing a button will perform in the code
+        ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
+        
+            // This will toggle the ImagePicker on
+            self.showingImagePicker = true
+            
+            // This will cause ImagePicker to toggle the camera on
+            self.shouldPresentCamera = true
+        }),
+        
+        // This creates a "Photo Library" button
+        ActionSheet.Button.default(Text("Photo Library"), action: {
+        
+            // This toggles the ImagePicker on
+            self.showingImagePicker = true
+            
+            // This prevents the camera from toggling on
+            self.shouldPresentCamera = false
+        }),
+        
+        // This creates a "Cancel" button
+        ActionSheet.Button.cancel()])
+        
+    }
+        
+    }
+}
+
+struct DetailedView: View {
+
+    @Environment(\.presentationMode) var presentation
+
+    @Binding var img: UIImage?
+    @Binding var honeyTotal: Float
+    @Binding var done: Bool
+    
+    @State private var showCropper: Bool = true
+    @State private var predictionUIImages: [UIImage] = []
+    @State private var honeyCount: Int = 0
+    @State private var isLoading: Bool = false
+    @State private var showLoadingBar: Bool = false
+    @State private var showAnaylseButton: Bool = false
+    
+    @State private var imgCountCurrent: Int = 0
+    @State private var downloadAmount = 0.0
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    
+    var dimWidth: Int
+    var dimHeight: Int
+
+    var body: some View{
+        VStack{
+            if showLoadingBar{
+                ProgressView("Analyzing Image", value: downloadAmount, total: Double(predictionUIImages.count))
+                    .progressViewStyle(LinearProgressViewStyle(tint: .orange))
+                    //.progressViewStyle(CircularProgressViewStyle(tint: .orange))
+                    //.scaleEffect(2)
+                    .padding()
+            }
+            
+            if showAnaylseButton {
+                Button(action: {
+                    showAnaylseButton = false
+                    showLoadingBar = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        CropImage()
+                    }
+                }){
+                    Text("Anaylze Image")
+                }
+            }
+            
+            
+        }.fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
+            
+            ImageEditor(theImage: $img, isShowing: $showCropper)
+        }
+        .onReceive(timer){ _ in
+            if isLoading{
+                downloadAmount = Double(imgCountCurrent)
+                if imgCountCurrent < predictionUIImages.count{
+                    MLPrediction()
+                } else {
+                    timer.upstream.connect().cancel()
+                }
+            }
+        }
+    }
+
+    func CropImage(){
+        
+        // Slice images based on frame dimensions
+        let originalImage = SwiftImage.Image<RGBA<UInt8>>(uiImage: img!)
+
+        
+        var croppingImgWidth: Int = originalImage.width
+        var croppingImgHeight: Int = originalImage.height
+        
+        for i in stride(from: originalImage.width, to: 0, by: -1){
+            if i % dimWidth == 0{
+                croppingImgWidth = i
+                break
+            }
+        }
+        
+        for i in stride(from: originalImage.height, to: 0, by: -1){
+            if i % dimHeight == 0{
+                croppingImgHeight = i
+                break
+            }
+        }
+        
+        let wPixels: Int = croppingImgWidth / dimWidth
+        let hPixels: Int = croppingImgHeight / dimHeight
+        
+        
+        for w in 0..<dimWidth{
+            for h in 0..<dimHeight{
+                let slice: ImageSlice<RGBA<UInt8>> = originalImage[
+                    (w * wPixels)..<(w * wPixels + wPixels),
+                    (h * hPixels)..<(h * hPixels + hPixels)]
+                let tmpImg: UIImage = (SwiftImage.Image<RGBA<UInt8>>(slice)).uiImage
+                predictionUIImages.append(tmpImg)
+            }
+        }
+        isLoading = true
+    }
+    
+    func MLPrediction(){
+        do{
+            let config = MLModelConfiguration()
+            let classifier = try CombClassifierSqInch(configuration: config)
+                
+            let resizedImage = predictionUIImages[imgCountCurrent].resizeTo(size: CGSize(width: 299, height: 299))
+            guard let buffer = resizedImage!.toBuffer() else {
+                print("ERROR when getting buffer")
+                return
+            }
+            
+            let output = try? classifier.prediction(image: buffer)
+            
+            if output?.classLabel != nil && output!.classLabel == "Honey" {
+                honeyCount += 1
+            }
+            imgCountCurrent += 1
+        
+            
+        } catch {
+        }
+        
+        if imgCountCurrent + 1 == predictionUIImages.count{
+            HoneyCalculation()
+        }
+    }
+    
+    func HoneyCalculation(){
+        // Honey calculation
+        let honeyPercent: Float = Float(honeyCount) / Float(predictionUIImages.count)
+        
+        let honeyLBPerSquareIn: Float = 0.033
+        honeyTotal += (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
+
+        done = true
+        
+        //Dismiss the view
+        self.presentation.wrappedValue.dismiss()
+    }
+}
+
+struct ImageEditor: UIViewControllerRepresentable{
+    typealias Coordinator = ImageEditorCoordinator
+
+    @Binding var theImage: UIImage?
+    @Binding var isShowing: Bool
+
+    func makeCoordinator() -> ImageEditorCoordinator {
+        return ImageEditorCoordinator(image: $theImage, isShowing: $isShowing)
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImageEditor>) -> Mantis.CropViewController {
+        let Editor = Mantis.cropViewController(image: theImage!)
+        Editor.delegate = context.coordinator
+        return Editor
+    }
+}
+
+class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
+
+    @Binding var theImage: UIImage?
+    @Binding var isShowing: Bool
+
+    init(image: Binding<UIImage?>, isShowing: Binding<Bool>){
+        _theImage = image
+        _isShowing = isShowing
+    }
+
+    func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation) {
+        theImage = cropped
+        isShowing = false
+    }
+
+    func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) { print("ERROR: Failed to crop") }
+
+    func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { isShowing = false }
+
+    func cropViewControllerDidBeginResize(_ cropViewController: CropViewController){}
+
+    func cropViewControllerDidEndResize(_ cropViewController: CropViewController, original: UIImage, cropInfo: CropInfo) {}
+
+    func cropViewControllerWillDismiss(_ cropViewController: CropViewController) {}
+}

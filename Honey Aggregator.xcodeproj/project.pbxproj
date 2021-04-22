@@ -15,6 +15,9 @@
 		2B347E9D261E0ECD00C063E8 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E9B261E0ECD00C063E8 /* ModelData.swift */; };
 		2B347E9E261E0ECD00C063E8 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E9C261E0ECD00C063E8 /* Structs.swift */; };
 		2B347EA4261E0F9700C063E8 /* SwiftyDraw in Frameworks */ = {isa = PBXBuildFile; productRef = 2B347EA3261E0F9700C063E8 /* SwiftyDraw */; };
+		2BB1549A2630707A0018BBF2 /* Mantis in Frameworks */ = {isa = PBXBuildFile; productRef = 2BB154992630707A0018BBF2 /* Mantis */; };
+		2BB1549F263070A60018BBF2 /* CombClassifierSqInch.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2BB1549E263070A60018BBF2 /* CombClassifierSqInch.mlmodel */; };
+		2BB154A4263070CB0018BBF2 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB154A3263070CB0018BBF2 /* UIImageExtension.swift */; };
 		2BC81BF425E57FBC003EE8C0 /* SwiftImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2BC81BF325E57FBC003EE8C0 /* SwiftImage */; };
 		AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */; };
 		AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9A25C31F2600351DA3 /* ContentView.swift */; };
@@ -50,6 +53,8 @@
 		2B347E94261E0EAE00C063E8 /* FrameCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCreator.swift; sourceTree = "<group>"; };
 		2B347E9B261E0ECD00C063E8 /* ModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		2B347E9C261E0ECD00C063E8 /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
+		2BB1549E263070A60018BBF2 /* CombClassifierSqInch.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = CombClassifierSqInch.mlmodel; sourceTree = "<group>"; };
+		2BB154A3263070CB0018BBF2 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honey Aggregator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorApp.swift; sourceTree = "<group>"; };
 		AA09AC9A25C31F2600351DA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BB1549A2630707A0018BBF2 /* Mantis in Frameworks */,
 				2B347EA4261E0F9700C063E8 /* SwiftyDraw in Frameworks */,
 				2BC81BF425E57FBC003EE8C0 /* SwiftImage in Frameworks */,
 			);
@@ -117,6 +123,7 @@
 		2B347E8C261E0E5200C063E8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2BB154A3263070CB0018BBF2 /* UIImageExtension.swift */,
 				2B347E8D261E0E8700C063E8 /* ImagePicker.swift */,
 			);
 			path = Utilities;
@@ -145,6 +152,7 @@
 		AA09AC9725C31F2600351DA3 /* Honey Aggregator */ = {
 			isa = PBXGroup;
 			children = (
+				2BB1549E263070A60018BBF2 /* CombClassifierSqInch.mlmodel */,
 				2B347E8C261E0E5200C063E8 /* Utilities */,
 				2B347E8B261E0E4600C063E8 /* Views */,
 				2B347E8A261E0E3F00C063E8 /* Model */,
@@ -209,6 +217,7 @@
 			packageProductDependencies = (
 				2BC81BF325E57FBC003EE8C0 /* SwiftImage */,
 				2B347EA3261E0F9700C063E8 /* SwiftyDraw */,
+				2BB154992630707A0018BBF2 /* Mantis */,
 			);
 			productName = "Honey Aggregator";
 			productReference = AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */;
@@ -284,6 +293,7 @@
 			packageReferences = (
 				2BC81BF225E57FBB003EE8C0 /* XCRemoteSwiftPackageReference "swift-image" */,
 				2B347EA2261E0F9700C063E8 /* XCRemoteSwiftPackageReference "SwiftyDraw" */,
+				2BB154982630707A0018BBF2 /* XCRemoteSwiftPackageReference "Mantis" */,
 			);
 			productRefGroup = AA09AC9625C31F2600351DA3 /* Products */;
 			projectDirPath = "";
@@ -332,6 +342,8 @@
 				2B347E95261E0EAE00C063E8 /* FrameCreatorSubViews.swift in Sources */,
 				2B347E96261E0EAE00C063E8 /* SettingsMenu.swift in Sources */,
 				0386FF50261F8FEC00275999 /* PopUpView.swift in Sources */,
+				2BB154A4263070CB0018BBF2 /* UIImageExtension.swift in Sources */,
+				2BB1549F263070A60018BBF2 /* CombClassifierSqInch.mlmodel in Sources */,
 				2B347E97261E0EAE00C063E8 /* FrameCreator.swift in Sources */,
 				2B347E8E261E0E8700C063E8 /* ImagePicker.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,
@@ -662,6 +674,14 @@
 				minimumVersion = 2.4.1;
 			};
 		};
+		2BB154982630707A0018BBF2 /* XCRemoteSwiftPackageReference "Mantis" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/guoyingtao/Mantis";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
 		2BC81BF225E57FBB003EE8C0 /* XCRemoteSwiftPackageReference "swift-image" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/koher/swift-image.git";
@@ -677,6 +697,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2B347EA2261E0F9700C063E8 /* XCRemoteSwiftPackageReference "SwiftyDraw" */;
 			productName = SwiftyDraw;
+		};
+		2BB154992630707A0018BBF2 /* Mantis */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BB154982630707A0018BBF2 /* XCRemoteSwiftPackageReference "Mantis" */;
+			productName = Mantis;
 		};
 		2BC81BF325E57FBC003EE8C0 /* SwiftImage */ = {
 			isa = XCSwiftPackageProductDependency;

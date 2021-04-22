@@ -27,9 +27,9 @@ class Hives: ObservableObject{
         
     // List of Template types for template selection
     let templates = [
-        Template(name: "Langstroff Deep", height: 19.0, width: 9.5625),
-        Template(name: "Langstroff Medium", height: 19.0, width: 6.625),
-        Template(name: "Langstroff Shallow", height: 19.0, width: 5.75)
+        Template(name: "Langstroff Deep", height: 9.5625, width: 19.0),
+        Template(name: "Langstroff Medium", height: 6.625, width: 19.0),
+        Template(name: "Langstroff Shallow", height: 5.75, width: 19.0)
     ]
     
     init(){

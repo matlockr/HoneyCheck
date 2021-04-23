@@ -10,6 +10,8 @@ import UIKit
 
 extension UIImage {
     
+    
+    // Takes a UIImage and resizes it to a certain size
     func resizeTo(size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         self.draw(in: CGRect(origin: CGPoint.zero, size: size))
@@ -18,6 +20,8 @@ extension UIImage {
         return resizedImage
     }
     
+    // Takes a UIImage and converts it into a CVPixelBuffer used
+    // for CoreML Classification
     func toBuffer() -> CVPixelBuffer? {
         let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue, kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue] as CFDictionary
         var pixelBuffer: CVPixelBuffer?

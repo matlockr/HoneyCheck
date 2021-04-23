@@ -535,8 +535,10 @@ struct PictureHandler: View{
     }
 }
 
+// Struct view for the Automated picture handler
 struct AutomatedPictureHandler: View{
-
+    
+    // Selected Template used for getting the height and width of image when slicing
     var selectedTemplate: Template
     
     // Binding variables that are connected to @State variables
@@ -555,17 +557,21 @@ struct AutomatedPictureHandler: View{
     // Bool used to trigger user choice for image selection
     @State private var shouldPresentActionSheet = false
     
+    // Done variable used for triggering the transition between states
     @State private var done: Bool = false
     
     var body: some View{
         VStack{
             
+            // Shows the image imported
             if (inputImage != nil){
                 Image(uiImage: inputImage!)
                     .resizable()
                     .scaledToFit()
             }
             
+            // Button for getting the image from the photo library
+            // or the camera.
             ZStack{
                 Image(systemName: "circle")
                     .font(.system(size: 70.0))
@@ -578,10 +584,12 @@ struct AutomatedPictureHandler: View{
                 self.shouldPresentActionSheet = true
             }
             
-            
+            // Navigation link button for cropping the image and doing the
+            // Automated image classification.
             if (inputImage != nil){
                 NavigationLink(destination: DetailedView(img: $inputImage, honeyTotal: $honeyTotal, done: $done, dimWidth: Int(selectedTemplate.width), dimHeight: Int(selectedTemplate.height)).onDisappear(perform: {
                     
+                    // When classification is done, then transition to next state
                     if done{
                         if state == STATE.Picture1Get{
                             state = STATE.Picture2Get
@@ -643,30 +651,42 @@ struct AutomatedPictureHandler: View{
     }
 }
 
+// DetailedView handles the cropping view and the image classification
 struct DetailedView: View {
 
+    // Used to dismiss the view when done
     @Environment(\.presentationMode) var presentation
 
+    // Binding variables from the AutomatedPictureHandler View
     @Binding var img: UIImage?
     @Binding var honeyTotal: Float
     @Binding var done: Bool
     
+    // Show/hide cropping view
     @State private var showCropper: Bool = true
+   
+    // Information about ML Classification
     @State private var predictionUIImages: [UIImage] = []
     @State private var honeyCount: Int = 0
+    @State private var imgCountCurrent: Int = 0
+    
+    // UI toggles for showing/hiding buttons and bars
     @State private var isLoading: Bool = false
     @State private var showLoadingBar: Bool = false
     @State private var showAnaylseButton: Bool = false
-    
-    @State private var imgCountCurrent: Int = 0
     @State private var downloadAmount = 0.0
+    
+    // Timer for handleing switching between ML classification and updating view
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
+    // Dimension of frame in integer form
     var dimWidth: Int
     var dimHeight: Int
 
     var body: some View{
         VStack{
+            // Loading bar based on how many images left to classify
+            // for better user feedback
             if showLoadingBar{
                 ProgressView("Analyzing Image", value: downloadAmount, total: Double(predictionUIImages.count))
                     .progressViewStyle(LinearProgressViewStyle(tint: .orange))
@@ -675,10 +695,13 @@ struct DetailedView: View {
                     .padding()
             }
             
+            // Analyze button appears when the cropping is done
             if showAnaylseButton {
                 Button(action: {
                     showAnaylseButton = false
                     showLoadingBar = true
+                    
+                    // DispatchQueue delays the code to allow the view to update
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         CropImage()
                     }
@@ -690,29 +713,34 @@ struct DetailedView: View {
             
         }.fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
             
+            // Show the cropping view
             ImageEditor(theImage: $img, isShowing: $showCropper)
         }
         .onReceive(timer){ _ in
+            // When we are in the classification stage, everytime the timer activates
+            // grab the next image to be classified.
             if isLoading{
                 downloadAmount = Double(imgCountCurrent)
                 if imgCountCurrent < predictionUIImages.count{
                     MLPrediction()
                 } else {
+                    // Stop timer if out of images to classify
                     timer.upstream.connect().cancel()
                 }
             }
         }
     }
-
+    
+    // Function for slicing the cropped image
     func CropImage(){
         
         // Slice images based on frame dimensions
         let originalImage = SwiftImage.Image<RGBA<UInt8>>(uiImage: img!)
-
         
         var croppingImgWidth: Int = originalImage.width
         var croppingImgHeight: Int = originalImage.height
         
+        // Set max width of slice based on what image width divisablilty
         for i in stride(from: originalImage.width, to: 0, by: -1){
             if i % dimWidth == 0{
                 croppingImgWidth = i
@@ -720,6 +748,7 @@ struct DetailedView: View {
             }
         }
         
+        // Set max height of slice based on what image width divisablilty
         for i in stride(from: originalImage.height, to: 0, by: -1){
             if i % dimHeight == 0{
                 croppingImgHeight = i
@@ -727,10 +756,13 @@ struct DetailedView: View {
             }
         }
         
+        // Get the amount of pixels the width and height would be
         let wPixels: Int = croppingImgWidth / dimWidth
         let hPixels: Int = croppingImgHeight / dimHeight
         
         
+        // Slice square inch sized images of the original image and append them
+        // to a list of UIImages
         for w in 0..<dimWidth{
             for h in 0..<dimHeight{
                 let slice: ImageSlice<RGBA<UInt8>> = originalImage[
@@ -740,43 +772,53 @@ struct DetailedView: View {
                 predictionUIImages.append(tmpImg)
             }
         }
+        // Start the loading process
         isLoading = true
     }
     
+    // Function for classifying a single square inch image
     func MLPrediction(){
         do{
+            
+            // Setup the ML model
             let config = MLModelConfiguration()
             let classifier = try CombClassifierSqInch(configuration: config)
-                
+            
+            // Resize the image
             let resizedImage = predictionUIImages[imgCountCurrent].resizeTo(size: CGSize(width: 299, height: 299))
+            
+            // Conver the UIImage to a CVPixelBuffer
             guard let buffer = resizedImage!.toBuffer() else {
                 print("ERROR when getting buffer")
                 return
             }
             
+            // Attempt to get a prediction from the ML model
             let output = try? classifier.prediction(image: buffer)
             
+            // Increment honeyCount if the image is labeled as "Honey"
             if output?.classLabel != nil && output!.classLabel == "Honey" {
                 honeyCount += 1
             }
             imgCountCurrent += 1
-        
             
         } catch {
         }
         
+        // Do the honey caluclation when all images are classified
         if imgCountCurrent + 1 == predictionUIImages.count{
             HoneyCalculation()
         }
     }
     
+    // Function for calculating the honey amount based on
     func HoneyCalculation(){
-        // Honey calculation
         let honeyPercent: Float = Float(honeyCount) / Float(predictionUIImages.count)
         
         let honeyLBPerSquareIn: Float = 0.033
         honeyTotal += (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
 
+        // Start the transistion to the next state
         done = true
         
         //Dismiss the view
@@ -784,9 +826,12 @@ struct DetailedView: View {
     }
 }
 
+// Struct UIView for connecting the Mantis Cropping view to SwiftUI
 struct ImageEditor: UIViewControllerRepresentable{
     typealias Coordinator = ImageEditorCoordinator
 
+    // Binding variables for the image being cropped and
+    // if the cropping view is showing.
     @Binding var theImage: UIImage?
     @Binding var isShowing: Bool
 
@@ -803,8 +848,11 @@ struct ImageEditor: UIViewControllerRepresentable{
     }
 }
 
+// ImageEditor Coordinator setup for using the Mantis Cropping View
 class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
-
+    
+    // Binding variables for the image being cropped and
+    // if the cropping view is showing.
     @Binding var theImage: UIImage?
     @Binding var isShowing: Bool
 

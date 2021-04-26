@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Mantis",
+        "repositoryURL": "https://github.com/guoyingtao/Mantis",
+        "state": {
+          "branch": null,
+          "revision": "d722a58f80c87b3324739548a99767f100c88e1a",
+          "version": "1.6.0"
+        }
+      },
+      {
         "package": "SwiftImage",
         "repositoryURL": "https://github.com/koher/swift-image.git",
         "state": {

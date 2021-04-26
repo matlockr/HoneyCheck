@@ -10,6 +10,9 @@
 import SwiftUI
 import SwiftyDraw
 import SwiftImage
+import Mantis
+import UIKit
+import CoreML
 
 // View for HiveCreator
 struct HiveCreator: View{
@@ -308,10 +311,7 @@ struct DrawingView: UIViewRepresentable{
 }
 
 struct PictureHandler: View{
-    
-    // Singleton object that holds list of hives
-    @EnvironmentObject var hives:Hives
-    
+        
     var selectedTemplate: Template
     
     // Binding variables that are connected to @State variables
@@ -535,3 +535,344 @@ struct PictureHandler: View{
     }
 }
 
+// Struct view for the Automated picture handler
+struct AutomatedPictureHandler: View{
+    
+    // Selected Template used for getting the height and width of image when slicing
+    var selectedTemplate: Template
+    
+    // Binding variables that are connected to @State variables
+    // in FrameCreator
+    @Binding var titleText: String
+    @Binding var state: STATE
+    @Binding var honeyTotal: Float
+    
+    // State variables for image handeling
+    @State private var showingImagePicker = false
+    @State private var inputImage : UIImage?
+    
+    // Bool used to trigger the camera in the ImagePicker
+    @State private var shouldPresentCamera = false
+    
+    // Bool used to trigger user choice for image selection
+    @State private var shouldPresentActionSheet = false
+    
+    // Done variable used for triggering the transition between states
+    @State private var done: Bool = false
+    
+    var body: some View{
+        VStack{
+            
+            // Shows the image imported
+            if (inputImage != nil){
+                Image(uiImage: inputImage!)
+                    .resizable()
+                    .scaledToFit()
+            }
+            
+            // Button for getting the image from the photo library
+            // or the camera.
+            ZStack{
+                Image(systemName: "circle")
+                    .font(.system(size: 70.0))
+                
+                Image(systemName: "camera")
+                    .font(.system(size: 40.0))
+            }
+            .onTapGesture {
+                // Will allow Action Sheet to be toggled on
+                self.shouldPresentActionSheet = true
+            }
+            
+            // Navigation link button for cropping the image and doing the
+            // Automated image classification.
+            if (inputImage != nil){
+                NavigationLink(destination: DetailedView(img: $inputImage, honeyTotal: $honeyTotal, done: $done, dimWidth: Int(selectedTemplate.width), dimHeight: Int(selectedTemplate.height)).onDisappear(perform: {
+                    
+                    // When classification is done, then transition to next state
+                    if done{
+                        if state == STATE.Picture1Get{
+                            state = STATE.Picture2Get
+                            titleText = "Frame Side B"
+                        } else if state == STATE.Picture2Get{
+                            state = STATE.Finalize
+                            titleText = "Finalize"
+                        }
+                    }
+                })
+                ){
+                    Text("Crop Image")
+                }
+                .padding()
+            }
+            
+        }
+    .sheet(isPresented: $showingImagePicker) {
+        
+        // This call to the constructor brings up the ImagePicker
+        // sourceType uses the ? to set up an if else condition for variable shouldPresentCamera: Bool
+        ImagePicker(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$inputImage)
+    }
+   
+    // Call to Action Sheet constructor isPresented is a Bool value which calls Binding<Bool> shouldPresentActionSheet
+    // Action Sheet lists buttons in top down order, i.e. Camera is at top, cancel is at bottom
+    .actionSheet(isPresented: $shouldPresentActionSheet) {
+        
+        // This creates the action sheet
+        () -> ActionSheet in
+        
+        // This gives the Action Sheet a title
+        // This gives the action sheet a message for the user to read
+        // The syntax "action:" is used to define any behavior that pressing a button will perform in the code
+        ActionSheet(title: Text("Choose mode"), message: Text("Please choose your preferred mode to set your profile image"), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
+        
+            // This will toggle the ImagePicker on
+            self.showingImagePicker = true
+            
+            // This will cause ImagePicker to toggle the camera on
+            self.shouldPresentCamera = true
+        }),
+        
+        // This creates a "Photo Library" button
+        ActionSheet.Button.default(Text("Photo Library"), action: {
+        
+            // This toggles the ImagePicker on
+            self.showingImagePicker = true
+            
+            // This prevents the camera from toggling on
+            self.shouldPresentCamera = false
+        }),
+        
+        // This creates a "Cancel" button
+        ActionSheet.Button.cancel()])
+        
+    }
+        
+    }
+}
+
+// DetailedView handles the cropping view and the image classification
+struct DetailedView: View {
+
+    // Used to dismiss the view when done
+    @Environment(\.presentationMode) var presentation
+
+    // Binding variables from the AutomatedPictureHandler View
+    @Binding var img: UIImage?
+    @Binding var honeyTotal: Float
+    @Binding var done: Bool
+    
+    // Show/hide cropping view
+    @State private var showCropper: Bool = true
+   
+    // Information about ML Classification
+    @State private var predictionUIImages: [UIImage] = []
+    @State private var honeyCount: Int = 0
+    @State private var imgCountCurrent: Int = 0
+    
+    // UI toggles for showing/hiding buttons and bars
+    @State private var isLoading: Bool = false
+    @State private var showLoadingBar: Bool = false
+    @State private var showAnaylseButton: Bool = false
+    @State private var downloadAmount = 0.0
+    
+    // Timer for handleing switching between ML classification and updating view
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+    
+    // Dimension of frame in integer form
+    var dimWidth: Int
+    var dimHeight: Int
+
+    var body: some View{
+        VStack{
+            // Loading bar based on how many images left to classify
+            // for better user feedback
+            if showLoadingBar{
+                ProgressView("Analyzing Image", value: downloadAmount, total: Double(predictionUIImages.count))
+                    .progressViewStyle(LinearProgressViewStyle(tint: .orange))
+                    //.progressViewStyle(CircularProgressViewStyle(tint: .orange))
+                    //.scaleEffect(2)
+                    .padding()
+            }
+            
+            // Analyze button appears when the cropping is done
+            if showAnaylseButton {
+                Button(action: {
+                    showAnaylseButton = false
+                    showLoadingBar = true
+                    
+                    // DispatchQueue delays the code to allow the view to update
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        CropImage()
+                    }
+                }){
+                    Text("Anaylze Image")
+                }
+            }
+            
+            
+        }.fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
+            
+            // Show the cropping view
+            ImageEditor(theImage: $img, isShowing: $showCropper)
+        }
+        .onReceive(timer){ _ in
+            // When we are in the classification stage, everytime the timer activates
+            // grab the next image to be classified.
+            if isLoading{
+                downloadAmount = Double(imgCountCurrent)
+                if imgCountCurrent < predictionUIImages.count{
+                    MLPrediction()
+                } else {
+                    // Stop timer if out of images to classify
+                    timer.upstream.connect().cancel()
+                }
+            }
+        }
+    }
+    
+    // Function for slicing the cropped image
+    func CropImage(){
+        
+        // Slice images based on frame dimensions
+        let originalImage = SwiftImage.Image<RGBA<UInt8>>(uiImage: img!)
+        
+        var croppingImgWidth: Int = originalImage.width
+        var croppingImgHeight: Int = originalImage.height
+        
+        // Set max width of slice based on what image width divisablilty
+        for i in stride(from: originalImage.width, to: 0, by: -1){
+            if i % dimWidth == 0{
+                croppingImgWidth = i
+                break
+            }
+        }
+        
+        // Set max height of slice based on what image width divisablilty
+        for i in stride(from: originalImage.height, to: 0, by: -1){
+            if i % dimHeight == 0{
+                croppingImgHeight = i
+                break
+            }
+        }
+        
+        // Get the amount of pixels the width and height would be
+        let wPixels: Int = croppingImgWidth / dimWidth
+        let hPixels: Int = croppingImgHeight / dimHeight
+        
+        
+        // Slice square inch sized images of the original image and append them
+        // to a list of UIImages
+        for w in 0..<dimWidth{
+            for h in 0..<dimHeight{
+                let slice: ImageSlice<RGBA<UInt8>> = originalImage[
+                    (w * wPixels)..<(w * wPixels + wPixels),
+                    (h * hPixels)..<(h * hPixels + hPixels)]
+                let tmpImg: UIImage = (SwiftImage.Image<RGBA<UInt8>>(slice)).uiImage
+                predictionUIImages.append(tmpImg)
+            }
+        }
+        // Start the loading process
+        isLoading = true
+    }
+    
+    // Function for classifying a single square inch image
+    func MLPrediction(){
+        do{
+            
+            // Setup the ML model
+            let config = MLModelConfiguration()
+            let classifier = try CombClassifierSqInch(configuration: config)
+            
+            // Resize the image
+            let resizedImage = predictionUIImages[imgCountCurrent].resizeTo(size: CGSize(width: 299, height: 299))
+            
+            // Conver the UIImage to a CVPixelBuffer
+            guard let buffer = resizedImage!.toBuffer() else {
+                print("ERROR when getting buffer")
+                return
+            }
+            
+            // Attempt to get a prediction from the ML model
+            let output = try? classifier.prediction(image: buffer)
+            
+            // Increment honeyCount if the image is labeled as "Honey"
+            if output?.classLabel != nil && output!.classLabel == "Honey" {
+                honeyCount += 1
+            }
+            imgCountCurrent += 1
+            
+        } catch {
+        }
+        
+        // Do the honey caluclation when all images are classified
+        if imgCountCurrent + 1 == predictionUIImages.count{
+            HoneyCalculation()
+        }
+    }
+    
+    // Function for calculating the honey amount based on
+    func HoneyCalculation(){
+        let honeyPercent: Float = Float(honeyCount) / Float(predictionUIImages.count)
+        
+        let honeyLBPerSquareIn: Float = 0.033
+        honeyTotal += (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
+
+        // Start the transistion to the next state
+        done = true
+        
+        //Dismiss the view
+        self.presentation.wrappedValue.dismiss()
+    }
+}
+
+// Struct UIView for connecting the Mantis Cropping view to SwiftUI
+struct ImageEditor: UIViewControllerRepresentable{
+    typealias Coordinator = ImageEditorCoordinator
+
+    // Binding variables for the image being cropped and
+    // if the cropping view is showing.
+    @Binding var theImage: UIImage?
+    @Binding var isShowing: Bool
+
+    func makeCoordinator() -> ImageEditorCoordinator {
+        return ImageEditorCoordinator(image: $theImage, isShowing: $isShowing)
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImageEditor>) -> Mantis.CropViewController {
+        let Editor = Mantis.cropViewController(image: theImage!)
+        Editor.delegate = context.coordinator
+        return Editor
+    }
+}
+
+// ImageEditor Coordinator setup for using the Mantis Cropping View
+class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
+    
+    // Binding variables for the image being cropped and
+    // if the cropping view is showing.
+    @Binding var theImage: UIImage?
+    @Binding var isShowing: Bool
+
+    init(image: Binding<UIImage?>, isShowing: Binding<Bool>){
+        _theImage = image
+        _isShowing = isShowing
+    }
+
+    func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation) {
+        theImage = cropped
+        isShowing = false
+    }
+
+    func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) { print("ERROR: Failed to crop") }
+
+    func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { isShowing = false }
+
+    func cropViewControllerDidBeginResize(_ cropViewController: CropViewController){}
+
+    func cropViewControllerDidEndResize(_ cropViewController: CropViewController, original: UIImage, cropInfo: CropInfo) {}
+
+    func cropViewControllerWillDismiss(_ cropViewController: CropViewController) {}
+}

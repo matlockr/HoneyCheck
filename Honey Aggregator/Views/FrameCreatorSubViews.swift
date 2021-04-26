@@ -319,6 +319,8 @@ struct PictureHandler: View{
     @Binding var titleText: String
     @Binding var state: STATE
     @Binding var tempHoneyAmount: Float
+    @Binding var sideAHoneyAmount: Float
+    @Binding var sideBHoneyAmount: Float
     
     // State variables for image handeling
     @State private var showingImagePicker = false
@@ -519,6 +521,12 @@ struct PictureHandler: View{
             // Caluclate the honey amount for one side of the frame and add it
             // to the tempHoneyAmount
             tempHoneyAmount += (frameWidth * frameHeight * honeyPercent * honeyLBPerSquareIn)
+            
+            if state == .Picture1Get{
+                sideAHoneyAmount = tempHoneyAmount
+            } else {
+                sideBHoneyAmount = tempHoneyAmount - sideAHoneyAmount
+            }
                         
             EndPictureState()
         } else {

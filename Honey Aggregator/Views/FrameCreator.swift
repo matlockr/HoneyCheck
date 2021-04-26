@@ -69,13 +69,10 @@ struct FrameCreator: View {
             } else if state == STATE.Picture1Get{
                 
                 if showDrawingPictureHandler{
-                    PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount)
+                    PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 } else {
                     AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount)
                 }
-                // Show the PictureHandler view
-                PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount).environmentObject(hives)
-                
                     
                 //Show a current calculation value to monitor changes in the frame calculation. Might remove due to no need to see during state 1, but could be helpful for debugging for now. 
                 if hives.isMetric {
@@ -89,12 +86,10 @@ struct FrameCreator: View {
             } else if state == STATE.Picture2Get{
                 
                 if showDrawingPictureHandler{
-                    PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount)
+                    PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 } else {
                     AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount)
                 }
-                // Show the PictureHandler view
-                PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount).environmentObject(hives)
                 
                 //Show a current calculation value to monitor changes in the frame calculation.
                 if hives.isMetric {

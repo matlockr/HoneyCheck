@@ -31,6 +31,8 @@ struct FrameCreator: View {
     // Hold the honey amount for the frame so it can be used when
     // creating the frame at the end state
     @State private var tempHoneyAmount: Float = 0.0
+    @State private var frameSideAHoneyAmount: Float = 0.0
+    @State private var frameSideBHoneyAmount: Float = 0.0
     
     // Turn on/off image processing by drawing
     @State private var showDrawingPictureHandler: Bool = false
@@ -71,6 +73,8 @@ struct FrameCreator: View {
                 } else {
                     AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount)
                 }
+                // Show the PictureHandler view
+                PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount).environmentObject(hives)
                 
                     
                 //Show a current calculation value to monitor changes in the frame calculation. Might remove due to no need to see during state 1, but could be helpful for debugging for now. 
@@ -89,7 +93,8 @@ struct FrameCreator: View {
                 } else {
                     AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount)
                 }
-
+                // Show the PictureHandler view
+                PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount).environmentObject(hives)
                 
                 //Show a current calculation value to monitor changes in the frame calculation.
                 if hives.isMetric {
@@ -129,11 +134,58 @@ struct FrameCreator: View {
                 }
             }
         }
-        // Navigation bar title text
-        .navigationBarItems(leading: Text("\(titleText)"))
+        .navigationBarTitle("\(titleText)")
         // Navigation toolbar changes based on what state the View is in
+        .navigationBarItems(leading:
+            Button(action: {
+                // Dismiss the view and return to the ContentView view
+                presentationMode.wrappedValue.dismiss()
+            }){
+                Text("Home")
+            }
+        )
         .toolbar{
             ToolbarItemGroup(placement: .navigationBarTrailing){
+                Button(action: {
+                    switch state {
+                    case .SelectHive:
+                        // Dismiss the view and return to the ContentView view
+                        presentationMode.wrappedValue.dismiss()
+                        break
+                    case .SelectBox:
+                        state = .SelectHive
+                        titleText = "Select Hive"
+                        break
+                    case .SelectFrame:
+                        state = .SelectBox
+                        titleText = "Select Box"
+                        break
+                    case .SelectTemplate:
+                        state = .SelectFrame
+                        titleText = "Frames"
+                        break
+                    case .CustomTemplate:
+                        state = .SelectTemplate
+                        titleText = "Select Template"
+                        break
+                    case .Picture1Get:
+                        state = .SelectTemplate
+                        titleText = "Custom Template"
+                        break
+                    case .Picture2Get:
+                        state = .Picture1Get
+                        tempHoneyAmount = 0.0
+                        titleText = "Side A Picture"
+                        break
+                    case .Finalize:
+                        state = .Picture2Get
+                        tempHoneyAmount -= frameSideBHoneyAmount
+                        titleText = "Side B Picture"
+                        break
+                    }
+                }){
+                    Image(systemName: "arrowshape.turn.up.left.fill").imageScale(.large)
+                }
                 if state == STATE.SelectBox || state == STATE.SelectFrame{
                     Button(action: {
                         if state == STATE.SelectBox{
@@ -153,6 +205,7 @@ struct FrameCreator: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

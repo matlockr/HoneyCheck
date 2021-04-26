@@ -109,13 +109,9 @@ class Hives: ObservableObject{
                     readOutString += "\t\tFrame: \(k) \n"
                     
                     if isMetric{
-                        readOutString += "\t\t\tHeight: \(hiveList[i].beeBoxes[j].frames[k].height * 25.4) mm\n"
-                        readOutString += "\t\t\tWidth: \(hiveList[i].beeBoxes[j].frames[k].width * 25.4) mm\n"
-                        readOutString += "\t\t\tHoney Total: \(hiveList[i].beeBoxes[j].frames[k].honeyTotal / 2.20) kg\n"
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[i].beeBoxes[j].frames[k].honeyTotal / 2.20)) kg\n"
                     } else {
-                        readOutString += "\t\t\tHeight: \(hiveList[i].beeBoxes[j].frames[k].height) in\n"
-                        readOutString += "\t\t\tWidth: \(hiveList[i].beeBoxes[j].frames[k].width) in\n"
-                        readOutString += "\t\t\tHoney Total: \(hiveList[i].beeBoxes[j].frames[k].honeyTotal) lbs\n"
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[i].beeBoxes[j].frames[k].honeyTotal)) lbs\n"
                     }
                 }
             }

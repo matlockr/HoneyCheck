@@ -68,9 +68,11 @@ struct FrameCreator: View {
                 
                 //Show a current calculation value to monitor changes in the frame calculation. Might remove due to no need to see during state 1, but could be helpful for debugging for now. 
                 if hives.isMetric {
-                    Text("Current Calculation: \(tempHoneyAmount / 2.2) kg")
+                    Text("Current Calculation: \(String(format: "%.2f", tempHoneyAmount / 2.2)) kg")
+                        .padding()
                 } else {
-                    Text("Current Calculation: \(tempHoneyAmount) lbs")
+                    Text("Current Calculation: \(String(format: "%.2f", tempHoneyAmount)) lbs")
+                        .padding()
                 }
                 
             } else if state == STATE.Picture2Get{
@@ -80,9 +82,11 @@ struct FrameCreator: View {
                 
                 //Show a current calculation value to monitor changes in the frame calculation.
                 if hives.isMetric {
-                    Text("Current Calculation: \(tempHoneyAmount / 2.2) kg")
+                    Text("Current Calculation: \(String(format: "%.2f", tempHoneyAmount / 2.2)) kg")
+                        .padding()
                 } else {
-                    Text("Current Calculation: \(tempHoneyAmount) lbs")
+                    Text("Current Calculation: \(String(format: "%.2f", tempHoneyAmount)) lbs")
+                        .padding()
                 }
                 
             } else if state == STATE.Finalize{
@@ -92,13 +96,13 @@ struct FrameCreator: View {
                 Text("Hive Name: \(selectedHive!.hiveName)")
                 Text("Box Number: \(selectedBox!.idx)")
                 if hives.isMetric{
-                    Text("Frame height: \(selectedTemplate!.height * 25.4) mm")
-                    Text("Frame Width: \(selectedTemplate!.width * 25.4) mm")
-                    Text("Honey Amount: \(tempHoneyAmount / 2.2) kg")
+                    Text("Frame height: \(String(format: "%.2f", selectedTemplate!.height * 25.4)) mm")
+                    Text("Frame Width: \(String(format: "%.2f", selectedTemplate!.width * 25.4)) mm")
+                    Text("Honey Amount: \(String(format: "%.2f", tempHoneyAmount / 2.2)) kg")
                 } else {
-                    Text("Frame height: \(selectedTemplate!.height) in")
-                    Text("Frame Width: \(selectedTemplate!.width) in")
-                    Text("Honey Amount: \(tempHoneyAmount) lbs")
+                    Text("Frame height: \(String(format: "%.2f", selectedTemplate!.height)) in")
+                    Text("Frame Width: \(String(format: "%.2f", selectedTemplate!.width)) in")
+                    Text("Honey Amount: \(String(format: "%.2f", tempHoneyAmount)) lbs")
                 }
                 
                 Button(action: {

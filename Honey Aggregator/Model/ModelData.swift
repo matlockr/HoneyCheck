@@ -208,6 +208,12 @@ class Hives: ObservableObject{
         }
 
     }
+    //This removes all hiveList data Test for whether this is only current data
+    func reset(){
+        hiveList.removeAll()
+        save()
+        readOut = getReadOut()
+    }
     
     // Add a hive to the hives list
     func addHive(name: String){

@@ -21,6 +21,7 @@ struct HiveCreator: View{
     
     // Alert Var
     @State var showAlert = false
+    @State var tmpHive: Hive
     
     // Binding variables that are connected to @State variables
     // in FrameCreator
@@ -87,12 +88,13 @@ struct HiveCreator: View{
                         // Tapping the trash icon will delete the hive
                         Image(systemName: "trash.fill")
                             .onTapGesture {
+                                tmpHive = hive
                                 self.showAlert.toggle()
                             }
                     }
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
-                            hives.deleteHive(hiveid: hive.id)
+                            hives.deleteHive(hiveid: tmpHive.id)
                             hives.save()
                         }
                         let sButton = Alert.Button.cancel(Text("Cancel"))

@@ -19,9 +19,9 @@ struct HiveCreator: View{
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
-    // Alert Var
+    // Alert Vars
     @State var showAlert = false
-    @State var tmpHive: Hive
+    @State var tmpHive: Hive?
     
     // Binding variables that are connected to @State variables
     // in FrameCreator
@@ -94,7 +94,7 @@ struct HiveCreator: View{
                     }
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
-                            hives.deleteHive(hiveid: tmpHive.id)
+                            hives.deleteHive(hiveid: tmpHive!.id)
                             hives.save()
                         }
                         let sButton = Alert.Button.cancel(Text("Cancel"))
@@ -111,6 +111,10 @@ struct BoxCreator: View{
     
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
+    
+    // Alert Vars
+    @State var showAlert = false
+    @State var tmpBox: BeeBox?
     
     var selectedHive: Hive
     
@@ -140,9 +144,18 @@ struct BoxCreator: View{
                         // Tapping the trash icon will delete the hive
                         Image(systemName: "trash.fill")
                             .onTapGesture {
-                                hives.deleteBox(boxid: box.id)
-                                hives.save()
+                                tmpBox = box
+                                self.showAlert.toggle()
                             }
+                    }
+                    .alert(isPresented: $showAlert) { () -> Alert in
+                        let pButton = Alert.Button.destructive(Text("Delete")){
+                            hives.deleteBox(boxid: tmpBox!.id)
+                            hives.save()
+                        }
+                        let sButton = Alert.Button.cancel(Text("Cancel"))
+                        return Alert(title: Text("WARNING"), message: Text("Are you sure you want to delete this Box?"),
+                                     primaryButton: pButton, secondaryButton: sButton)
                     }
                 }
             }
@@ -154,6 +167,11 @@ struct FrameSelector: View{
     
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
+    
+    // Alert Vars
+    @State var showAlert = false
+    @State var tmpFrame: Frame?
+    
     
     var selectedBox: BeeBox
     
@@ -176,9 +194,19 @@ struct FrameSelector: View{
                         // Tapping the trash icon will delete the frame
                         Image(systemName: "trash.fill")
                             .onTapGesture {
-                                hives.deleteFrame(frameid: frame.id)
-                                hives.save()
+                                tmpFrame = frame
+                                self.showAlert.toggle()
+                                
                             }
+                    }
+                    .alert(isPresented: $showAlert) { () -> Alert in
+                        let pButton = Alert.Button.destructive(Text("Delete")){
+                            hives.deleteFrame(frameid: tmpFrame!.id)
+                            hives.save()
+                        }
+                        let sButton = Alert.Button.cancel(Text("Cancel"))
+                        return Alert(title: Text("WARNING"), message: Text("Are you sure you want to delete this Frame?"),
+                                     primaryButton: pButton, secondaryButton: sButton)
                     }
                 }
             }

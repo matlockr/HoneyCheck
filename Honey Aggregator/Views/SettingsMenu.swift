@@ -11,7 +11,7 @@ struct SettingsMenu: View {
     
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
-    
+    @State private var showingActionSheet = false
     // This is just used for being able to dissmiss the view in code
     @Environment(\.presentationMode) var presentationMode
         
@@ -23,6 +23,7 @@ struct SettingsMenu: View {
                 .font(.title2)
             
             HStack{
+                
                 Button(action: {
                     hives.isMetric = false
                     hives.readOut = hives.getReadOut()
@@ -68,8 +69,21 @@ struct SettingsMenu: View {
                 Text("2018")
                 Text("2019")
             }
+            Button(action: {
+                self.showingActionSheet = true
+                // Dismiss the view and return to the ContentView view
+                presentationMode.wrappedValue.dismiss()
+            }){
+                Text("Clear Current Hives")
+            }
         }
-        .navigationBarItems(leading: Text("Honey Aggregator"))
+        .navigationBarItems(leading: Text("Honey Aggregator")).actionSheet(isPresented: $showingActionSheet) {
+                ActionSheet(title: Text("Change background"), message: Text("Select a new color"), buttons: [
+                .default(Text("Confirm Reset?")) { hives.reset() },
+                 .cancel()
+                    ]
+                )
+            }
     }
     
 }

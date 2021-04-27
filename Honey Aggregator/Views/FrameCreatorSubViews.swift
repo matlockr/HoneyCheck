@@ -308,7 +308,7 @@ struct DrawingView: UIViewRepresentable{
 }
 
 struct PictureHandler: View{
-    
+    @State private var showPopOver: Bool = false
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
@@ -334,7 +334,6 @@ struct PictureHandler: View{
     enum DrawingState {
         case GetPicture, DrawFrame, DrawHoney
     }
-    
     // Set the starting sub state for the DrawingView
     @State private var subState = DrawingState.GetPicture
     
@@ -348,7 +347,7 @@ struct PictureHandler: View{
     
     @State var honeyPercent: Float = 0.0
     
-    var body: some View{
+    var body: some View {
         VStack{
             if subState == DrawingState.GetPicture{
                 // Display the image picker button icon
@@ -379,6 +378,18 @@ struct PictureHandler: View{
                     .padding()
                 
                 HStack{
+                    //Button with the other drawing tools for the tutorial popover view that describes the usage of the drawing program to the user. 
+                    Button("Tutorial") {
+                        showPopOver.toggle()
+                    }
+                    .popover(isPresented: $showPopOver) {
+                        Text("To calculatue the amount of honey you will need to draw in two sections. \n\n First: Draw with the red pen around the edges of the frame and hit done to go to the next step. \n\n Second: Draw with the blue pen around where honey should be present. \n\n You can edit the size of the pen on both steps with the slider.")
+                        .padding()
+                        .frame(width:320, height: 400)
+                        Button("OK") {
+                            showPopOver.toggle()
+                        }
+                    }
                     // Undo drawing button
                     Button(action: {
                         drawView.undo()
@@ -441,7 +452,7 @@ struct PictureHandler: View{
             // This creates a "Cancel" button
             ActionSheet.Button.cancel()])
         }
-
+        
     }
     
     // Change the drawing state

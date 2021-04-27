@@ -19,6 +19,9 @@ struct HiveCreator: View{
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
+    // Alert Var
+    @State var showAlert = false
+    
     // Binding variables that are connected to @State variables
     // in FrameCreator
     @Binding var state: STATE
@@ -84,9 +87,17 @@ struct HiveCreator: View{
                         // Tapping the trash icon will delete the hive
                         Image(systemName: "trash.fill")
                             .onTapGesture {
-                                hives.deleteHive(hiveid: hive.id)
-                                hives.save()
+                                self.showAlert.toggle()
                             }
+                    }
+                    .alert(isPresented: $showAlert) { () -> Alert in
+                        let pButton = Alert.Button.destructive(Text("Delete")){
+                            hives.deleteHive(hiveid: hive.id)
+                            hives.save()
+                        }
+                        let sButton = Alert.Button.cancel(Text("Cancel"))
+                        return Alert(title: Text("WARNING"), message: Text("Are you sure you want to delete this Hive?"),
+                                     primaryButton: pButton, secondaryButton: sButton)
                     }
                 }
             }
@@ -884,3 +895,59 @@ class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
 
     func cropViewControllerWillDismiss(_ cropViewController: CropViewController) {}
 }
+
+
+// Struct for alerts created for testing purposes. Ignore for now.
+
+//struct Alert {
+//    static func present(title: String?, message: String, actions: Alert.Action..., from controller: UIViewController) {
+//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//        for action in actions {
+//            alertController.addAction(action.alertAction)
+//        }
+//        controller.present(alertController, animated: true, completion: nil)
+//    }
+//}
+//
+//extension Alert{
+//    enum Action{
+//        case delete(handler: (() -> Void)?)
+//        case cancel(handler: (() -> Void)?)
+//
+//        private var title: String {
+//            switch self {
+//            case .delete:
+//                return "Delete"
+//            case .cancel:
+//                return "Cancel"
+//            }
+//        }
+//
+//        private var handler: (() -> Void)? {
+//            switch self {
+//            case .delete(let handler):
+//                return handler
+//            case .cancel:
+//                return nil
+//            }
+//        }
+//
+//        var alertAction: UIAlertAction {
+//            return UIAlertAction(title: title, style: .default, handler: { _ in
+//                if let handler = self.handler {
+//                    handler()
+//                }
+//            })
+//        }
+//    }
+//}
+
+
+//Alert.present(
+//    title: "WARNING",
+//    message: "Are you sure you want to delete this Hive?",
+//    actions: .delete(handler: {
+//        hives.deleteHive(hiveid: hive.id)
+//        hives.save()
+//    }), .cancel(handler: nil),
+//    from: self)

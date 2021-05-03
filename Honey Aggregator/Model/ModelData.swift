@@ -95,7 +95,10 @@ class Hives: ObservableObject{
             fatalError("Couldn't save data to \(fileName)")
         }
     }
-    
+    //This function creates a .json of the current hive and archives it.
+    func archive(){
+        
+    }
     // Create a string based on the information stored in the hive to show
     // on the main page for debug purposes.
     func getReadOut() -> String{

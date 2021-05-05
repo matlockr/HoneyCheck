@@ -78,7 +78,7 @@ struct SettingsMenu: View {
             }
         }
         .navigationBarItems(leading: Text("Honey Aggregator")).actionSheet(isPresented: $showingActionSheet) {
-                ActionSheet(title: Text("Change background"), message: Text("Select a new color"), buttons: [
+                ActionSheet(title: Text("Clear Hive Data"), buttons: [
                 .default(Text("Confirm Reset?")) { hives.reset() },
                  .cancel()
                     ]

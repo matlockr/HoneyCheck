@@ -81,13 +81,12 @@ class Hives: ObservableObject{
         do {
             // Setup the encoder
             let encoder = JSONEncoder()
-            
+            var fileURL: URL
             // Attempt to encode the hivelist data
             let data = try encoder.encode(hiveList)
             
             // Get the correct directory path to save the hivelist data
-            let fileURL = dir.appendingPathComponent(fileName)
-            
+            fileURL = dir.appendingPathComponent(fileName)
             // Attempt to write to file
             try data.write(to: fileURL)
             
@@ -96,8 +95,51 @@ class Hives: ObservableObject{
         }
     }
     //This function creates a .json of the current hive and archives it.
-    func archive(){
-        
+    func archive(file:String){
+        do {
+            var contingency = ""
+            if file.isEmpty{
+                var hasher = Hasher()
+                file.hash(into: &hasher)
+                let today = "\(Date())".replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "").replacingOccurrences(of: ":", with: "").replacingOccurrences(of: "+", with: "")
+                let hashIntoString = "\(hasher.finalize())"
+                    contingency = "\(hashIntoString)date\(today).json".replacingOccurrences(of: "-", with: "")
+            }
+            else if !file.contains(".json"){
+                if contingency.isEmpty{
+                    contingency = "\(file).json"
+                }
+            }
+            if contingency.isEmpty{
+                // Setup the encoder
+                let encoder = JSONEncoder()
+                
+                // Attempt to encode the hivelist data
+                let data = try encoder.encode(hiveList)
+                
+                // Get the correct directory path to save the hivelist data
+                let fileURL = dir.appendingPathComponent(file)
+                
+                // Attempt to write to file
+                try data.write(to: fileURL)
+            }
+            else{
+                // Setup the encoder
+                let encoder = JSONEncoder()
+                
+                // Attempt to encode the hivelist data
+                let data = try encoder.encode(hiveList)
+                
+                // Get the correct directory path to save the hivelist data
+                let fileURL = dir.appendingPathComponent(contingency)
+                
+                // Attempt to write to file
+                try data.write(to: fileURL)
+            }
+            
+        } catch {
+            fatalError("Couldn't archive data)")
+        }
     }
     // Create a string based on the information stored in the hive to show
     // on the main page for debug purposes.

@@ -88,7 +88,7 @@ struct SettingsMenu: View {
                 //presentationMode.wrappedValue.dismiss()
             }){
                 Text("Clear Current Hives")
-            }
+            }.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         }.sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
             switch item {
             case .reset:

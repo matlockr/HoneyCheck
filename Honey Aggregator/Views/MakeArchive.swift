@@ -15,7 +15,7 @@ struct MakeArchive: View {
     var body: some View {
         VStack( content: {
             Spacer()
-            Text("Do you want to archive the season?  You can't edit it once it is archived.").padding()
+            Text("Do you want to archive the season?  You can't edit it once it is archived.").fontWeight(.semibold).padding()
             Spacer()
             TextField("Name this season", text: $seasonName).padding()
             Button(action: {

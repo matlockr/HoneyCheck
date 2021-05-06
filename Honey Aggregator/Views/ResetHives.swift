@@ -13,7 +13,7 @@ struct ResetHives: View {
     var body: some View {
         VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 20, content: {
             
-            Text("Confirm Reset?")
+            Text("Confirm Reset?").fontWeight(.semibold)
             Button(action: {
                 hives.reset()
                 self.presentationMode.wrappedValue.dismiss()

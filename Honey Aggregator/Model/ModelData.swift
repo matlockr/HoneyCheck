@@ -3,7 +3,8 @@
 //  Honey_Aggregator
 //
 //  Created by Robert Matlock on 3/19/21.
-//
+//  Special thanks to Sergey Kargopolov
+//  https://www.appsdeveloperblog.com/check-if-a-file-exist/
 
 import Foundation
 

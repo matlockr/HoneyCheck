@@ -572,7 +572,7 @@ struct PictureHandler: View{
             
             let frameHeight: Float = selectedTemplate.height
             let frameWidth: Float = selectedTemplate.width
-            let honeyLBPerSquareIn: Float = 0.033
+            let honeyLBPerSquareIn: Float = 0.02727
             
             // Caluclate the honey amount for one side of the frame and add it
             // to the tempHoneyAmount
@@ -610,6 +610,8 @@ struct AutomatedPictureHandler: View{
     @Binding var titleText: String
     @Binding var state: STATE
     @Binding var honeyTotal: Float
+    @Binding var sideAHoneyAmount: Float
+    @Binding var sideBHoneyAmount: Float
     
     // State variables for image handeling
     @State private var showingImagePicker = false
@@ -651,7 +653,7 @@ struct AutomatedPictureHandler: View{
             // Navigation link button for cropping the image and doing the
             // Automated image classification.
             if (inputImage != nil){
-                NavigationLink(destination: DetailedView(img: $inputImage, honeyTotal: $honeyTotal, done: $done, dimWidth: Int(selectedTemplate.width), dimHeight: Int(selectedTemplate.height)).onDisappear(perform: {
+                NavigationLink(destination: DetailedView(img: $inputImage, honeyTotal: $honeyTotal, done: $done, sideAHoneyAmount: $sideAHoneyAmount, sideBHoneyAmount: $sideBHoneyAmount, state: state, dimWidth: Int(selectedTemplate.width), dimHeight: Int(selectedTemplate.height)).onDisappear(perform: {
                     
                     // When classification is done, then transition to next state
                     if done{
@@ -725,6 +727,9 @@ struct DetailedView: View {
     @Binding var img: UIImage?
     @Binding var honeyTotal: Float
     @Binding var done: Bool
+    @Binding var sideAHoneyAmount: Float
+    @Binding var sideBHoneyAmount: Float
+    var state: STATE
     
     // Show/hide cropping view
     @State private var showCropper: Bool = true
@@ -786,7 +791,11 @@ struct DetailedView: View {
             if isLoading{
                 downloadAmount = Double(imgCountCurrent)
                 if imgCountCurrent < predictionUIImages.count{
-                    MLPrediction()
+                    if imgCountCurrent + 9 < predictionUIImages.count{
+                        MLPrediction(batch: true)
+                    } else{
+                        MLPrediction(batch: false)
+                    }
                 } else {
                     // Stop timer if out of images to classify
                     timer.upstream.connect().cancel()
@@ -841,37 +850,56 @@ struct DetailedView: View {
     }
     
     // Function for classifying a single square inch image
-    func MLPrediction(){
+    func MLPrediction(batch: Bool){
         do{
             
             // Setup the ML model
             let config = MLModelConfiguration()
             let classifier = try CombClassifierSqInch(configuration: config)
             
-            // Resize the image
-            let resizedImage = predictionUIImages[imgCountCurrent].resizeTo(size: CGSize(width: 299, height: 299))
-            
-            // Conver the UIImage to a CVPixelBuffer
-            guard let buffer = resizedImage!.toBuffer() else {
-                print("ERROR when getting buffer")
-                return
+            if batch{
+                for i in 0..<10{
+                    // Resize the image
+                    let resizedImage = predictionUIImages[imgCountCurrent + i].resizeTo(size: CGSize(width: 299, height: 299))
+                    
+                    // Conver the UIImage to a CVPixelBuffer
+                    guard let buffer = resizedImage!.toBuffer() else {
+                        print("ERROR when getting buffer")
+                        return
+                    }
+                    
+                    // Attempt to get a prediction from the ML model
+                    let output = try? classifier.prediction(image: buffer)
+                    
+                    // Increment honeyCount if the image is labeled as "Honey"
+                    if output?.classLabel != nil && output!.classLabel == "Honey" {
+                        honeyCount += 1
+                    }
+                }
+                imgCountCurrent += 10
+            } else {
+                for i in 0..<predictionUIImages.count-imgCountCurrent{
+                    // Resize the image
+                    let resizedImage = predictionUIImages[imgCountCurrent + i].resizeTo(size: CGSize(width: 299, height: 299))
+                    
+                    // Conver the UIImage to a CVPixelBuffer
+                    guard let buffer = resizedImage!.toBuffer() else {
+                        print("ERROR when getting buffer")
+                        return
+                    }
+                    
+                    // Attempt to get a prediction from the ML model
+                    let output = try? classifier.prediction(image: buffer)
+                    
+                    // Increment honeyCount if the image is labeled as "Honey"
+                    if output?.classLabel != nil && output!.classLabel == "Honey" {
+                        honeyCount += 1
+                    }
+                }
+                imgCountCurrent = predictionUIImages.count
+                HoneyCalculation()
             }
-            
-            // Attempt to get a prediction from the ML model
-            let output = try? classifier.prediction(image: buffer)
-            
-            // Increment honeyCount if the image is labeled as "Honey"
-            if output?.classLabel != nil && output!.classLabel == "Honey" {
-                honeyCount += 1
-            }
-            imgCountCurrent += 1
-            
         } catch {
-        }
-        
-        // Do the honey caluclation when all images are classified
-        if imgCountCurrent + 1 == predictionUIImages.count{
-            HoneyCalculation()
         }
     }
     
@@ -879,11 +907,17 @@ struct DetailedView: View {
     func HoneyCalculation(){
         let honeyPercent: Float = Float(honeyCount) / Float(predictionUIImages.count)
         
-        let honeyLBPerSquareIn: Float = 0.033
+        let honeyLBPerSquareIn: Float = 0.02727
         honeyTotal += (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
 
         // Start the transistion to the next state
         done = true
+        
+        if state == .Picture1Get{
+            sideAHoneyAmount = (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
+        } else {
+            sideBHoneyAmount = (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
+        }
         
         //Dismiss the view
         self.presentation.wrappedValue.dismiss()

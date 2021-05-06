@@ -34,7 +34,9 @@ struct Frame: Hashable, Codable, Identifiable {
     var idx: Int
     var height: Float
     var width: Float
-    var honeyTotal: Float
+    var honeyTotalSideA: Float
+    var honeyTotalSideB: Float
+    var dateMade: String
     
 }
 

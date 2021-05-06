@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		038236D92643252B005FE94C /* ResetHives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038236D82643252B005FE94C /* ResetHives.swift */; };
+		038236DD26432FBF005FE94C /* MakeArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038236DC26432FBF005FE94C /* MakeArchive.swift */; };
 		0386FF50261F8FEC00275999 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0386FF4F261F8FEC00275999 /* PopUpView.swift */; };
 		2B347E8E261E0E8700C063E8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E8D261E0E8700C063E8 /* ImagePicker.swift */; };
 		2B347E95261E0EAE00C063E8 /* FrameCreatorSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E92261E0EAE00C063E8 /* FrameCreatorSubViews.swift */; };
@@ -46,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		038236D82643252B005FE94C /* ResetHives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetHives.swift; sourceTree = "<group>"; };
+		038236DC26432FBF005FE94C /* MakeArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeArchive.swift; sourceTree = "<group>"; };
 		0386FF4F261F8FEC00275999 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		2B347E8D261E0E8700C063E8 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2B347E92261E0EAE00C063E8 /* FrameCreatorSubViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCreatorSubViews.swift; sourceTree = "<group>"; };
@@ -116,6 +120,8 @@
 				2B347E94261E0EAE00C063E8 /* FrameCreator.swift */,
 				2B347E92261E0EAE00C063E8 /* FrameCreatorSubViews.swift */,
 				2B347E93261E0EAE00C063E8 /* SettingsMenu.swift */,
+				038236DC26432FBF005FE94C /* MakeArchive.swift */,
+				038236D82643252B005FE94C /* ResetHives.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,11 +345,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B347E9E261E0ECD00C063E8 /* Structs.swift in Sources */,
+				038236D92643252B005FE94C /* ResetHives.swift in Sources */,
 				2B347E95261E0EAE00C063E8 /* FrameCreatorSubViews.swift in Sources */,
 				2B347E96261E0EAE00C063E8 /* SettingsMenu.swift in Sources */,
 				0386FF50261F8FEC00275999 /* PopUpView.swift in Sources */,
 				2BB154A4263070CB0018BBF2 /* UIImageExtension.swift in Sources */,
 				2BB1549F263070A60018BBF2 /* CombClassifierSqInch.mlmodel in Sources */,
+				038236DD26432FBF005FE94C /* MakeArchive.swift in Sources */,
 				2B347E97261E0EAE00C063E8 /* FrameCreator.swift in Sources */,
 				2B347E8E261E0E8700C063E8 /* ImagePicker.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,

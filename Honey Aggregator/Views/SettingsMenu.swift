@@ -98,7 +98,7 @@ struct SettingsMenu: View {
             }){
                 Text("Clear Current Hives")
             }.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-        }            .padding(.bottom)
+                .padding(.bottom)
         }
         .fileExporter(isPresented: $showExportSheet, document: document, contentType: UTType.commaSeparatedText){ result in
             switch result {
@@ -107,6 +107,7 @@ struct SettingsMenu: View {
             case .failure(let error):
                 print(error.localizedDescription)
           }
+        }
         .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
           switch item {
           case .reset:
@@ -123,11 +124,11 @@ struct SettingsMenu: View {
                 )
             }
             }*/
-    .onAppear(perform: {
-          isMetric = hives.isMetric
-          isDrawingPictureHandler = hives.isDrawingHandler
-      })
-    
+        .onAppear(perform: {
+              isMetric = hives.isMetric
+              isDrawingPictureHandler = hives.isDrawingHandler
+          })
+    }
 }
 
 struct SettingsMenu_Previews: PreviewProvider {

@@ -3,13 +3,24 @@
 //  Honey_Agg
 //
 //  Created by Robert Matlock on 3/20/21.
-//
-
+//  Special thanks to Paul Hudson
+//   https://www.hackingwithswift.com/quick-start/swiftui/enabling-and-disabling-elements-in-forms
+//  Special thanks to Andrew Jackson
+//  https://medium.com/@codechimp_org/implementing-multiple-action-sheets-from-toolbar-buttons-with-swiftui-ce3bce2b97cb
 import SwiftUI
 import UniformTypeIdentifiers
 
 struct SettingsMenu: View {
-    
+    //The enum is used to create multiple action sheets
+    enum Sheets: Identifiable {
+            case reset, archiveMake
+
+            var id: Int {
+                self.hashValue
+            }
+        }
+    //activeSheet is used to add child sheets
+    @State var activeSheet: Sheets?
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     @State private var showingActionSheet = false
@@ -47,6 +58,7 @@ struct SettingsMenu: View {
             //Start new season button
             Button(action: {
                 print("Start New Season Clicked")
+                self.activeSheet = .archiveMake
             }){
                 Text("Start New Season")
             }
@@ -79,13 +91,14 @@ struct SettingsMenu: View {
             
             Button(action: {
                 self.showingActionSheet = true
-                
+                self.activeSheet = .reset
+                //self.showingActionSheet = true
                 // Dismiss the view and return to the ContentView view
-                presentationMode.wrappedValue.dismiss()
+                //presentationMode.wrappedValue.dismiss()
             }){
                 Text("Clear Current Hives")
-            }
-            .padding(.bottom)
+            }.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        }            .padding(.bottom)
         }
         .fileExporter(isPresented: $showExportSheet, document: document, contentType: UTType.commaSeparatedText){ result in
             switch result {
@@ -93,20 +106,27 @@ struct SettingsMenu: View {
                 print("Saved to \(url)")
             case .failure(let error):
                 print(error.localizedDescription)
-            }
+          }
+        .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
+          switch item {
+          case .reset:
+              ResetHives()
+          case .archiveMake:
+              MakeArchive(seasonName: "", warning: "")
+          }
         }
-        .navigationBarItems(leading: Text("Honey Aggregator")).actionSheet(isPresented: $showingActionSheet) {
-                ActionSheet(title: Text("Change background"), message: Text("Select a new color"), buttons: [
+        /*.navigationBarItems(leading: Text("Honey Aggregator")).actionSheet(isPresented: $showingActionSheet) {
+                ActionSheet(title: Text("Clear Hive Data"), buttons: [
                 .default(Text("Confirm Reset?")) { hives.reset() },
                  .cancel()
                     ]
                 )
             }
-        .onAppear(perform: {
-            isMetric = hives.isMetric
-            isDrawingPictureHandler = hives.isDrawingHandler
-        })
-    }
+            }*/
+    .onAppear(perform: {
+          isMetric = hives.isMetric
+          isDrawingPictureHandler = hives.isDrawingHandler
+      })
     
 }
 

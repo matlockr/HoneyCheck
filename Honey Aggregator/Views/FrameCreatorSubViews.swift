@@ -80,7 +80,7 @@ struct HiveCreator: View{
                                 selectedHive = hive
                                 state = STATE.SelectBox
                                 titleText = "Select Box"
-                                hives.save()
+                                hives.save(file: "")
                             })
                             
                         Divider()
@@ -95,7 +95,7 @@ struct HiveCreator: View{
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
                             hives.deleteHive(hiveid: tmpHive!.id)
-                            hives.save()
+                            hives.save(file: "")
                         }
                         let sButton = Alert.Button.cancel(Text("Cancel"))
                         return Alert(title: Text("WARNING"), message: Text("Are you sure you want to delete this Hive?"),
@@ -151,7 +151,7 @@ struct BoxCreator: View{
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
                             hives.deleteBox(boxid: tmpBox!.id)
-                            hives.save()
+                            hives.save(file: "")
                         }
                         let sButton = Alert.Button.cancel(Text("Cancel"))
                         return Alert(title: Text("WARNING"), message: Text("Are you sure you want to delete this Box?"),
@@ -202,7 +202,7 @@ struct FrameSelector: View{
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
                             hives.deleteFrame(frameid: tmpFrame!.id)
-                            hives.save()
+                            hives.save(file: "")
                         }
                         let sButton = Alert.Button.cancel(Text("Cancel"))
                         return Alert(title: Text("WARNING"), message: Text("Are you sure you want to delete this Frame?"),
@@ -271,7 +271,16 @@ struct TemplateSelector: View{
 }
 
 struct CustomTemplateCreator: View{
-    @State private var showPopUp: Bool = false
+    //This allows for multiple action sheets in this sub view.
+    enum Sheets: Identifiable {
+            case popUpView
+
+            var id: Int {
+                self.hashValue
+            }
+        }
+    
+    //@State private var showPopUp: Bool = false
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
@@ -280,7 +289,8 @@ struct CustomTemplateCreator: View{
     @Binding var state: STATE
     @Binding var selectedTemplate: Template?
     @Binding var titleText: String
-    
+    //activeSheet is used to add child sheets
+    @State var activeSheet: Sheets?
     @State private var customName: String = ""
     @State private var customHeight: String = ""
     @State private var customWidth: String = ""
@@ -306,11 +316,11 @@ struct CustomTemplateCreator: View{
                 if let floatHeight = Float(customHeight){
                     if let floatWidth = Float(customWidth){
                         if floatWidth <= 0 {
-                            showPopUp.toggle()
+                            self.activeSheet = .popUpView
                             
                         }
                         else if floatHeight <= 0 {
-                            showPopUp.toggle()
+                            self.activeSheet = .popUpView
                             
                         }
                         else{
@@ -331,9 +341,16 @@ struct CustomTemplateCreator: View{
               Text("Next")
             }
         }
-        ZStack{
+        .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
+                        switch item {
+                        //This brings up the warning screen.
+                        case .popUpView:
+                            PopUpView(title: "Error", message: "Sorry, the custom dimensions must be more than zero!", buttonText: "OK")
+                        }
+                    }
+        /*ZStack{
             PopUpView(title: "Error", message: "Sorry, the custom dimensions must be more than zero!", buttonText: "OK", show: $showPopUp)
-        }
+        }*/
     }
 }
 

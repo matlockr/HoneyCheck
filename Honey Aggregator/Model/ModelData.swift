@@ -23,6 +23,8 @@ class Hives: ObservableObject{
     // Setup for unit type
     var isMetric: Bool = false
     
+    var isDrawingHandler: Bool = false
+    
     // Reset file for testing purposes
     let fileReset = false
         
@@ -179,9 +181,9 @@ class Hives: ObservableObject{
                     readOutString += "\t\tFrame: \(k) \n"
                     
                     if isMetric{
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[i].beeBoxes[j].frames[k].honeyTotal / 2.20)) kg\n"
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", (hiveList[i].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[i].beeBoxes[j].frames[k].honeyTotalSideB) / 2.20)) kg\n"
                     } else {
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[i].beeBoxes[j].frames[k].honeyTotal)) lbs\n"
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", (hiveList[i].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[i].beeBoxes[j].frames[k].honeyTotalSideB))) lbs\n"
                     }
                 }
             }
@@ -292,11 +294,16 @@ class Hives: ObservableObject{
     }
     
     // Add a frame to a box
-    func addFrame(boxid: UUID, height: Float, width: Float, honeyTotal: Float){
+    func addFrame(boxid: UUID, height: Float, width: Float, honeyTotalSideA: Float, honeyTotalSideB: Float){
         for i in 0..<hiveList.count {
             for j in 0..<hiveList[i].beeBoxes.count{
                 if boxid == hiveList[i].beeBoxes[j].id{
-                    let newFrame = Frame(idx: hiveList[i].beeBoxes[j].frames.count, height: height, width: width, honeyTotal: honeyTotal)
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateStyle = .short
+                    let dateString = dateFormatter.string(from: Date())
+                    
+                    let newFrame = Frame(idx: hiveList[i].beeBoxes[j].frames.count, height: height, width: width, honeyTotalSideA: honeyTotalSideA, honeyTotalSideB: honeyTotalSideB, dateMade: dateString)
                     hiveList[i].beeBoxes[j].frames.append(newFrame)
                     
                     readOut = getReadOut()

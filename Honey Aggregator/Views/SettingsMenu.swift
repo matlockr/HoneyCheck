@@ -8,6 +8,7 @@
 //  Special thanks to Andrew Jackson
 //  https://medium.com/@codechimp_org/implementing-multiple-action-sheets-from-toolbar-buttons-with-swiftui-ce3bce2b97cb
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct SettingsMenu: View {
     //The enum is used to create multiple action sheets
@@ -23,37 +24,32 @@ struct SettingsMenu: View {
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     @State private var showingActionSheet = false
+    
     // This is just used for being able to dissmiss the view in code
     @Environment(\.presentationMode) var presentationMode
-        
+    
+    @State private var isDrawingPictureHandler: Bool = false
+    @State private var isMetric:Bool = false
+    
+    @State private var showExportSheet: Bool = false
+    @State private var csvHead: String = ""
+    @State private var document = TextFile()
+    
     var body: some View {
         VStack{
-            //Unit selection
-            Text("Unit Type")
+
+            Toggle("Use Metric", isOn: $isMetric)
+                .onChange(of: isMetric) {value in
+                    hives.isMetric = isMetric
+                    hives.readOut = hives.getReadOut()
+                }
                 .padding()
-                .font(.title2)
-            
-            HStack{
-                
-                Button(action: {
-                    hives.isMetric = false
-                    hives.readOut = hives.getReadOut()
-                    // Dismiss the view and return to the ContentView view
-                    presentationMode.wrappedValue.dismiss()
-                }){
-                    Text("Imperial")
+        
+            Toggle("Drawing Feature", isOn: $isDrawingPictureHandler)
+                .onChange(of: isDrawingPictureHandler) {value in
+                    hives.isDrawingHandler = isDrawingPictureHandler
                 }
-                
-            
-                Button(action: {
-                    hives.isMetric = true
-                    hives.readOut = hives.getReadOut()
-                    // Dismiss the view and return to the ContentView view
-                    presentationMode.wrappedValue.dismiss()
-                }){
-                    Text("Metric")
-                }
-            }
+                .padding()
             
             Spacer()
             
@@ -67,21 +63,34 @@ struct SettingsMenu: View {
                 Text("Start New Season")
             }
             
-            // View old season list
-            // TODO: Actually make this functional
-            Spacer()
-            
-            Spacer()
-            
-            Text("View Old Season")
-                .font(.title2)
-            
             List{
                 Text("2020")
                 Text("2018")
                 Text("2019")
             }
+            
             Button(action: {
+                csvHead = "Season,Date,Hive Title,Box #,Frame Area,Frame #,Side,Honey Weight Estimate\n"
+                
+                
+                for i in 0..<hives.hiveList.count{
+                    for j in 0..<hives.hiveList[i].beeBoxes.count{
+                        for frame in hives.hiveList[i].beeBoxes[j].frames{
+                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx),\(frame.width * frame.height),\(frame.idx),A,\(frame.honeyTotalSideA)\n")
+                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx),\(frame.width * frame.height),\(frame.idx),B,\(frame.honeyTotalSideB)\n")
+                        }
+                    }
+                }
+                
+                document.text = csvHead
+                showExportSheet = true
+            }){
+                Text("Export Data")
+            }
+            .padding(.bottom)
+            
+            Button(action: {
+                self.showingActionSheet = true
                 self.activeSheet = .reset
                 //self.showingActionSheet = true
                 // Dismiss the view and return to the ContentView view
@@ -89,14 +98,22 @@ struct SettingsMenu: View {
             }){
                 Text("Clear Current Hives")
             }.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-        }.sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
-            switch item {
-            case .reset:
-                ResetHives()
-            case .archiveMake:
-                MakeArchive(seasonName: "", warning: "")
-            }
-            
+        }            .padding(.bottom)
+        }
+        .fileExporter(isPresented: $showExportSheet, document: document, contentType: UTType.commaSeparatedText){ result in
+            switch result {
+            case .success(let url):
+                print("Saved to \(url)")
+            case .failure(let error):
+                print(error.localizedDescription)
+          }
+        .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
+          switch item {
+          case .reset:
+              ResetHives()
+          case .archiveMake:
+              MakeArchive(seasonName: "", warning: "")
+          }
         }
         /*.navigationBarItems(leading: Text("Honey Aggregator")).actionSheet(isPresented: $showingActionSheet) {
                 ActionSheet(title: Text("Clear Hive Data"), buttons: [
@@ -104,13 +121,43 @@ struct SettingsMenu: View {
                  .cancel()
                     ]
                 )
+            }
             }*/
-    }
+    .onAppear(perform: {
+          isMetric = hives.isMetric
+          isDrawingPictureHandler = hives.isDrawingHandler
+      })
     
 }
 
 struct SettingsMenu_Previews: PreviewProvider {
     static var previews: some View {
         SettingsMenu().environmentObject(Hives())
+    }
+}
+
+struct TextFile: FileDocument {
+    // tell the system we support only plain text
+    static var readableContentTypes = [UTType.commaSeparatedText]
+
+    // by default our document is empty
+    var text = ""
+
+    // a simple initializer that creates new, empty documents
+    init(initialText: String = "") {
+        text = initialText
+    }
+
+    // this initializer loads data that has been saved previously
+    init(configuration: ReadConfiguration) throws {
+        if let data = configuration.file.regularFileContents {
+            text = String(decoding: data, as: UTF8.self)
+        }
+    }
+
+    // this will be called when the system wants to write our data to disk
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = Data(text.utf8)
+        return FileWrapper(regularFileWithContents: data)
     }
 }

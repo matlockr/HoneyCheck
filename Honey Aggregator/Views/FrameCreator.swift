@@ -68,10 +68,10 @@ struct FrameCreator: View {
                 
             } else if state == STATE.Picture1Get{
                 
-                if showDrawingPictureHandler{
+                if hives.isDrawingHandler{
                     PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 } else {
-                    AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount)
+                    AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 }
                     
                 //Show a current calculation value to monitor changes in the frame calculation. Might remove due to no need to see during state 1, but could be helpful for debugging for now. 
@@ -85,10 +85,10 @@ struct FrameCreator: View {
                 
             } else if state == STATE.Picture2Get{
                 
-                if showDrawingPictureHandler{
+                if hives.isDrawingHandler{
                     PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 } else {
-                    AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount)
+                    AutomatedPictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, honeyTotal: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 }
                 
                 //Show a current calculation value to monitor changes in the frame calculation.
@@ -118,7 +118,7 @@ struct FrameCreator: View {
                 
                 Button(action: {
                     // Create the new frame and add it to the selected box
-                    hives.addFrame(boxid: selectedBox!.id, height: selectedTemplate!.height, width: selectedTemplate!.width, honeyTotal: tempHoneyAmount)
+                    hives.addFrame(boxid: selectedBox!.id, height: selectedTemplate!.height, width: selectedTemplate!.width, honeyTotalSideA: frameSideAHoneyAmount, honeyTotalSideB: frameSideBHoneyAmount)
                     
                     hives.save(file: "")
                     

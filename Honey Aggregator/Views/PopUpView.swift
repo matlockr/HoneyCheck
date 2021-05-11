@@ -10,16 +10,17 @@
 import SwiftUI
 
 struct PopUpView: View {
+    @Environment(\.presentationMode) var presentationMode
     var title: String
         var message: String
         var buttonText: String
-        @Binding var show: Bool
+        //@Binding var show: Bool
 
         var body: some View {
             ZStack {
-                if show {
+                //if show {
                     // PopUp background color
-                    Color.black.opacity(show ? 0.3 : 0).edgesIgnoringSafeArea(.all)
+                    //Color.black.opacity(show ? 0.3 : 0).edgesIgnoringSafeArea(.all)
 
                     // PopUp Window
                     VStack(alignment: .center, spacing: 0) {
@@ -39,7 +40,8 @@ struct PopUpView: View {
                         Button(action: {
                             // Dismiss the PopUp
                             withAnimation(.linear(duration: 0.3)) {
-                                show = false
+                                self.presentationMode.wrappedValue.dismiss()
+                                //show = false
                             }
                         }, label: {
                             Text(buttonText)
@@ -56,7 +58,7 @@ struct PopUpView: View {
                 }
             }
         }
-    }
+    //}
 /*
 struct PopUpView_Previews: PreviewProvider {
     static var previews: some View {

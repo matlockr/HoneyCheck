@@ -3,7 +3,8 @@
 //  Honey_Aggregator
 //
 //  Created by Robert Matlock on 3/19/21.
-//
+//  Special thanks to Sergey Kargopolov
+//  https://www.appsdeveloperblog.com/check-if-a-file-exist/
 
 import Foundation
 
@@ -75,19 +76,45 @@ class Hives: ObservableObject{
         }
         
     }
+    //Checks to see if file is contained in file system
+    func fileCheck(file: String)->String{
+        var filePath = ""
+        let dirs : [String] = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true)
+        //This check just makes sure we can right to the documents directory
+        if dirs.count > 0 {
+            let dir = dirs[0] //documents directory
+            filePath = dir.appendingFormat("/" + file)
+            //print("Local path = \(filePath)")
+        }
+        else {
+            return "Could not find local directory to store file"
+        }
+        let fileManager = FileManager.default
+        // Check if file exists
+        if fileManager.fileExists(atPath: filePath) {
+            return "File exists"
+        }
+        else {
+            return "File does not exist"
+        }
+    }
     
     // Save function encodes the hive information and saves it to a JSON file.
-    func save(){
+    func save(file: String){
         do {
             // Setup the encoder
             let encoder = JSONEncoder()
-            
+            var fileURL: URL
             // Attempt to encode the hivelist data
             let data = try encoder.encode(hiveList)
-            
-            // Get the correct directory path to save the hivelist data
-            let fileURL = dir.appendingPathComponent(fileName)
-            
+            if(file.isEmpty){
+                // Get the correct directory path to save the hivelist data
+                fileURL = dir.appendingPathComponent(fileName)
+            }
+           
+            else{
+                fileURL = dir.appendingPathComponent(file)
+            }
             // Attempt to write to file
             try data.write(to: fileURL)
             
@@ -95,7 +122,50 @@ class Hives: ObservableObject{
             fatalError("Couldn't save data to \(fileName)")
         }
     }
-    
+    //This function creates a .json of the current hive and archives it.
+    func archive(file:String)->String{
+        do {
+            var contingency = ""
+            //This is an error check and ensures a unique filename if somehow an empty string reaches this function
+            if file.isEmpty{
+                //Hasher is always a unique valeu
+                var hasher = Hasher()
+                file.hash(into: &hasher)
+                //This adds the date to this random unique file name after parsing it for characters that would break the file system.  You may be able to refactor the parse.
+                let today = "\(Date())".replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "").replacingOccurrences(of: ":", with: "").replacingOccurrences(of: "+", with: "")
+                let hashIntoString = "\(hasher.finalize())"
+                    contingency = "\(hashIntoString)date\(today).json".replacingOccurrences(of: "-", with: "")
+            }
+            //This is an error check for a string that does not contain the file type.  It shouldn't be possible to reach this branch
+            else if !file.contains(".json"){
+                if contingency.isEmpty{
+                    contingency = "\(file).json"
+                }
+            }
+            //This should be the only branch that can be reached.
+            if contingency.isEmpty{
+                print("The good branch")
+                print(file)
+                if(fileCheck(file: file) == "File exists" || fileCheck(file: file) == "Could not find local directory to store file"){
+                    return "File name already in use."
+                }
+                // Setup the encoder
+                save(file: file)
+            }
+            //This is a branch that should be impossible to reach but ensures any call to archive can be handled.
+            else{
+                print("Impressive very impressive")
+                print("File is: \(file)")
+                if(fileCheck(file: contingency) == "File exists" || fileCheck(file: contingency) == "Could not find local directory to store file"){
+                    return "File name already in use."
+                }
+                // Setup the encoder
+                save(file: contingency)
+            }
+            reset()
+            return "Season was successfully archived!"
+        }
+    }
     // Create a string based on the information stored in the hive to show
     // on the main page for debug purposes.
     func getReadOut() -> String{
@@ -207,7 +277,7 @@ class Hives: ObservableObject{
     //This removes all hiveList data Test for whether this is only current data
     func reset(){
         hiveList.removeAll()
-        save()
+        save(file: "")
         readOut = getReadOut()
     }
     

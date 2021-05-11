@@ -120,7 +120,7 @@ struct FrameCreator: View {
                     // Create the new frame and add it to the selected box
                     hives.addFrame(boxid: selectedBox!.id, height: selectedTemplate!.height, width: selectedTemplate!.width, honeyTotal: tempHoneyAmount)
                     
-                    hives.save()
+                    hives.save(file: "")
                     
                     // Dismiss the view and return to the ContentView view
                     presentationMode.wrappedValue.dismiss()
@@ -187,7 +187,7 @@ struct FrameCreator: View {
                             
                             //Add a box to the selected hive
                             hives.addBox(hiveid: selectedHive!.id)
-                            hives.save()
+                            hives.save(file: "")
                         } else if state == STATE.SelectFrame{
                             
                             //Add a box to the selected hive

@@ -19,6 +19,8 @@ class Hives: ObservableObject{
     // Setup for the readout information for the main page
     @Published var readOut: String = ""
     
+    @Published var menuArray:
+        [String] = []
     // Setup for unit type
     var isMetric: Bool = false
     
@@ -121,6 +123,41 @@ class Hives: ObservableObject{
         return readOutString
     }
     
+    //Modified version of the readout function to add all the hives to an array.
+    func menuReadArray() -> [String] {
+        var readOutArray: [String] = []
+        
+        for i in 0..<hiveList.count{
+            readOutArray.append("\(hiveList[i].hiveName)")
+        }
+        return readOutArray
+    }
+    //Modified version of the readout function that allows for finding a specific element in the hive list and displaying just that one set of data as a string.
+    func menuSelect(index: Int) -> String {
+        var readOutString = ""
+        var tempIndex: Int?
+        for i in 0..<hiveList.count{
+            if i == index {
+                tempIndex = i
+            }
+        }
+        if tempIndex != nil {
+            readOutString += "Hive: \(hiveList[tempIndex!].hiveName)\n"
+            for j in 0..<hiveList[tempIndex!].beeBoxes.count{
+                readOutString += "\tBox: \(j)\n"
+                for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
+                    readOutString += "\t\tFrame: \(k) \n"
+                
+                    if isMetric{
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotal / 2.20)) kg\n"
+                    } else {
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotal)) lbs\n"
+                    }
+                }
+            }
+        }
+        return readOutString
+    }
     // Add a BeeBox to a hive using the hive's UUID
     func addBox(hiveid: UUID){
         for i in 0..<hiveList.count {
@@ -163,6 +200,7 @@ class Hives: ObservableObject{
                 hiveList.remove(at: i)
                 
                 readOut = getReadOut()
+                menuArray = menuReadArray()
                 return
             }
         }
@@ -218,6 +256,9 @@ class Hives: ObservableObject{
             hiveList.append(newHive)
             
             readOut = getReadOut()
+            menuArray = menuReadArray()
+            
+
         }
     }
     

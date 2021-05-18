@@ -21,27 +21,40 @@ struct ContentView: View {
         NavigationView{
             // The new functional part of this is that the menu picker will allow the user to see all saved hives and display the data based off of one of those selections.
             VStack {
-                Picker("Hive Selection\n\n\n", selection: $menu) {
+                Picker("Hive Selection", selection: $menu) {
                     ForEach(0..<hives.menuArray.count, id: \.self) { index in
                         Text("\(1+index): " + hives.menuArray[index])
                     }
                 }
+                .foregroundColor(Color.orange)
+                .padding(10)
+                .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                .cornerRadius(10)
+                .font(.system(size: 20, weight: .heavy))
                 .pickerStyle(MenuPickerStyle())
+                
+                Divider()
+                
                 Text(hives.menuSelect(index: menu))
+                
+                Spacer()
             }
-            
-            .navigationBarItems(leading: Text("Honey Aggregator"))
+            .navigationBarItems(leading: Text("HoneyCheck").foregroundColor(.orange)
+)
             // Toolbar setup for the navigation buttons on the top of the view
             .toolbar{
                 ToolbarItemGroup(placement: .navigationBarTrailing){
                     // Navigation link to the FrameCreator view
                     NavigationLink(destination: FrameCreator().environmentObject(hives)){
-                        Image(systemName: "plus").imageScale(.large)
+                        Image(systemName: "plus")
+                            .imageScale(.large)
+
                     }
                     
                     // Navigation Link to the SettingsMenu view
                     NavigationLink(destination: SettingsMenu().environmentObject(hives)){
-                        Image(systemName: "gearshape.fill").imageScale(.large)
+                        Image(systemName: "gearshape.fill")
+                            .imageScale(.large)
                     }
                 }
             }
@@ -53,6 +66,7 @@ struct ContentView: View {
             hives.menuArray = hives.menuReadArray()
         
         })
+        .accentColor(Color.orange)
     }
 }
 

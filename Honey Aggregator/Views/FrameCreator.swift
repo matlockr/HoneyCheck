@@ -105,7 +105,7 @@ struct FrameCreator: View {
                 // Display all the information of the new frame that will be
                 // created.
                 Text("Hive Name: \(selectedHive!.hiveName)")
-                Text("Box Number: \(selectedBox!.idx)")
+                Text("Box Number: \(selectedBox!.idx + 1)")
                 if hives.isMetric{
                     Text("Frame height: \(String(format: "%.2f", selectedTemplate!.height * 25.4)) mm")
                     Text("Frame Width: \(String(format: "%.2f", selectedTemplate!.width * 25.4)) mm")
@@ -126,10 +126,16 @@ struct FrameCreator: View {
                     presentationMode.wrappedValue.dismiss()
                 }){
                     Text("Done")
-                }
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))                }
+                .padding()
             }
         }
-        .navigationBarTitle("\(titleText)")
+        .navigationBarTitle(Text(titleText))
+        
         // Navigation toolbar changes based on what state the View is in
         .navigationBarItems(leading:
             Button(action: {
@@ -137,6 +143,7 @@ struct FrameCreator: View {
                 presentationMode.wrappedValue.dismiss()
             }){
                 Text("Home")
+                    .foregroundColor(Color.orange)
             }
         )
         .toolbar{
@@ -179,7 +186,7 @@ struct FrameCreator: View {
                         break
                     }
                 }){
-                    Image(systemName: "arrowshape.turn.up.left.fill").imageScale(.large)
+                    Image(systemName: "arrowshape.turn.up.left.fill")
                 }
                 if state == STATE.SelectBox || state == STATE.SelectFrame{
                     Button(action: {
@@ -195,7 +202,7 @@ struct FrameCreator: View {
                             titleText = "Select Template"
                         }
                     }){
-                        Image(systemName: "plus").imageScale(.large)
+                        Image(systemName: "plus")
                     }
                 }
             }

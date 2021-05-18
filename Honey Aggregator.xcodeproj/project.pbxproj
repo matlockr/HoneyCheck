@@ -18,8 +18,8 @@
 		2B347E9E261E0ECD00C063E8 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B347E9C261E0ECD00C063E8 /* Structs.swift */; };
 		2B347EA4261E0F9700C063E8 /* SwiftyDraw in Frameworks */ = {isa = PBXBuildFile; productRef = 2B347EA3261E0F9700C063E8 /* SwiftyDraw */; };
 		2BB1549A2630707A0018BBF2 /* Mantis in Frameworks */ = {isa = PBXBuildFile; productRef = 2BB154992630707A0018BBF2 /* Mantis */; };
-		2BB1549F263070A60018BBF2 /* CombClassifierSqInch.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2BB1549E263070A60018BBF2 /* CombClassifierSqInch.mlmodel */; };
 		2BB154A4263070CB0018BBF2 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB154A3263070CB0018BBF2 /* UIImageExtension.swift */; };
+		2BB6216B264C4CCB001A5326 /* CombClassifierFinal 1.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 2BB6216A264C4CCB001A5326 /* CombClassifierFinal 1.mlmodel */; };
 		2BC81BF425E57FBC003EE8C0 /* SwiftImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2BC81BF325E57FBC003EE8C0 /* SwiftImage */; };
 		AA09AC9925C31F2600351DA3 /* Honey_AggregatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */; };
 		AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09AC9A25C31F2600351DA3 /* ContentView.swift */; };
@@ -57,8 +57,8 @@
 		2B347E94261E0EAE00C063E8 /* FrameCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCreator.swift; sourceTree = "<group>"; };
 		2B347E9B261E0ECD00C063E8 /* ModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		2B347E9C261E0ECD00C063E8 /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
-		2BB1549E263070A60018BBF2 /* CombClassifierSqInch.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = CombClassifierSqInch.mlmodel; sourceTree = "<group>"; };
 		2BB154A3263070CB0018BBF2 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		2BB6216A264C4CCB001A5326 /* CombClassifierFinal 1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "CombClassifierFinal 1.mlmodel"; sourceTree = "<group>"; };
 		AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honey Aggregator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorApp.swift; sourceTree = "<group>"; };
 		AA09AC9A25C31F2600351DA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		AA09AC9725C31F2600351DA3 /* Honey Aggregator */ = {
 			isa = PBXGroup;
 			children = (
-				2BB1549E263070A60018BBF2 /* CombClassifierSqInch.mlmodel */,
+				2BB6216A264C4CCB001A5326 /* CombClassifierFinal 1.mlmodel */,
 				2B347E8C261E0E5200C063E8 /* Utilities */,
 				2B347E8B261E0E4600C063E8 /* Views */,
 				2B347E8A261E0E3F00C063E8 /* Model */,
@@ -350,8 +350,8 @@
 				2B347E96261E0EAE00C063E8 /* SettingsMenu.swift in Sources */,
 				0386FF50261F8FEC00275999 /* PopUpView.swift in Sources */,
 				2BB154A4263070CB0018BBF2 /* UIImageExtension.swift in Sources */,
-				2BB1549F263070A60018BBF2 /* CombClassifierSqInch.mlmodel in Sources */,
 				038236DD26432FBF005FE94C /* MakeArchive.swift in Sources */,
+				2BB6216B264C4CCB001A5326 /* CombClassifierFinal 1.mlmodel in Sources */,
 				2B347E97261E0EAE00C063E8 /* FrameCreator.swift in Sources */,
 				2B347E8E261E0E8700C063E8 /* ImagePicker.swift in Sources */,
 				AA09AC9B25C31F2600351DA3 /* ContentView.swift in Sources */,

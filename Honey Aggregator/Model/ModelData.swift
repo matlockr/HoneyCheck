@@ -216,14 +216,14 @@ class Hives: ObservableObject{
         if tempIndex != nil {
             readOutString += "Hive: \(hiveList[tempIndex!].hiveName)\n"
             for j in 0..<hiveList[tempIndex!].beeBoxes.count{
-                readOutString += "\tBox: \(j)\n"
+                readOutString += "\tBox: \(j + 1)\n"
                 for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
-                    readOutString += "\t\tFrame: \(k) \n"
+                    readOutString += "\t\tFrame: \(k + 1) \n"
                 
                     if isMetric{
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotal / 2.20)) kg\n"
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", (hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB) / 2.20)) kg\n"
                     } else {
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotal)) lbs\n"
+                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB)) lbs\n"
                     }
                 }
             }

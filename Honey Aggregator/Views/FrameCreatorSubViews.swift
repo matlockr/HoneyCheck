@@ -66,8 +66,11 @@ struct HiveCreator: View{
                     Image(systemName: "plus")
                         .imageScale(.large)
                         .padding()
+                        .foregroundColor(Color.orange)
                 }
             }
+            .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+            .cornerRadius(10)
             
             // List for displaying all the hives
             List{
@@ -91,6 +94,7 @@ struct HiveCreator: View{
                                 tmpHive = hive
                                 self.showAlert.toggle()
                             }
+                            .foregroundColor(Color.red)
                     }
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
@@ -131,7 +135,7 @@ struct BoxCreator: View{
                 ForEach(hives.getBoxes(hiveid: selectedHive.id)) { box in
                     HStack{
                         // Tapping the hive name will move the FrameCreator to the SelectFrame state
-                        Text("Box \(box.idx)")
+                        Text("Box \(box.idx + 1)")
                             .frame(maxWidth: .infinity)
                             .onTapGesture(perform: {
                                 selectedBox = box
@@ -147,6 +151,7 @@ struct BoxCreator: View{
                                 tmpBox = box
                                 self.showAlert.toggle()
                             }
+                            .foregroundColor(Color.red)
                     }
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
@@ -186,7 +191,7 @@ struct FrameSelector: View{
             List{
                 ForEach(hives.getFrames(boxid: selectedBox.id)) { frame in
                     HStack{
-                        Text("Frame \(frame.idx)")
+                        Text("Frame \(frame.idx + 1)")
                             .frame(maxWidth: .infinity)
                         
                         Divider()
@@ -196,8 +201,8 @@ struct FrameSelector: View{
                             .onTapGesture {
                                 tmpFrame = frame
                                 self.showAlert.toggle()
-                                
                             }
+                            .foregroundColor(Color.red)
                     }
                     .alert(isPresented: $showAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
@@ -233,8 +238,14 @@ struct TemplateSelector: View{
                 state = STATE.CustomTemplate
                 titleText = "Custom Template"
             }){
-                Text("Custom")
+                Text("Custom Template")
+                    .foregroundColor(Color.orange)
+                    .padding(10)
+                    .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                    .cornerRadius(10)
+                    .font(.system(size: 20, weight: .heavy))
             }
+            .padding(.top)
             
             // List for showing all the templates and their dimensions
             List{
@@ -297,19 +308,24 @@ struct CustomTemplateCreator: View{
     
     var body: some View {
         VStack{
+            
+            
             // TextField for name of custom template
             TextField("Template Name", text: $customName)
                 .padding()
+                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
             
             // TextField for height of custom template
             TextField("Enter Height", text: $customHeight)
                 .padding()
                 .keyboardType(.decimalPad)
+                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
             
             // TextField for width of custom template
             TextField("Enter Width",text: $customWidth)
                 .padding()
                 .keyboardType(.decimalPad)
+                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
             
             // Button for creating the new template
             Button(action: {
@@ -339,7 +355,13 @@ struct CustomTemplateCreator: View{
                 }
             }){
               Text("Next")
+                .foregroundColor(Color.orange)
+                .padding(10)
+                .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                .cornerRadius(10)
+                .font(.system(size: 18, weight: .heavy))
             }
+            
         }
         .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
                         switch item {
@@ -418,9 +440,11 @@ struct PictureHandler: View{
                 ZStack{
                     Image(systemName: "circle")
                         .font(.system(size: 70.0))
+                        .foregroundColor(Color.orange)
                     
                     Image(systemName: "camera")
                         .font(.system(size: 40.0))
+                        .foregroundColor(Color.orange)
                 }
                 .onTapGesture {
                     // Will allow Action Sheet to be toggled on
@@ -442,9 +466,12 @@ struct PictureHandler: View{
                     .padding()
                 
                 HStack{
-                    //Button with the other drawing tools for the tutorial popover view that describes the usage of the drawing program to the user. 
-                    Button("Tutorial") {
+                    //Button with the other drawing tools for the tutorial popover view that describes the usage of the drawing program to the user.
+                    Button(action: {
                         showPopOver.toggle()
+                    }){
+                        Text("Tutorial")
+                            .foregroundColor(Color.orange)
                     }
                     .popover(isPresented: $showPopOver) {
                         Text("To calculatue the amount of honey you will need to draw in two sections. \n\n First: Draw with the red pen around the edges of the frame and hit done to go to the next step. \n\n Second: Draw with the blue pen around where honey should be present. \n\n You can edit the size of the pen on both steps with the slider.")
@@ -459,6 +486,7 @@ struct PictureHandler: View{
                         drawView.undo()
                     }){
                         Text("Undo")
+                            .foregroundColor(Color.orange)
                     }
                     
                     // Redo drawing button
@@ -466,6 +494,7 @@ struct PictureHandler: View{
                         drawView.redo()
                     }){
                         Text("Redo")
+                            .foregroundColor(Color.orange)
                     }
                     
                     // Done drawing button
@@ -473,6 +502,7 @@ struct PictureHandler: View{
                         drawingDone()
                     }){
                         Text("Done")
+                            .foregroundColor(Color.orange)
                     }
                 }.padding()
             }
@@ -589,7 +619,7 @@ struct PictureHandler: View{
             
             let frameHeight: Float = selectedTemplate.height
             let frameWidth: Float = selectedTemplate.width
-            let honeyLBPerSquareIn: Float = 0.02727
+            let honeyLBPerSquareIn: Float = 0.02508
             
             // Caluclate the honey amount for one side of the frame and add it
             // to the tempHoneyAmount
@@ -658,9 +688,11 @@ struct AutomatedPictureHandler: View{
             ZStack{
                 Image(systemName: "circle")
                     .font(.system(size: 70.0))
+                    .foregroundColor(Color.orange)
                 
                 Image(systemName: "camera")
                     .font(.system(size: 40.0))
+                    .foregroundColor(Color.orange)
             }
             .onTapGesture {
                 // Will allow Action Sheet to be toggled on
@@ -670,7 +702,7 @@ struct AutomatedPictureHandler: View{
             // Navigation link button for cropping the image and doing the
             // Automated image classification.
             if (inputImage != nil){
-                NavigationLink(destination: DetailedView(img: $inputImage, honeyTotal: $honeyTotal, done: $done, sideAHoneyAmount: $sideAHoneyAmount, sideBHoneyAmount: $sideBHoneyAmount, state: state, dimWidth: Int(selectedTemplate.width), dimHeight: Int(selectedTemplate.height)).onDisappear(perform: {
+                NavigationLink(destination: DetailedView(img: $inputImage, honeyTotal: $honeyTotal, done: $done, sideAHoneyAmount: $sideAHoneyAmount, sideBHoneyAmount: $sideBHoneyAmount, state: state, dimWidth: Int(selectedTemplate.width - 0.71), dimHeight: Int(selectedTemplate.height - 0.71)).onDisappear(perform: {
                     
                     // When classification is done, then transition to next state
                     if done{
@@ -685,8 +717,13 @@ struct AutomatedPictureHandler: View{
                 })
                 ){
                     Text("Crop Image")
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))
                 }
-                .padding()
+                .padding(.top)
             }
             
         }
@@ -776,9 +813,8 @@ struct DetailedView: View {
             if showLoadingBar{
                 ProgressView("Analyzing Image", value: downloadAmount, total: Double(predictionUIImages.count))
                     .progressViewStyle(LinearProgressViewStyle(tint: .orange))
-                    //.progressViewStyle(CircularProgressViewStyle(tint: .orange))
-                    //.scaleEffect(2)
                     .padding()
+                    .foregroundColor(Color.orange)
             }
             
             // Analyze button appears when the cropping is done
@@ -793,11 +829,17 @@ struct DetailedView: View {
                     }
                 }){
                     Text("Anaylze Image")
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))
                 }
             }
             
             
-        }.fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
+        }.navigationBarBackButtonHidden(true)
+        .fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
             
             // Show the cropping view
             ImageEditor(theImage: $img, isShowing: $showCropper)
@@ -872,7 +914,7 @@ struct DetailedView: View {
             
             // Setup the ML model
             let config = MLModelConfiguration()
-            let classifier = try CombClassifierSqInch(configuration: config)
+            let classifier = try CombClassifierFinal_1(configuration: config)
             
             if batch{
                 for i in 0..<10{
@@ -924,7 +966,7 @@ struct DetailedView: View {
     func HoneyCalculation(){
         let honeyPercent: Float = Float(honeyCount) / Float(predictionUIImages.count)
         
-        let honeyLBPerSquareIn: Float = 0.02727
+        let honeyLBPerSquareIn: Float = 0.02508
         honeyTotal += (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
 
         // Start the transistion to the next state

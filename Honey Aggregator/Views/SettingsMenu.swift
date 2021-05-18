@@ -43,12 +43,16 @@ struct SettingsMenu: View {
                     hives.isMetric = isMetric
                     hives.readOut = hives.getReadOut()
                 }
-                .padding()
+                .foregroundColor(Color.orange)
+                .font(.system(size: 20, weight: .heavy))
+                .padding(.horizontal)
         
             Toggle("Drawing Feature", isOn: $isDrawingPictureHandler)
                 .onChange(of: isDrawingPictureHandler) {value in
                     hives.isDrawingHandler = isDrawingPictureHandler
                 }
+                .foregroundColor(Color.orange)
+                .font(.system(size: 20, weight: .heavy))
                 .padding()
             
             Spacer()
@@ -61,7 +65,13 @@ struct SettingsMenu: View {
                 self.activeSheet = .archiveMake
             }){
                 Text("Start New Season")
-            }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .foregroundColor(Color.orange)
+                    .padding(10)
+                    .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                    .cornerRadius(10)
+                    .font(.system(size: 20, weight: .heavy))
+            }.padding(.horizontal)
             
             List{
                 Text("2020")
@@ -76,8 +86,8 @@ struct SettingsMenu: View {
                 for i in 0..<hives.hiveList.count{
                     for j in 0..<hives.hiveList[i].beeBoxes.count{
                         for frame in hives.hiveList[i].beeBoxes[j].frames{
-                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx),\(frame.width * frame.height),\(frame.idx),A,\(frame.honeyTotalSideA)\n")
-                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx),\(frame.width * frame.height),\(frame.idx),B,\(frame.honeyTotalSideB)\n")
+                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),A,\(frame.honeyTotalSideA)\n")
+                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),B,\(frame.honeyTotalSideB)\n")
                         }
                     }
                 }
@@ -86,9 +96,15 @@ struct SettingsMenu: View {
                 showExportSheet = true
             }){
                 Text("Export Data")
-            }
-            .padding(.bottom)
-            
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .foregroundColor(Color.orange)
+                    .padding(10)
+                    .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                    .cornerRadius(10)
+                    .font(.system(size: 20, weight: .heavy))
+            }.buttonStyle(PlainButtonStyle())
+            .padding(.horizontal)
+                        
             Button(action: {
                 self.showingActionSheet = true
                 self.activeSheet = .reset
@@ -97,8 +113,15 @@ struct SettingsMenu: View {
                 //presentationMode.wrappedValue.dismiss()
             }){
                 Text("Clear Current Hives")
-            }.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                .padding(.bottom)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .foregroundColor(Color.orange)
+                    .padding(10)
+                    .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                    .cornerRadius(10)
+                    .font(.system(size: 20, weight: .heavy))
+            }
+            .padding(.bottom)
+            .padding(.horizontal)
         }
         .fileExporter(isPresented: $showExportSheet, document: document, contentType: UTType.commaSeparatedText){ result in
             switch result {

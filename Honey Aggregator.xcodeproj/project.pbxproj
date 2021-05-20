@@ -59,7 +59,7 @@
 		2B347E9C261E0ECD00C063E8 /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		2BB154A3263070CB0018BBF2 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		2BB6216A264C4CCB001A5326 /* CombClassifierFinal 1.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "CombClassifierFinal 1.mlmodel"; sourceTree = "<group>"; };
-		AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Honey Aggregator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA09AC9525C31F2600351DA3 /* HoneyCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoneyCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA09AC9825C31F2600351DA3 /* Honey_AggregatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Honey_AggregatorApp.swift; sourceTree = "<group>"; };
 		AA09AC9A25C31F2600351DA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		AA09AC9C25C31F2700351DA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		AA09AC9625C31F2600351DA3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */,
+				AA09AC9525C31F2600351DA3 /* HoneyCheck.app */,
 				AA09ACA625C31F2700351DA3 /* Honey AggregatorTests.xctest */,
 				AA09ACB125C31F2700351DA3 /* Honey AggregatorUITests.xctest */,
 			);
@@ -226,7 +226,7 @@
 				2BB154992630707A0018BBF2 /* Mantis */,
 			);
 			productName = "Honey Aggregator";
-			productReference = AA09AC9525C31F2600351DA3 /* Honey Aggregator.app */;
+			productReference = AA09AC9525C31F2600351DA3 /* HoneyCheck.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AA09ACA525C31F2700351DA3 /* Honey AggregatorTests */ = {
@@ -515,7 +515,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Honey Aggregator/Preview Content\"";
-				DEVELOPMENT_TEAM = W9PU55TJBX;
+				DEVELOPMENT_TEAM = 4FNH2EJB25;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Honey Aggregator/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -523,10 +523,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-Aggregator";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raidersoft.honeycheck;
+				PRODUCT_NAME = HoneyCheck;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -537,7 +537,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Honey Aggregator/Preview Content\"";
-				DEVELOPMENT_TEAM = W9PU55TJBX;
+				DEVELOPMENT_TEAM = 4FNH2EJB25;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Honey Aggregator/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -545,10 +545,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "SOU.Honey-Aggregator";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raidersoft.honeycheck;
+				PRODUCT_NAME = HoneyCheck;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

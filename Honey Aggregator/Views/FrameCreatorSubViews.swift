@@ -842,7 +842,7 @@ struct DetailedView: View {
         .fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
             
             // Show the cropping view
-            ImageEditor(theImage: $img, isShowing: $showCropper)
+            ImageEditor(theImage: $img, isShowing: $showCropper).ignoresSafeArea()
         }
         .onReceive(timer){ _ in
             // When we are in the classification stage, everytime the timer activates
@@ -991,101 +991,41 @@ struct ImageEditor: UIViewControllerRepresentable{
     // if the cropping view is showing.
     @Binding var theImage: UIImage?
     @Binding var isShowing: Bool
+    
+    // ImageEditor Coordinator setup for using the Mantis Cropping View
+    class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
+        
+        var parent: ImageEditor
 
-    func makeCoordinator() -> ImageEditorCoordinator {
-        return ImageEditorCoordinator(image: $theImage, isShowing: $isShowing)
+        init(_ parent: ImageEditor){
+            self.parent = parent
+        }
+
+        func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation) {
+            parent.theImage = cropped
+            parent.isShowing = false
+        }
+
+        func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) {}
+
+        func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { parent.isShowing = false }
+
+        func cropViewControllerDidBeginResize(_ cropViewController: CropViewController){}
+
+        func cropViewControllerDidEndResize(_ cropViewController: CropViewController, original: UIImage, cropInfo: CropInfo) {}
+
+        func cropViewControllerWillDismiss(_ cropViewController: CropViewController) {}
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImageEditor>) -> Mantis.CropViewController {
-        let Editor = Mantis.cropViewController(image: theImage!)
-        Editor.delegate = context.coordinator
-        return Editor
+        let cropViewController = Mantis.cropViewController(image: theImage!, config: Mantis.Config())
+        cropViewController.delegate = context.coordinator
+        return cropViewController
     }
 }
-
-// ImageEditor Coordinator setup for using the Mantis Cropping View
-class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
-    
-    // Binding variables for the image being cropped and
-    // if the cropping view is showing.
-    @Binding var theImage: UIImage?
-    @Binding var isShowing: Bool
-
-    init(image: Binding<UIImage?>, isShowing: Binding<Bool>){
-        _theImage = image
-        _isShowing = isShowing
-    }
-
-    func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation) {
-        theImage = cropped
-        isShowing = false
-    }
-
-    func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) { print("ERROR: Failed to crop") }
-
-    func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { isShowing = false }
-
-    func cropViewControllerDidBeginResize(_ cropViewController: CropViewController){}
-
-    func cropViewControllerDidEndResize(_ cropViewController: CropViewController, original: UIImage, cropInfo: CropInfo) {}
-
-    func cropViewControllerWillDismiss(_ cropViewController: CropViewController) {}
-}
-
-
-// Struct for alerts created for testing purposes. Ignore for now.
-
-//struct Alert {
-//    static func present(title: String?, message: String, actions: Alert.Action..., from controller: UIViewController) {
-//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        for action in actions {
-//            alertController.addAction(action.alertAction)
-//        }
-//        controller.present(alertController, animated: true, completion: nil)
-//    }
-//}
-//
-//extension Alert{
-//    enum Action{
-//        case delete(handler: (() -> Void)?)
-//        case cancel(handler: (() -> Void)?)
-//
-//        private var title: String {
-//            switch self {
-//            case .delete:
-//                return "Delete"
-//            case .cancel:
-//                return "Cancel"
-//            }
-//        }
-//
-//        private var handler: (() -> Void)? {
-//            switch self {
-//            case .delete(let handler):
-//                return handler
-//            case .cancel:
-//                return nil
-//            }
-//        }
-//
-//        var alertAction: UIAlertAction {
-//            return UIAlertAction(title: title, style: .default, handler: { _ in
-//                if let handler = self.handler {
-//                    handler()
-//                }
-//            })
-//        }
-//    }
-//}
-
-
-//Alert.present(
-//    title: "WARNING",
-//    message: "Are you sure you want to delete this Hive?",
-//    actions: .delete(handler: {
-//        hives.deleteHive(hiveid: hive.id)
-//        hives.save()
-//    }), .cancel(handler: nil),
-//    from: self)

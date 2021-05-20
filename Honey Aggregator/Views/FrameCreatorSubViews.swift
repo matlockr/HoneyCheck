@@ -786,7 +786,8 @@ struct DetailedView: View {
     var state: STATE
     
     // Show/hide cropping view
-    @State private var showCropper: Bool = true
+    @State private var showCropper: Bool = false
+    @State private var showCropperButton: Bool = true
    
     // Information about ML Classification
     @State private var predictionUIImages: [UIImage] = []
@@ -808,6 +809,19 @@ struct DetailedView: View {
 
     var body: some View{
         VStack{
+            
+            if (showCropperButton == true){
+                Button(action: {
+                    showCropper = true
+                }){
+                    Text("Crop Image!")
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))
+                }.padding()
+            }
             // Loading bar based on how many images left to classify
             // for better user feedback
             if showLoadingBar{
@@ -821,6 +835,7 @@ struct DetailedView: View {
             if showAnaylseButton {
                 Button(action: {
                     showAnaylseButton = false
+                    showCropperButton = false
                     showLoadingBar = true
                     
                     // DispatchQueue delays the code to allow the view to update
@@ -839,10 +854,11 @@ struct DetailedView: View {
             
             
         }.navigationBarBackButtonHidden(true)
-        .fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
-            
+        .fullScreenCover(isPresented: $showCropper, onDismiss: {
+            showAnaylseButton = true
+        }){
             // Show the cropping view
-            ImageEditor(theImage: $img, isShowing: $showCropper).ignoresSafeArea()
+            ImageEditor(theImage: $img).ignoresSafeArea()
         }
         .onReceive(timer){ _ in
             // When we are in the classification stage, everytime the timer activates
@@ -985,15 +1001,15 @@ struct DetailedView: View {
 
 // Struct UIView for connecting the Mantis Cropping view to SwiftUI
 struct ImageEditor: UIViewControllerRepresentable{
-    typealias Coordinator = ImageEditorCoordinator
 
+    @Environment(\.presentationMode) var presentationMode
+    
     // Binding variables for the image being cropped and
     // if the cropping view is showing.
     @Binding var theImage: UIImage?
-    @Binding var isShowing: Bool
     
     // ImageEditor Coordinator setup for using the Mantis Cropping View
-    class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
+    class Coordinator: CropViewControllerDelegate{
         
         var parent: ImageEditor
 
@@ -1003,12 +1019,12 @@ struct ImageEditor: UIViewControllerRepresentable{
 
         func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation) {
             parent.theImage = cropped
-            parent.isShowing = false
+            parent.presentationMode.wrappedValue.dismiss()
         }
 
         func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) {}
 
-        func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { parent.isShowing = false }
+        func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { parent.presentationMode.wrappedValue.dismiss() }
 
         func cropViewControllerDidBeginResize(_ cropViewController: CropViewController){}
 

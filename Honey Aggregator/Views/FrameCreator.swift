@@ -105,15 +105,38 @@ struct FrameCreator: View {
                 // Display all the information of the new frame that will be
                 // created.
                 Text("Hive Name: \(selectedHive!.hiveName)")
+                    .foregroundColor(Color.orange)
+                    .font(.system(size: 20, weight: .heavy))
+                    .padding(.horizontal)
                 Text("Box Number: \(selectedBox!.idx + 1)")
+                    .foregroundColor(Color.orange)
+                    .font(.system(size: 20, weight: .heavy))
+                    .padding(.horizontal)
                 if hives.isMetric{
                     Text("Frame height: \(String(format: "%.2f", selectedTemplate!.height * 25.4)) mm")
+                        .foregroundColor(Color.orange)
+                        .font(.system(size: 20, weight: .heavy))
+                        .padding(.horizontal)
                     Text("Frame Width: \(String(format: "%.2f", selectedTemplate!.width * 25.4)) mm")
+                        .foregroundColor(Color.orange)
+                        .font(.system(size: 20, weight: .heavy))
+                        .padding(.horizontal)
                     Text("Honey Amount: \(String(format: "%.2f", tempHoneyAmount / 2.2)) kg")
+                        .foregroundColor(Color.orange)
+                        .font(.system(size: 20, weight: .heavy))
+                        .padding(.horizontal)
                 } else {
                     Text("Frame height: \(String(format: "%.2f", selectedTemplate!.height)) in")
+                        .foregroundColor(Color.orange)
+                        .font(.system(size: 20, weight: .heavy))
+                        .padding(.horizontal)
                     Text("Frame Width: \(String(format: "%.2f", selectedTemplate!.width)) in")
-                    Text("Honey Amount: \(String(format: "%.2f", tempHoneyAmount)) lbs")
+                        .foregroundColor(Color.orange)
+                        .font(.system(size: 20, weight: .heavy))
+                        .padding(.horizontal)
+                    Text("Honey Amount: \(String(format: "%.2f", tempHoneyAmount)) lbs").foregroundColor(Color.orange)
+                        .font(.system(size: 20, weight: .heavy))
+                        .padding(.horizontal)
                 }
                 
                 Button(action: {

@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "honeychecknotification.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
@@ -31,6 +32,7 @@
       "size" : "40x40"
     },
     {
+      "filename" : "honeycheckapp.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
@@ -86,6 +88,7 @@
       "size" : "83.5x83.5"
     },
     {
+      "filename" : "honeycheckappstore.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"

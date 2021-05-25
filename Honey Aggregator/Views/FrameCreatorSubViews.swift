@@ -52,7 +52,7 @@ struct HiveCreator: View{
     var body: some View{
         VStack{
             HStack{
-                Text("Hive:")
+                Text("New Hive:")
                     .padding()
                                 
                 // Textfield for editing the new hive name
@@ -309,23 +309,25 @@ struct CustomTemplateCreator: View{
     var body: some View {
         VStack{
             
-            
-            // TextField for name of custom template
-            TextField("Template Name", text: $customName)
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
-            
-            // TextField for height of custom template
-            TextField("Enter Height", text: $customHeight)
-                .padding()
-                .keyboardType(.decimalPad)
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
-            
-            // TextField for width of custom template
-            TextField("Enter Width",text: $customWidth)
-                .padding()
-                .keyboardType(.decimalPad)
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+            VStack{
+                // TextField for name of custom template
+                TextField("Template Name", text: $customName)
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                
+                // TextField for height of custom template
+                TextField("Enter Height", text: $customHeight)
+                    .padding()
+                    .keyboardType(.decimalPad)
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                
+                // TextField for width of custom template
+                TextField("Enter Width",text: $customWidth)
+                    .padding()
+                    .keyboardType(.decimalPad)
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                    
+            }.padding()
             
             // Button for creating the new template
             Button(action: {
@@ -438,11 +440,11 @@ struct PictureHandler: View{
             if subState == DrawingState.GetPicture{
                 // Display the image picker button icon
                 ZStack{
-                    Image(systemName: "circle")
+                    Image(systemName: "circle.fill")
                         .font(.system(size: 70.0))
-                        .foregroundColor(Color.orange)
+                        .foregroundColor(Color(red: 255/255, green: 248/255, blue: 235/255))
                     
-                    Image(systemName: "camera")
+                    Image(systemName: "camera.fill")
                         .font(.system(size: 40.0))
                         .foregroundColor(Color.orange)
                 }
@@ -474,11 +476,23 @@ struct PictureHandler: View{
                             .foregroundColor(Color.orange)
                     }
                     .popover(isPresented: $showPopOver) {
-                        Text("To calculatue the amount of honey you will need to draw in two sections. \n\n First: Draw with the red pen around the edges of the frame and hit done to go to the next step. \n\n Second: Draw with the blue pen around where honey should be present. \n\n You can edit the size of the pen on both steps with the slider.")
+                        Text("Drawing Tutorial")
+                            .foregroundColor(Color.orange)
+                            .font(.system(size: 20, weight: .heavy))
+                            .padding(.horizontal)
+                        Text("To calculatue the amount of honey you will need to draw in two sections. \n\nFirst: Draw with the red pen over the buildable comb area and hit done to go to the next step. \n\nSecond: Draw with the blue pen over where honey should be present. \n\nYou can edit the size of the pen on both steps with the slider.")
                         .padding()
                         .frame(width:320, height: 400)
-                        Button("OK") {
+                        Button(action: {
                             showPopOver.toggle()
+                        }){
+                            Text("Done")
+                                .foregroundColor(Color.orange)
+                                .padding(10)
+                                .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                                .cornerRadius(10)
+                                .font(.system(size: 20, weight: .heavy))
+                                .pickerStyle(MenuPickerStyle())
                         }
                     }
                     // Undo drawing button
@@ -565,7 +579,6 @@ struct PictureHandler: View{
             titleText = "Finalize"
         }
     }
-    
     
     func drawingDone(){
         
@@ -686,11 +699,11 @@ struct AutomatedPictureHandler: View{
             // Button for getting the image from the photo library
             // or the camera.
             ZStack{
-                Image(systemName: "circle")
+                Image(systemName: "circle.fill")
                     .font(.system(size: 70.0))
-                    .foregroundColor(Color.orange)
+                    .foregroundColor(Color(red: 255/255, green: 248/255, blue: 235/255))
                 
-                Image(systemName: "camera")
+                Image(systemName: "camera.fill")
                     .font(.system(size: 40.0))
                     .foregroundColor(Color.orange)
             }
@@ -716,7 +729,7 @@ struct AutomatedPictureHandler: View{
                     }
                 })
                 ){
-                    Text("Crop Image")
+                    Text("Next")
                         .foregroundColor(Color.orange)
                         .padding(10)
                         .background(Color(red: 255/255, green: 248/255, blue: 235/255))
@@ -727,7 +740,7 @@ struct AutomatedPictureHandler: View{
             }
             
         }
-    .sheet(isPresented: $showingImagePicker) {
+        .sheet(isPresented: $showingImagePicker) {
         
         // This call to the constructor brings up the ImagePicker
         // sourceType uses the ? to set up an if else condition for variable shouldPresentCamera: Bool
@@ -736,7 +749,7 @@ struct AutomatedPictureHandler: View{
    
     // Call to Action Sheet constructor isPresented is a Bool value which calls Binding<Bool> shouldPresentActionSheet
     // Action Sheet lists buttons in top down order, i.e. Camera is at top, cancel is at bottom
-    .actionSheet(isPresented: $shouldPresentActionSheet) {
+        .actionSheet(isPresented: $shouldPresentActionSheet) {
         
         // This creates the action sheet
         () -> ActionSheet in
@@ -766,8 +779,7 @@ struct AutomatedPictureHandler: View{
         // This creates a "Cancel" button
         ActionSheet.Button.cancel()])
         
-    }
-        
+        }
     }
 }
 
@@ -786,7 +798,8 @@ struct DetailedView: View {
     var state: STATE
     
     // Show/hide cropping view
-    @State private var showCropper: Bool = true
+    @State private var showCropper: Bool = false
+    @State private var showCropperButton: Bool = true
    
     // Information about ML Classification
     @State private var predictionUIImages: [UIImage] = []
@@ -808,6 +821,19 @@ struct DetailedView: View {
 
     var body: some View{
         VStack{
+            
+            if (showCropperButton == true){
+                Button(action: {
+                    showCropper = true
+                }){
+                    Text("Crop Image")
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))
+                }.padding()
+            }
             // Loading bar based on how many images left to classify
             // for better user feedback
             if showLoadingBar{
@@ -821,6 +847,7 @@ struct DetailedView: View {
             if showAnaylseButton {
                 Button(action: {
                     showAnaylseButton = false
+                    showCropperButton = false
                     showLoadingBar = true
                     
                     // DispatchQueue delays the code to allow the view to update
@@ -839,10 +866,11 @@ struct DetailedView: View {
             
             
         }.navigationBarBackButtonHidden(true)
-        .fullScreenCover(isPresented: $showCropper, onDismiss: {showAnaylseButton = true}){
-            
+        .fullScreenCover(isPresented: $showCropper, onDismiss: {
+            showAnaylseButton = true
+        }){
             // Show the cropping view
-            ImageEditor(theImage: $img, isShowing: $showCropper)
+            ImageEditor(theImage: $img).ignoresSafeArea()
         }
         .onReceive(timer){ _ in
             // When we are in the classification stage, everytime the timer activates
@@ -985,107 +1013,47 @@ struct DetailedView: View {
 
 // Struct UIView for connecting the Mantis Cropping view to SwiftUI
 struct ImageEditor: UIViewControllerRepresentable{
-    typealias Coordinator = ImageEditorCoordinator
 
+    @Environment(\.presentationMode) var presentationMode
+    
     // Binding variables for the image being cropped and
     // if the cropping view is showing.
     @Binding var theImage: UIImage?
-    @Binding var isShowing: Bool
+    
+    // ImageEditor Coordinator setup for using the Mantis Cropping View
+    class Coordinator: CropViewControllerDelegate{
+        
+        var parent: ImageEditor
 
-    func makeCoordinator() -> ImageEditorCoordinator {
-        return ImageEditorCoordinator(image: $theImage, isShowing: $isShowing)
+        init(_ parent: ImageEditor){
+            self.parent = parent
+        }
+
+        func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation) {
+            parent.theImage = cropped
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+
+        func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) {}
+
+        func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { parent.presentationMode.wrappedValue.dismiss() }
+
+        func cropViewControllerDidBeginResize(_ cropViewController: CropViewController){}
+
+        func cropViewControllerDidEndResize(_ cropViewController: CropViewController, original: UIImage, cropInfo: CropInfo) {}
+
+        func cropViewControllerWillDismiss(_ cropViewController: CropViewController) {}
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImageEditor>) -> Mantis.CropViewController {
-        let Editor = Mantis.cropViewController(image: theImage!)
-        Editor.delegate = context.coordinator
-        return Editor
+        let cropViewController = Mantis.cropViewController(image: theImage!, config: Mantis.Config())
+        cropViewController.delegate = context.coordinator
+        return cropViewController
     }
 }
-
-// ImageEditor Coordinator setup for using the Mantis Cropping View
-class ImageEditorCoordinator: NSObject, CropViewControllerDelegate{
-    
-    // Binding variables for the image being cropped and
-    // if the cropping view is showing.
-    @Binding var theImage: UIImage?
-    @Binding var isShowing: Bool
-
-    init(image: Binding<UIImage?>, isShowing: Binding<Bool>){
-        _theImage = image
-        _isShowing = isShowing
-    }
-
-    func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation) {
-        theImage = cropped
-        isShowing = false
-    }
-
-    func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) { print("ERROR: Failed to crop") }
-
-    func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) { isShowing = false }
-
-    func cropViewControllerDidBeginResize(_ cropViewController: CropViewController){}
-
-    func cropViewControllerDidEndResize(_ cropViewController: CropViewController, original: UIImage, cropInfo: CropInfo) {}
-
-    func cropViewControllerWillDismiss(_ cropViewController: CropViewController) {}
-}
-
-
-// Struct for alerts created for testing purposes. Ignore for now.
-
-//struct Alert {
-//    static func present(title: String?, message: String, actions: Alert.Action..., from controller: UIViewController) {
-//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        for action in actions {
-//            alertController.addAction(action.alertAction)
-//        }
-//        controller.present(alertController, animated: true, completion: nil)
-//    }
-//}
-//
-//extension Alert{
-//    enum Action{
-//        case delete(handler: (() -> Void)?)
-//        case cancel(handler: (() -> Void)?)
-//
-//        private var title: String {
-//            switch self {
-//            case .delete:
-//                return "Delete"
-//            case .cancel:
-//                return "Cancel"
-//            }
-//        }
-//
-//        private var handler: (() -> Void)? {
-//            switch self {
-//            case .delete(let handler):
-//                return handler
-//            case .cancel:
-//                return nil
-//            }
-//        }
-//
-//        var alertAction: UIAlertAction {
-//            return UIAlertAction(title: title, style: .default, handler: { _ in
-//                if let handler = self.handler {
-//                    handler()
-//                }
-//            })
-//        }
-//    }
-//}
-
-
-//Alert.present(
-//    title: "WARNING",
-//    message: "Are you sure you want to delete this Hive?",
-//    actions: .delete(handler: {
-//        hives.deleteHive(hiveid: hive.id)
-//        hives.save()
-//    }), .cancel(handler: nil),
-//    from: self)

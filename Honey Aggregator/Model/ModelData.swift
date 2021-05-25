@@ -80,6 +80,7 @@ class Hives: ObservableObject{
         }
         
     }
+    
     //Checks to see if file is contained in file system
     func fileCheck(file: String)->String{
         var filePath = ""
@@ -126,6 +127,7 @@ class Hives: ObservableObject{
             fatalError("Couldn't save data to \(fileName)")
         }
     }
+    
     //This function creates a .json of the current hive and archives it.
     func archive(file:String)->String{
         do {
@@ -170,6 +172,7 @@ class Hives: ObservableObject{
             return "Season was successfully archived!"
         }
     }
+    
     // Create a string based on the information stored in the hive to show
     // on the main page for debug purposes.
     func getReadOut() -> String{
@@ -204,6 +207,7 @@ class Hives: ObservableObject{
         }
         return readOutArray
     }
+    
     //Modified version of the readout function that allows for finding a specific element in the hive list and displaying just that one set of data as a string.
     func menuSelect(index: Int) -> String {
         var readOutString = ""
@@ -230,6 +234,7 @@ class Hives: ObservableObject{
         }
         return readOutString
     }
+    
     // Add a BeeBox to a hive using the hive's UUID
     func addBox(hiveid: UUID){
         for i in 0..<hiveList.count {
@@ -314,6 +319,7 @@ class Hives: ObservableObject{
         }
 
     }
+    
     //This removes all hiveList data Test for whether this is only current data
     func reset(){
         hiveList.removeAll()

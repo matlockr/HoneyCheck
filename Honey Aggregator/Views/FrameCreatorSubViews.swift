@@ -52,7 +52,7 @@ struct HiveCreator: View{
     var body: some View{
         VStack{
             HStack{
-                Text("Hive:")
+                Text("New Hive:")
                     .padding()
                                 
                 // Textfield for editing the new hive name
@@ -309,23 +309,25 @@ struct CustomTemplateCreator: View{
     var body: some View {
         VStack{
             
-            
-            // TextField for name of custom template
-            TextField("Template Name", text: $customName)
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
-            
-            // TextField for height of custom template
-            TextField("Enter Height", text: $customHeight)
-                .padding()
-                .keyboardType(.decimalPad)
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
-            
-            // TextField for width of custom template
-            TextField("Enter Width",text: $customWidth)
-                .padding()
-                .keyboardType(.decimalPad)
-                .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+            VStack{
+                // TextField for name of custom template
+                TextField("Template Name", text: $customName)
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                
+                // TextField for height of custom template
+                TextField("Enter Height", text: $customHeight)
+                    .padding()
+                    .keyboardType(.decimalPad)
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                
+                // TextField for width of custom template
+                TextField("Enter Width",text: $customWidth)
+                    .padding()
+                    .keyboardType(.decimalPad)
+                    .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                    
+            }.padding()
             
             // Button for creating the new template
             Button(action: {
@@ -438,11 +440,11 @@ struct PictureHandler: View{
             if subState == DrawingState.GetPicture{
                 // Display the image picker button icon
                 ZStack{
-                    Image(systemName: "circle")
+                    Image(systemName: "circle.fill")
                         .font(.system(size: 70.0))
-                        .foregroundColor(Color.orange)
+                        .foregroundColor(Color(red: 255/255, green: 248/255, blue: 235/255))
                     
-                    Image(systemName: "camera")
+                    Image(systemName: "camera.fill")
                         .font(.system(size: 40.0))
                         .foregroundColor(Color.orange)
                 }
@@ -474,11 +476,23 @@ struct PictureHandler: View{
                             .foregroundColor(Color.orange)
                     }
                     .popover(isPresented: $showPopOver) {
-                        Text("To calculatue the amount of honey you will need to draw in two sections. \n\n First: Draw with the red pen around the edges of the frame and hit done to go to the next step. \n\n Second: Draw with the blue pen around where honey should be present. \n\n You can edit the size of the pen on both steps with the slider.")
+                        Text("Drawing Tutorial")
+                            .foregroundColor(Color.orange)
+                            .font(.system(size: 20, weight: .heavy))
+                            .padding(.horizontal)
+                        Text("To calculatue the amount of honey you will need to draw in two sections. \n\nFirst: Draw with the red pen over the buildable comb area and hit done to go to the next step. \n\nSecond: Draw with the blue pen over where honey should be present. \n\nYou can edit the size of the pen on both steps with the slider.")
                         .padding()
                         .frame(width:320, height: 400)
-                        Button("OK") {
+                        Button(action: {
                             showPopOver.toggle()
+                        }){
+                            Text("Done")
+                                .foregroundColor(Color.orange)
+                                .padding(10)
+                                .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                                .cornerRadius(10)
+                                .font(.system(size: 20, weight: .heavy))
+                                .pickerStyle(MenuPickerStyle())
                         }
                     }
                     // Undo drawing button
@@ -565,7 +579,6 @@ struct PictureHandler: View{
             titleText = "Finalize"
         }
     }
-    
     
     func drawingDone(){
         
@@ -686,11 +699,11 @@ struct AutomatedPictureHandler: View{
             // Button for getting the image from the photo library
             // or the camera.
             ZStack{
-                Image(systemName: "circle")
+                Image(systemName: "circle.fill")
                     .font(.system(size: 70.0))
-                    .foregroundColor(Color.orange)
+                    .foregroundColor(Color(red: 255/255, green: 248/255, blue: 235/255))
                 
-                Image(systemName: "camera")
+                Image(systemName: "camera.fill")
                     .font(.system(size: 40.0))
                     .foregroundColor(Color.orange)
             }
@@ -716,7 +729,7 @@ struct AutomatedPictureHandler: View{
                     }
                 })
                 ){
-                    Text("Crop Image")
+                    Text("Next")
                         .foregroundColor(Color.orange)
                         .padding(10)
                         .background(Color(red: 255/255, green: 248/255, blue: 235/255))
@@ -727,7 +740,7 @@ struct AutomatedPictureHandler: View{
             }
             
         }
-    .sheet(isPresented: $showingImagePicker) {
+        .sheet(isPresented: $showingImagePicker) {
         
         // This call to the constructor brings up the ImagePicker
         // sourceType uses the ? to set up an if else condition for variable shouldPresentCamera: Bool
@@ -736,7 +749,7 @@ struct AutomatedPictureHandler: View{
    
     // Call to Action Sheet constructor isPresented is a Bool value which calls Binding<Bool> shouldPresentActionSheet
     // Action Sheet lists buttons in top down order, i.e. Camera is at top, cancel is at bottom
-    .actionSheet(isPresented: $shouldPresentActionSheet) {
+        .actionSheet(isPresented: $shouldPresentActionSheet) {
         
         // This creates the action sheet
         () -> ActionSheet in
@@ -766,8 +779,7 @@ struct AutomatedPictureHandler: View{
         // This creates a "Cancel" button
         ActionSheet.Button.cancel()])
         
-    }
-        
+        }
     }
 }
 
@@ -814,7 +826,7 @@ struct DetailedView: View {
                 Button(action: {
                     showCropper = true
                 }){
-                    Text("Crop Image!")
+                    Text("Crop Image")
                         .foregroundColor(Color.orange)
                         .padding(10)
                         .background(Color(red: 255/255, green: 248/255, blue: 235/255))

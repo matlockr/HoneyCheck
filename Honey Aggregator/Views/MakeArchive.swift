@@ -12,9 +12,13 @@ struct MakeArchive: View {
     @Environment(\.presentationMode) var presentationMode
     @State var seasonName: String
     @State var warning: String
+    
     var body: some View {
         VStack( content: {
             Text("Start New Season")
+                .foregroundColor(Color.orange)
+                .font(.system(size: 20, weight: .heavy))
+                .padding()
             
             Spacer()
             
@@ -42,7 +46,7 @@ struct MakeArchive: View {
                     .background(Color(red: 255/255, green: 248/255, blue: 235/255))
                     .cornerRadius(10)
                     .font(.system(size: 20, weight: .heavy))
-            }
+            }.padding(.top)
             .disabled(seasonName.isEmpty)
             
             if(warning.isEmpty){

@@ -13,7 +13,7 @@ import UniformTypeIdentifiers
 struct SettingsMenu: View {
     //The enum is used to create multiple action sheets
     enum Sheets: Identifiable {
-            case reset, archiveMake
+            case reset, archiveMake, about
 
             var id: Int {
                 self.hashValue
@@ -123,6 +123,18 @@ struct SettingsMenu: View {
             .padding(.bottom)
             .padding(.horizontal)
         }
+        Button(action: {
+            self.showingActionSheet = true
+            self.activeSheet = .about
+        }){
+            Text("About Us")
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .foregroundColor(Color.orange)
+                .padding(10)
+                .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                .cornerRadius(10)
+                .font(.system(size: 15, weight: .heavy))
+        }
         .fileExporter(isPresented: $showExportSheet, document: document, contentType: UTType.commaSeparatedText){ result in
             switch result {
             case .success(let url):
@@ -137,6 +149,25 @@ struct SettingsMenu: View {
               ResetHives()
           case .archiveMake:
               MakeArchive(seasonName: "", warning: "")
+          case .about:
+            Text("Swipe down to dismiss")
+              .padding(.top)
+              .font(.system(size: 12, weight: .light))
+            Divider()
+            Text("HoneyCheck is an application developed to help local beekeepers in the Southern Oregon area.\n\nIt was designed by a group of Computer Science capstone students based out of Southern Oregon University.\n ")
+                .padding(.top)
+                .font(.system(size:14, weight: .light))
+            
+            VStack(alignment: .leading) {
+                Text("HoneyCheck was created by: \n\n Robert Matlock \n Nicholas Morales \n Collin Robinson \n Avery Economou \n\n Faculty Supervisor:\n Fabrizzio Soares ")
+                  .padding(10)
+                  .multilineTextAlignment(.leading)
+                  .font(.system(size:14, weight: .heavy))
+            }
+            Divider()
+            Text("Application is owned by and maintained by RaiderSoft and the Southern Oregon University IT Department. \n ")
+                .italic()
+                .font(.system(size: 12, weight: .light))
           }
         }
         /*.navigationBarItems(leading: Text("Honey Aggregator")).actionSheet(isPresented: $showingActionSheet) {
@@ -184,4 +215,5 @@ struct TextFile: FileDocument {
         let data = Data(text.utf8)
         return FileWrapper(regularFileWithContents: data)
     }
+    
 }

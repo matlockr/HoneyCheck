@@ -39,9 +39,9 @@ struct ContentView: View {
                         .pickerStyle(MenuPickerStyle())
                         
                         Divider()
-                        
-                        Text(hives.menuSelect(index: menu))
-                        
+                        ScrollView(.vertical){
+                            Text(hives.menuSelect(index: menu))
+                        }
                         Spacer()
                     }
                 } else {

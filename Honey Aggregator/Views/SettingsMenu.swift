@@ -59,6 +59,8 @@ struct SettingsMenu: View {
             
             Divider()
             
+            Spacer()
+
             //Start new season button
             Button(action: {
                 print("Start New Season Clicked")
@@ -73,27 +75,9 @@ struct SettingsMenu: View {
                     .font(.system(size: 20, weight: .heavy))
             }.padding(.horizontal)
             
-            List{
-                Text("2020")
-                Text("2018")
-                Text("2019")
-            }
             
             Button(action: {
-                csvHead = "Season,Date,Hive Title,Box #,Frame Area,Frame #,Side,Honey Weight Estimate\n"
-                
-                
-                for i in 0..<hives.hiveList.count{
-                    for j in 0..<hives.hiveList[i].beeBoxes.count{
-                        for frame in hives.hiveList[i].beeBoxes[j].frames{
-                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),A,\(frame.honeyTotalSideA)\n")
-                            csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),B,\(frame.honeyTotalSideB)\n")
-                        }
-                    }
-                }
-                
-                document.text = csvHead
-                showExportSheet = true
+                exportCSV()
             }){
                 Text("Export Data")
                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -132,7 +116,6 @@ struct SettingsMenu: View {
                 .foregroundColor(Color.orange)
                 .padding(10)
                 .background(Color(red: 255/255, green: 248/255, blue: 235/255))
-                .cornerRadius(10)
                 .font(.system(size: 15, weight: .heavy))
         }
         .fileExporter(isPresented: $showExportSheet, document: document, contentType: UTType.commaSeparatedText){ result in
@@ -146,9 +129,9 @@ struct SettingsMenu: View {
         .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
           switch item {
           case .reset:
-              ResetHives()
+            ResetHives()
           case .archiveMake:
-              MakeArchive(seasonName: "", warning: "")
+            MakeArchive(seasonName: "", warning: "")
           case .about:
             Text("Swipe down to dismiss")
               .padding(.top)
@@ -156,10 +139,11 @@ struct SettingsMenu: View {
             Divider()
             Text("HoneyCheck is an application developed to help local beekeepers in the Southern Oregon area.\n\nIt was designed by a group of Computer Science capstone students based out of Southern Oregon University.\n ")
                 .padding(.top)
+                .padding(.horizontal)
                 .font(.system(size:14, weight: .light))
             
             VStack(alignment: .leading) {
-                Text("HoneyCheck was created by: \n\n Robert Matlock \n Nicholas Morales \n Collin Robinson \n Avery Economou \n\n Faculty Supervisor:\n Fabrizzio Soares ")
+                Text("HoneyCheck was created by: \n\n\tRobert Matlock \n\tNicholas Morales \n\tCollin Robinson \n\tAvery Economou \n\nFaculty Supervisor:\n\n\tFabrizzio Soares ")
                   .padding(10)
                   .multilineTextAlignment(.leading)
                   .font(.system(size:14, weight: .heavy))
@@ -182,6 +166,23 @@ struct SettingsMenu: View {
               isMetric = hives.isMetric
               isDrawingPictureHandler = hives.isDrawingHandler
           })
+    }
+    
+    func exportCSV(){
+        csvHead = "Season,Date,Hive Title,Box #,Frame Area,Frame #,Side,Honey Weight Estimate\n"
+        
+        
+        for i in 0..<hives.hiveList.count{
+            for j in 0..<hives.hiveList[i].beeBoxes.count{
+                for frame in hives.hiveList[i].beeBoxes[j].frames{
+                    csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),A,\(frame.honeyTotalSideA)\n")
+                    csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),B,\(frame.honeyTotalSideB)\n")
+                }
+            }
+        }
+        
+        document.text = csvHead
+        showExportSheet = true
     }
 }
 

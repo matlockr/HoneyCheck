@@ -181,7 +181,7 @@ class Hives: ObservableObject{
         for i in 0..<hiveList.count{
             readOutString += "Hive: \(hiveList[i].hiveName)\n"
             for j in 0..<hiveList[i].beeBoxes.count{
-                readOutString += "\tBox: \(j)\n"
+                readOutString += "\tBox: \(j) Honey Total: \(getBoxHoneyAmount(hiveidx: i, boxidx: j))\n"
                 for k in 0..<hiveList[i].beeBoxes[j].frames.count{
                     readOutString += "\t\tFrame: \(k) \n"
                     
@@ -196,6 +196,26 @@ class Hives: ObservableObject{
         }
         
         return readOutString
+    }
+    
+    func getBoxHoneyAmount(hiveidx: Int, boxidx: Int) -> Float {
+        var totalHoney: Float = 0.0
+        
+        for frame in hiveList[hiveidx].beeBoxes[boxidx].frames{
+            totalHoney += (frame.honeyTotalSideA + frame.honeyTotalSideB)
+        }
+        
+        return totalHoney
+    }
+    
+    func getHiveHoneyTotal(hiveidx: Int) -> Float{
+        var totalHoney: Float = 0.0
+        
+        for i in 0..<hiveList[hiveidx].beeBoxes.count{
+            totalHoney += getBoxHoneyAmount(hiveidx: hiveidx, boxidx: i)
+        }
+        
+        return totalHoney
     }
     
     //Modified version of the readout function to add all the hives to an array.
@@ -218,18 +238,28 @@ class Hives: ObservableObject{
             }
         }
         if tempIndex != nil {
-            readOutString += "Hive: \(hiveList[tempIndex!].hiveName)\n"
-            for j in 0..<hiveList[tempIndex!].beeBoxes.count{
-                readOutString += "\tBox: \(j + 1)\n"
-                for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
-                    readOutString += "\t\tFrame: \(k + 1) \n"
-                
-                    if isMetric{
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", (hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB) / 2.20)) kg\n"
-                    } else {
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB)) lbs\n"
+            if isMetric{
+                readOutString += "Hive: \(hiveList[tempIndex!].hiveName) \nHoney Total: \(String(format: "%.2f", getHiveHoneyTotal(hiveidx: tempIndex!) / 2.20)) kg\n"
+                for j in 0..<hiveList[tempIndex!].beeBoxes.count{
+                    readOutString += "\tBox: \(j + 1) \n\tHoney Total: \(String(format: "%.2f", getBoxHoneyAmount(hiveidx: tempIndex!, boxidx: j) / 2.20)) kg\n"
+                    for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
+                        readOutString += "\t\tFrame: \(k + 1) \n"
+                    
+                        readOutString += "\t\tHoney Total: \(String(format: "%.2f", (hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB) / 2.20)) kg\n"
                     }
                 }
+
+            } else {
+                readOutString += "Hive: \(hiveList[tempIndex!].hiveName) \nHoney Total: \(String(format: "%.2f", getHiveHoneyTotal(hiveidx: tempIndex!))) lbs\n"
+                for j in 0..<hiveList[tempIndex!].beeBoxes.count{
+                    readOutString += "\tBox: \(j + 1) \n\tHoney Total: \(String(format: "%.2f", getBoxHoneyAmount(hiveidx: tempIndex!, boxidx: j))) lbs\n"
+                    for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
+                        readOutString += "\t\tFrame: \(k + 1) \n"
+
+                        readOutString += "\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB)) lbs\n"
+                    }
+                }
+
             }
         }
         return readOutString

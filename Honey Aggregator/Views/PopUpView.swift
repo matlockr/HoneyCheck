@@ -56,13 +56,6 @@ struct PopUpView: View {
                     .border(Color(#colorLiteral(red: 0.9737995267, green: 0.7765005827, blue: 0.08046276122, alpha: 1)), width: 2)
                     .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
                 }
-            }
         }
-    //}
-/*
-struct PopUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        PopUpView(show: <#Binding<Bool>#>)
-    }
 }
-*/
+

@@ -41,7 +41,7 @@ struct Frame: Hashable, Codable, Identifiable {
 }
 
 // Template object
-struct Template: Identifiable {
+struct Template: Hashable, Codable, Identifiable {
     var id = UUID()
     let name: String
     let height: Float

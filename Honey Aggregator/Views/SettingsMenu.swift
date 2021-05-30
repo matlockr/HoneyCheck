@@ -55,7 +55,6 @@ struct SettingsMenu: View {
                 .font(.system(size: 20, weight: .heavy))
                 .padding()
             
-            Spacer()
             
             Divider()
             

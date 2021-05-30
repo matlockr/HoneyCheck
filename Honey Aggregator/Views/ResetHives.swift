@@ -18,29 +18,31 @@ struct ResetHives: View {
                 .foregroundColor(Color.orange)
                 .font(.system(size: 20, weight: .heavy))
                 .padding()
+            HStack{
+                Button(action: {
+                    hives.reset()
+                    self.presentationMode.wrappedValue.dismiss()
+                }){
+                    Text("Reset")
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))
+                        .pickerStyle(MenuPickerStyle())
+                }.padding()
 
-            Button(action: {
-                hives.reset()
-                self.presentationMode.wrappedValue.dismiss()
-            }){
-                Text("Reset")
-                    .foregroundColor(Color.orange)
-                    .padding(10)
-                    .background(Color(red: 255/255, green: 248/255, blue: 235/255))
-                    .cornerRadius(10)
-                    .font(.system(size: 20, weight: .heavy))
-                    .pickerStyle(MenuPickerStyle())
-            }
-            Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }){
-                Text("Cancel")
-                    .foregroundColor(Color.orange)
-                    .padding(10)
-                    .background(Color(red: 255/255, green: 248/255, blue: 235/255))
-                    .cornerRadius(10)
-                    .font(.system(size: 20, weight: .heavy))
-                    .pickerStyle(MenuPickerStyle())
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }){
+                    Text("Cancel")
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))
+                        .pickerStyle(MenuPickerStyle())
+                }.padding()
             }
         })
     }

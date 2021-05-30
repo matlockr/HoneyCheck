@@ -61,6 +61,7 @@ struct HiveCreator: View{
                 // Button for adding the new hive
                 Button(action: {
                     hives.addHive(name: tmpHiveName.text)
+                    hives.save(file: "")
                     tmpHiveName.text = ""
                 }){
                     Image(systemName: "plus")
@@ -341,16 +342,17 @@ struct CustomTemplateCreator: View{
                             self.activeSheet = .popUpView
                             
                         }
-                        else{
-                        // Convert the height and width is the isMetric is true
-                        if hives.isMetric{
-                            selectedTemplate = Template(name: customName, height: floatHeight / 25.4, width: floatWidth / 25.4)
-                        } else {
-                            selectedTemplate = Template(name: customName, height: floatHeight, width: floatWidth)
-                        }
-                        
-                        state = STATE.Picture1Get
-                        titleText = "Side A Picture"
+                        else {
+                            // Convert the height and width is the isMetric is true
+                            if hives.isMetric{
+                                selectedTemplate = Template(name: customName, height: floatHeight / 25.4, width: floatWidth / 25.4)
+                            } else {
+                                selectedTemplate = Template(name: customName, height: floatHeight, width: floatWidth)
+                            }
+                            hives.templates.append(selectedTemplate!)
+                            hives.saveTemplates()
+                            state = STATE.Picture1Get
+                            titleText = "Side A Picture"
                         }
                         
                     }
@@ -800,6 +802,7 @@ struct DetailedView: View {
     // Show/hide cropping view
     @State private var showCropper: Bool = false
     @State private var showCropperButton: Bool = true
+    @State private var showPopOver: Bool = false
    
     // Information about ML Classification
     @State private var predictionUIImages: [UIImage] = []
@@ -833,6 +836,27 @@ struct DetailedView: View {
                         .cornerRadius(10)
                         .font(.system(size: 20, weight: .heavy))
                 }.padding()
+                
+                //Button with the other drawing tools for the tutorial popover view that describes the usage of the drawing program to the user.
+                Button(action: {
+                    showPopOver.toggle()
+                }){
+                    Text("Tutorial")
+                        .foregroundColor(Color.orange)
+                        .padding(10)
+                        .background(Color(red: 255/255, green: 248/255, blue: 235/255))
+                        .cornerRadius(10)
+                        .font(.system(size: 20, weight: .heavy))
+                }
+                .popover(isPresented: $showPopOver) {
+                    Text("Cropping Tutorial")
+                        .foregroundColor(Color.orange)
+                        .font(.system(size: 20, weight: .heavy))
+                        .padding(.horizontal)
+                    Text("To calculatue the amount of honey you will need to crop the image to the buildable comb of the frame. After the cropping is done, then select the Analyze Image button to start.")
+                    .padding()
+                    .frame(width:320, height: 400)
+                }
             }
             // Loading bar based on how many images left to classify
             // for better user feedback
@@ -862,6 +886,7 @@ struct DetailedView: View {
                         .cornerRadius(10)
                         .font(.system(size: 20, weight: .heavy))
                 }
+                .padding()
             }
             
             

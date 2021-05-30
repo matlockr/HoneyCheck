@@ -37,11 +37,14 @@ struct ContentView: View {
                         .cornerRadius(10)
                         .font(.system(size: 20, weight: .heavy))
                         .pickerStyle(MenuPickerStyle())
-                        
+
                         Divider()
                         ScrollView(.vertical){
-                            Text(hives.menuSelect(index: menu))
+                            ReadoutView(menuIndex: menu).environmentObject(hives)
                         }
+                        /*ScrollView(.vertical){
+                            Text(hives.menuSelect(index: menu))
+                        }*/
                         Spacer()
                     }
                 } else {

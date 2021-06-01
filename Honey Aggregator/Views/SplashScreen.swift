@@ -1,14 +1,8 @@
-//
-//  SplashScreen.swift
-//  Honey Aggregator
-//
-//  Created by Robert Matlock on 5/23/21.
-//
-
 import SwiftUI
 
 struct SplashScreen: View {
     
+    // Binding variables from ContentView that tell UI to show/hide
     @Binding var showingIcon: Bool
     @Binding var showNavBar: Bool
     

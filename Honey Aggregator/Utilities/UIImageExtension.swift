@@ -1,17 +1,10 @@
-//
-//  UIImageExtension.swift
-//  AutomatedHoneyCalculation
-//
-//  Created by Robert Matlock on 4/20/21.
-//
-
 import Foundation
 import UIKit
 
+// Extenstion to the UIImage objects that allows resizing and converting to pixel buffers
 extension UIImage {
     
-    
-    // Takes a UIImage and resizes it to a certain size
+    // Takes a UIImage and resizes it to a certain argument size
     func resizeTo(size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         self.draw(in: CGRect(origin: CGPoint.zero, size: size))
@@ -20,8 +13,7 @@ extension UIImage {
         return resizedImage
     }
     
-    // Takes a UIImage and converts it into a CVPixelBuffer used
-    // for CoreML Classification
+    // Takes a UIImage and converts it into a CVPixelBuffer for use in CoreML Classification
     func toBuffer() -> CVPixelBuffer? {
         let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue, kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue] as CFDictionary
         var pixelBuffer: CVPixelBuffer?
@@ -46,5 +38,4 @@ extension UIImage {
         
         return pixelBuffer
     }
-    
 }

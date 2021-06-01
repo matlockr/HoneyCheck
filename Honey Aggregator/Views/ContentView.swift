@@ -16,11 +16,11 @@ struct ContentView: View {
     @State private var menu = 0
     // Could not get this to work without the magic number Maybe someone else can?
     
+    // UI showing toggles
     @State var showingIcon = true
     @State var showNavBar = true
     
     var body: some View {
-        
         NavigationView{
             // The new functional part of this is that the menu picker will allow the user to see all saved hives and display the data based off of one of those selections.
             ZStack{
@@ -42,12 +42,10 @@ struct ContentView: View {
                         ScrollView(.vertical){
                             ReadoutView(menuIndex: menu).environmentObject(hives)
                         }
-                        /*ScrollView(.vertical){
-                            Text(hives.menuSelect(index: menu))
-                        }*/
                         Spacer()
                     }
                 } else {
+                    // Show the splash screen when the app opens
                     SplashScreen(showingIcon: $showingIcon, showNavBar: $showNavBar)
                 }
             }
@@ -81,10 +79,3 @@ struct ContentView: View {
         .accentColor(Color.orange)
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environmentObject(Hives())
-    }
-}
-

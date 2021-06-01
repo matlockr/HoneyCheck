@@ -19,17 +19,14 @@ struct Hive: Hashable, Codable, Identifiable{
 
 // BeeBox object
 struct BeeBox: Hashable, Codable, Identifiable{
-    
     var id = UUID()
     var idx: Int
     var honeyTotal: Float
     var frames = [Frame]()
-    
 }
 
 // Frame object
 struct Frame: Hashable, Codable, Identifiable {
-    
     var id = UUID()
     var idx: Int
     var height: Float
@@ -37,7 +34,6 @@ struct Frame: Hashable, Codable, Identifiable {
     var honeyTotalSideA: Float
     var honeyTotalSideB: Float
     var dateMade: String
-    
 }
 
 // Template object

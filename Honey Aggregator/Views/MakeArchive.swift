@@ -1,15 +1,11 @@
-//
-//  Make Archive.swift
-//  Honey Aggregator
-//
-//  Created by Nico Morales on 5/5/21.
-//
-
 import SwiftUI
 
 struct MakeArchive: View {
     @EnvironmentObject var hives:Hives
+    
     @Environment(\.presentationMode) var presentationMode
+    
+    // Information for the views archive data
     @State var seasonName: String
     @State var warning: String
     
@@ -36,6 +32,7 @@ struct MakeArchive: View {
             }.padding(.horizontal)
             
             HStack {
+                // Button for the starting archive process
                 Button(action: {
                     let check = hives.archive(file: "\(seasonName).json")
                     if check == "Season was successfully archived!"{
@@ -61,6 +58,7 @@ struct MakeArchive: View {
                     Text("\(warning)").padding()
                 }
                 
+                // Button for canceling archive
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }){
@@ -74,6 +72,5 @@ struct MakeArchive: View {
                     
             }
         })
-        
     }
 }

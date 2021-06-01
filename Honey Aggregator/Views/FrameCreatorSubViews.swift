@@ -346,18 +346,18 @@ struct CustomTemplateCreator: View{
                         else if floatHeight <= 0 {
                             self.activeSheet = .popUpView
                             
-                        }
-                    } else {
+                        } else {
                             // Convert the height and width is the isMetric is true
                             if hives.isMetric{
-                                selectedTemplate = Template(name: customName, height: floatHeight / 25.4, width: floatWidth / 25.4)
+                                selectedTemplate = Template(name: customTemplateName, height: floatHeight / 25.4, width: floatWidth / 25.4)
                             } else {
-                                selectedTemplate = Template(name: customName, height: floatHeight, width: floatWidth)
+                                selectedTemplate = Template(name: customTemplateName, height: floatHeight, width: floatWidth)
                             }
                             hives.templates.append(selectedTemplate!)
                             hives.saveTemplates()
                             state = STATE.Picture1Get
                             titleText = "Side A Picture"
+                        }
                     }
                 }
             }){
@@ -371,12 +371,12 @@ struct CustomTemplateCreator: View{
             
         }
         .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
-                        switch item {
-                        //This brings up the warning screen.
-                        case .popUpView:
-                            PopUpView(title: "Error", message: "Sorry, the custom dimensions must be more than zero!", buttonText: "OK")
-                        }
-                    }
+            switch item {
+            //This brings up the warning screen.
+            case .popUpView:
+                PopUpView(title: "Error", message: "Sorry, the custom dimensions must be more than zero!", buttonText: "OK")
+            }
+        }
     }
 }
 

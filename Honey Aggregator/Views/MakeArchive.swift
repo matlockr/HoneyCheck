@@ -70,9 +70,3 @@ struct MakeArchive: View {
         
     }
 }
-/*
-struct Make_Archive_Previews: PreviewProvider {
-    static var previews: some View {
-        Make_Archive()
-    }
-}*/

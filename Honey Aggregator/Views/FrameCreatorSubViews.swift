@@ -19,8 +19,8 @@ struct HiveCreator: View{
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
-    // Alert Vars
-    @State var showAlert = false
+    // Vars for Deletion Alerts
+    @State var showDeleteAlert = false
     @State var tmpHive: Hive?
     
     // Binding variables that are connected to @State variables
@@ -31,6 +31,8 @@ struct HiveCreator: View{
     
     // Manages length of text box inputs
     class TextFieldManager: ObservableObject{
+        
+        // Control for Hive Name Length
         @Published var text = "" {
             didSet{
                 if text.count > charLimit && oldValue.count <= charLimit{
@@ -92,11 +94,11 @@ struct HiveCreator: View{
                         Image(systemName: "trash.fill")
                             .onTapGesture {
                                 tmpHive = hive
-                                self.showAlert.toggle()
+                                self.showDeleteAlert.toggle()
                             }
                             .foregroundColor(Color.red)
                     }
-                    .alert(isPresented: $showAlert) { () -> Alert in
+                    .alert(isPresented: $showDeleteAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
                             hives.deleteHive(hiveid: tmpHive!.id)
                             hives.save(file: "")
@@ -116,10 +118,11 @@ struct BoxCreator: View{
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
-    // Alert Vars
-    @State var showAlert = false
+    // Vars for Deletion Alerts
+    @State var showDeleteAlert = false
     @State var tmpBox: BeeBox?
     
+    // Holds the current hive this set of boxes resides in
     var selectedHive: Hive
     
     // Binding variables that are connected to @State variables
@@ -149,11 +152,11 @@ struct BoxCreator: View{
                         Image(systemName: "trash.fill")
                             .onTapGesture {
                                 tmpBox = box
-                                self.showAlert.toggle()
+                                self.showDeleteAlert.toggle()
                             }
                             .foregroundColor(Color.red)
                     }
-                    .alert(isPresented: $showAlert) { () -> Alert in
+                    .alert(isPresented: $showDeleteAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
                             hives.deleteBox(boxid: tmpBox!.id)
                             hives.save(file: "")
@@ -173,8 +176,8 @@ struct FrameSelector: View{
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
-    // Alert Vars
-    @State var showAlert = false
+    // Vars for Deletion Alerts
+    @State var showDeleteAlert = false
     @State var tmpFrame: Frame?
     
     
@@ -200,11 +203,11 @@ struct FrameSelector: View{
                         Image(systemName: "trash.fill")
                             .onTapGesture {
                                 tmpFrame = frame
-                                self.showAlert.toggle()
+                                self.showDeleteAlert.toggle()
                             }
                             .foregroundColor(Color.red)
                     }
-                    .alert(isPresented: $showAlert) { () -> Alert in
+                    .alert(isPresented: $showDeleteAlert) { () -> Alert in
                         let pButton = Alert.Button.destructive(Text("Delete")){
                             hives.deleteFrame(frameid: tmpFrame!.id)
                             hives.save(file: "")
@@ -291,7 +294,6 @@ struct CustomTemplateCreator: View{
             }
         }
     
-    //@State private var showPopUp: Bool = false
     // Singleton object that holds list of hives
     @EnvironmentObject var hives:Hives
     
@@ -300,29 +302,32 @@ struct CustomTemplateCreator: View{
     @Binding var state: STATE
     @Binding var selectedTemplate: Template?
     @Binding var titleText: String
+    
     //activeSheet is used to add child sheets
     @State var activeSheet: Sheets?
-    @State private var customName: String = ""
-    @State private var customHeight: String = ""
-    @State private var customWidth: String = ""
+    
+    // Vars for custom template inputs
+    @State private var customTemplateName: String = ""
+    @State private var customTemplateHeight: String = ""
+    @State private var customTemplateWidth: String = ""
     
     var body: some View {
         VStack{
             
             VStack{
                 // TextField for name of custom template
-                TextField("Template Name", text: $customName)
+                TextField("Template Name", text: $customTemplateName)
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
                 
                 // TextField for height of custom template
-                TextField("Enter Height", text: $customHeight)
+                TextField("Enter Height", text: $customTemplateHeight)
                     .padding()
                     .keyboardType(.decimalPad)
                     .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
                 
                 // TextField for width of custom template
-                TextField("Enter Width",text: $customWidth)
+                TextField("Enter Width",text: $customTemplateWidth)
                     .padding()
                     .keyboardType(.decimalPad)
                     .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
@@ -331,8 +336,8 @@ struct CustomTemplateCreator: View{
             
             // Button for creating the new template
             Button(action: {
-                if let floatHeight = Float(customHeight){
-                    if let floatWidth = Float(customWidth){
+                if let floatHeight = Float(customTemplateHeight){
+                    if let floatWidth = Float(customTemplateWidth){
                         if floatWidth <= 0 {
                             self.activeSheet = .popUpView
                             
@@ -344,9 +349,9 @@ struct CustomTemplateCreator: View{
                         else{
                         // Convert the height and width is the isMetric is true
                         if hives.isMetric{
-                            selectedTemplate = Template(name: customName, height: floatHeight / 25.4, width: floatWidth / 25.4)
+                            selectedTemplate = Template(name: customTemplateName, height: floatHeight / 25.4, width: floatWidth / 25.4)
                         } else {
-                            selectedTemplate = Template(name: customName, height: floatHeight, width: floatWidth)
+                            selectedTemplate = Template(name: customTemplateName, height: floatHeight, width: floatWidth)
                         }
                         
                         state = STATE.Picture1Get
@@ -372,9 +377,6 @@ struct CustomTemplateCreator: View{
                             PopUpView(title: "Error", message: "Sorry, the custom dimensions must be more than zero!", buttonText: "OK")
                         }
                     }
-        /*ZStack{
-            PopUpView(title: "Error", message: "Sorry, the custom dimensions must be more than zero!", buttonText: "OK", show: $showPopUp)
-        }*/
     }
 }
 

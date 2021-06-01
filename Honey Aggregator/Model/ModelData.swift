@@ -12,6 +12,7 @@ class Hives: ObservableObject{
     
     // File name of where the hive data is saved
     let fileName = "hivesdata.json"
+    let templateFileName = "frametemplate.json"
     
     // Location to save the file to
     let dir: URL
@@ -33,7 +34,7 @@ class Hives: ObservableObject{
     let fileReset = false
         
     // List of Template types for template selection
-    let templates = [
+    var templates = [
         Template(name: "Langstroff Deep", height: 9.5625, width: 19.0),
         Template(name: "Langstroff Medium", height: 6.625, width: 19.0),
         Template(name: "Langstroff Shallow", height: 5.75, width: 19.0)
@@ -47,6 +48,7 @@ class Hives: ObservableObject{
         
         // Use the fileName variable to position file reading in FileManager
         let fileURL = dir.appendingPathComponent(fileName)
+        let templatefileURL = dir.appendingPathComponent(templateFileName)
         
         // Test read to see if file is empty, if so then add a base to json file
         do {
@@ -79,6 +81,47 @@ class Hives: ObservableObject{
             
         } catch {
             fatalError("Couldn't parse \(fileName) as [Hive] :\n\(error)")
+        }
+        
+        // Templates loading
+        var templateFileEmpty: Bool = false
+        // Test read to see if file is empty, if so then add a base to json file
+        do {
+            // Get the text from the file
+            let fileTxt = try String(contentsOf: templatefileURL, encoding: .utf8)
+            
+            // Build base to file if empty or looking to reset file
+            if fileTxt == ""{
+                templateFileEmpty = true
+                try "[]".write(to: templatefileURL, atomically: false, encoding: .utf8)
+            }
+            
+        } catch is CocoaError{ // This error is for when there is no existing file
+            // Write to the file for the first time and give it the base JSON structure
+            do {
+                templateFileEmpty = true
+                try "[]".write(to: templatefileURL, atomically: false, encoding: .utf8)
+            } catch {
+                fatalError("Couldn't write to \(templateFileName) \(error)\n\n\(type(of: error))\n\n")
+            }
+        } catch {
+            // Any other error should stop the app
+            fatalError("Couldn't read \(templateFileName) \(error)\n\n\(type(of: error))\n\n")
+        }
+        
+        // Decode file information and build the list of templates
+        do {
+            let decoder = JSONDecoder()
+            templates = try decoder.decode([Template].self, from: try Data(contentsOf: templatefileURL))
+            
+            if templateFileEmpty {
+                templates.append(Template(name: "Langstroff Deep", height: 9.5625, width: 19.0))
+                templates.append(Template(name: "Langstroff Medium", height: 6.625, width: 19.0))
+                templates.append(Template(name: "Langstroff Shallow", height: 5.75, width: 19.0))
+            }
+            
+        } catch {
+            fatalError("Couldn't parse \(templateFileName) as [Hive] :\n\(error)")
         }
         
     }
@@ -127,6 +170,35 @@ class Hives: ObservableObject{
             
         } catch {
             fatalError("Couldn't save data to \(fileName)")
+        }
+    }
+    
+    // Save function encodes the hive information and saves it to a JSON file.
+    func saveTemplates(){
+        do {
+            // Setup the encoder
+            let encoder = JSONEncoder()
+            var fileURL: URL
+            // Attempt to encode the hivelist data
+            let data = try encoder.encode(templates)
+            if(templateFileName.isEmpty){
+                // Get the correct directory path to save the hivelist data
+                fileURL = dir.appendingPathComponent(templateFileName)
+            }
+           
+            else{
+                fileURL = dir.appendingPathComponent(templateFileName)
+            }
+            // Attempt to write to file
+            try data.write(to: fileURL)
+            
+
+            // Get the text from the file
+            let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
+            print(fileTxt)
+            
+        } catch {
+            fatalError("Couldn't save data to \(templateFileName)")
         }
     }
     
@@ -183,7 +255,7 @@ class Hives: ObservableObject{
         for i in 0..<hiveList.count{
             readOutString += "Hive: \(hiveList[i].hiveName)\n"
             for j in 0..<hiveList[i].beeBoxes.count{
-                readOutString += "\tBox: \(j)\n"
+                readOutString += "\tBox: \(j) Honey Total: \(getBoxHoneyAmount(hiveidx: i, boxidx: j))\n"
                 for k in 0..<hiveList[i].beeBoxes[j].frames.count{
                     readOutString += "\t\tFrame: \(k) \n"
                     
@@ -198,6 +270,26 @@ class Hives: ObservableObject{
         }
         
         return readOutString
+    }
+    
+    func getBoxHoneyAmount(hiveidx: Int, boxidx: Int) -> Float {
+        var totalHoney: Float = 0.0
+        
+        for frame in hiveList[hiveidx].beeBoxes[boxidx].frames{
+            totalHoney += (frame.honeyTotalSideA + frame.honeyTotalSideB)
+        }
+        
+        return totalHoney
+    }
+    
+    func getHiveHoneyTotal(hiveidx: Int) -> Float{
+        var totalHoney: Float = 0.0
+        
+        for i in 0..<hiveList[hiveidx].beeBoxes.count{
+            totalHoney += getBoxHoneyAmount(hiveidx: hiveidx, boxidx: i)
+        }
+        
+        return totalHoney
     }
     
     //Modified version of the readout function to add all the hives to an array.
@@ -220,18 +312,28 @@ class Hives: ObservableObject{
             }
         }
         if tempIndex != nil {
-            readOutString += "Hive: \(hiveList[tempIndex!].hiveName)\n"
-            for j in 0..<hiveList[tempIndex!].beeBoxes.count{
-                readOutString += "\tBox: \(j + 1)\n"
-                for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
-                    readOutString += "\t\tFrame: \(k + 1) \n"
-                
-                    if isMetric{
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", (hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB) / 2.20)) kg\n"
-                    } else {
-                        readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB)) lbs\n"
+            if isMetric{
+                readOutString += "Hive: \(hiveList[tempIndex!].hiveName) \nHoney Total: \(String(format: "%.2f", getHiveHoneyTotal(hiveidx: tempIndex!) / 2.20)) kg\n"
+                for j in 0..<hiveList[tempIndex!].beeBoxes.count{
+                    readOutString += "\tBox: \(j + 1) \n\tHoney Total: \(String(format: "%.2f", getBoxHoneyAmount(hiveidx: tempIndex!, boxidx: j) / 2.20)) kg\n"
+                    for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
+                        readOutString += "\t\tFrame: \(k + 1) \n"
+                    
+                        readOutString += "\t\tHoney Total: \(String(format: "%.2f", (hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB) / 2.20)) kg\n"
                     }
                 }
+
+            } else {
+                readOutString += "Hive: \(hiveList[tempIndex!].hiveName) \nHoney Total: \(String(format: "%.2f", getHiveHoneyTotal(hiveidx: tempIndex!))) lbs\n"
+                for j in 0..<hiveList[tempIndex!].beeBoxes.count{
+                    readOutString += "\tBox: \(j + 1) \n\tHoney Total: \(String(format: "%.2f", getBoxHoneyAmount(hiveidx: tempIndex!, boxidx: j))) lbs\n"
+                    for k in 0..<hiveList[tempIndex!].beeBoxes[j].frames.count{
+                        readOutString += "\t\tFrame: \(k + 1) \n"
+
+                        readOutString += "\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB)) lbs\n"
+                    }
+                }
+
             }
         }
         return readOutString

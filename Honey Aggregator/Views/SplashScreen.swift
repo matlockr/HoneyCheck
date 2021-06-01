@@ -14,7 +14,8 @@ struct SplashScreen: View {
     
     var body: some View {
         ZStack(alignment: .center){
-            Image("comb")
+            Image("appLogo")
+                .resizable()
                 .aspectRatio(contentMode: .fit)
                 .background(Color.white)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

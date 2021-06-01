@@ -13,6 +13,8 @@ class Hives: ObservableObject{
     // File name of where the hive data is saved
     let fileName = "hivesdata.json"
     let templateFileName = "frametemplate.json"
+    
+    // Location to save the file to
     let dir: URL
     
     // Setup for the singleton object for the hive list

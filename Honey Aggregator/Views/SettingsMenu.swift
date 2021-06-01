@@ -91,9 +91,6 @@ struct SettingsMenu: View {
             Button(action: {
                 self.showingActionSheet = true
                 self.activeSheet = .reset
-                //self.showingActionSheet = true
-                // Dismiss the view and return to the ContentView view
-                //presentationMode.wrappedValue.dismiss()
             }){
                 Text("Clear Current Hives")
                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -153,14 +150,6 @@ struct SettingsMenu: View {
                 .font(.system(size: 12, weight: .light))
           }
         }
-        /*.navigationBarItems(leading: Text("Honey Aggregator")).actionSheet(isPresented: $showingActionSheet) {
-                ActionSheet(title: Text("Clear Hive Data"), buttons: [
-                .default(Text("Confirm Reset?")) { hives.reset() },
-                 .cancel()
-                    ]
-                )
-            }
-            }*/
         .onAppear(perform: {
               isMetric = hives.isMetric
               isDrawingPictureHandler = hives.isDrawingHandler

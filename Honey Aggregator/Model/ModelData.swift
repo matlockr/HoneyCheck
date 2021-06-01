@@ -189,8 +189,6 @@ class Hives: ObservableObject{
             // Attempt to write to file
             try data.write(to: fileURL)
             
-            // Get the text from the file
-            let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
         } catch {
             fatalError("Couldn't save data to \(templateFileName)")
         }

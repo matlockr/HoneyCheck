@@ -1,12 +1,3 @@
-//
-//  FrameCreatorSubViews.swift
-//  Honey_Agg
-//
-//  All the sub views for the FrameCreator view
-//
-//  Special thanks to John Codeos
-//  https://johncodeos.com/how-to-create-a-popup-window-with-swiftui/
-
 import SwiftUI
 import SwiftyDraw
 import SwiftImage
@@ -114,6 +105,7 @@ struct HiveCreator: View{
     }
 }
 
+// View for the BoxCreator
 struct BoxCreator: View{
     
     // Singleton object that holds list of hives
@@ -172,6 +164,7 @@ struct BoxCreator: View{
     }
 }
 
+// View for FrameSelector to add/delete frames
 struct FrameSelector: View{
     
     // Singleton object that holds list of hives
@@ -180,7 +173,6 @@ struct FrameSelector: View{
     // Vars for Deletion Alerts
     @State var showDeleteAlert = false
     @State var tmpFrame: Frame?
-    
     
     var selectedBox: BeeBox
     
@@ -223,6 +215,7 @@ struct FrameSelector: View{
     }
 }
 
+// View for the template selector
 struct TemplateSelector: View{
     
     // Singleton object that holds list of hives
@@ -285,6 +278,7 @@ struct TemplateSelector: View{
     }
 }
 
+// View for the Custom Template Maker View
 struct CustomTemplateCreator: View{
     //This allows for multiple action sheets in this sub view.
     enum Sheets: Identifiable {
@@ -390,10 +384,10 @@ struct DrawingView: UIViewRepresentable{
     }
     
     func updateUIView(_ uiView: SwiftyDrawView, context: Context) {
-        
     }
 }
 
+// View for doing the drawing image processing
 struct PictureHandler: View{
 
     // Singleton object that holds list of hives
@@ -582,23 +576,18 @@ struct PictureHandler: View{
         }
     }
     
+    // Calculate the honey amount using pixel counts of the comb and honey selections
     func drawingDone(){
         
         // Get the Screenshot of the current view
         var image: UIImage?
         
         let currentLayer = UIApplication.shared.keyWindow!.layer
-        
         let currentScale = UIScreen.main.scale
-        
         UIGraphicsBeginImageContextWithOptions(currentLayer.frame.size, false, currentScale)
-        
         guard let currentContext = UIGraphicsGetCurrentContext() else {return}
-        
         currentLayer.render(in: currentContext)
-        
         image = UIGraphicsGetImageFromCurrentImageContext()
-        
         UIGraphicsEndImageContext()
 
         // Convert the UIImage to the SwiftImage Image type
@@ -740,7 +729,6 @@ struct AutomatedPictureHandler: View{
                 }
                 .padding(.top)
             }
-            
         }
         .sheet(isPresented: $showingImagePicker) {
         
@@ -780,7 +768,6 @@ struct AutomatedPictureHandler: View{
         
         // This creates a "Cancel" button
         ActionSheet.Button.cancel()])
-        
         }
     }
 }

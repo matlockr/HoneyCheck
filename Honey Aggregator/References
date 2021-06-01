@@ -4,3 +4,34 @@ PopUpView.swift
 
 Special thanks to John Codeos
 https://johncodeos.com/how-to-create-a-popup-window-with-swiftui/
+
+ImagePicker.swift
+
+Based on tutorial by InstaFilter from HackingWithSwift URL:
+https://www.hackingwithswift.com/read/13/overview
+    
+Additional thanks to @karthickselvaraj from Medium.com for sourceType information
+https://medium.com/better-programming/how-to-pick-an-image-from-camera-or-photo-library-in-swiftui-a596a0a2ece
+
+ModelData.swift
+
+Special thanks to Sergey Kargopolov
+https://www.appsdeveloperblog.com/check-if-a-file-exist/
+
+FrameCreator.swift
+
+Thanks to Paul Hudson for showing how to use DataFormatter
+https://www.hackingwithswift.com/books/ios-swiftui/connecting-swiftui-to-core-ml
+
+FrameCreatorSubViews.swift
+
+Special thanks to John Codeos
+https://johncodeos.com/how-to-create-a-popup-window-with-swiftui/
+
+Tutorial of how to setup Mantis Cropping with swiftui
+https://www.youtube.com/watch?v=mTV2gXs56OU
+
+Github page for showing UIImage to CVPixelBuffer
+https://gist.github.com/francoismarceau29/abac55c22f6e440800d1d73d72bf2225
+
+Note: Many smaller aspects of this project were in part to many other individuals and organizations that may not be noted here. This is simply due to how the app has been modified over time leading to some sources being mixes/lost with other sources.

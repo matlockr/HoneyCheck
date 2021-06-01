@@ -28,16 +28,18 @@ struct SettingsMenu: View {
     // This is just used for being able to dissmiss the view in code
     @Environment(\.presentationMode) var presentationMode
     
+    // State variables for the holding some ui viewing variables
     @State private var isDrawingPictureHandler: Bool = false
     @State private var isMetric:Bool = false
-    
     @State private var showExportSheet: Bool = false
+    
+    // Setup for exporting the CSV
     @State private var csvHead: String = ""
     @State private var document = TextFile()
     
     var body: some View {
         VStack{
-
+            // Toggle for using metric or not
             Toggle("Use Metric", isOn: $isMetric)
                 .onChange(of: isMetric) {value in
                     hives.isMetric = isMetric
@@ -47,6 +49,7 @@ struct SettingsMenu: View {
                 .font(.system(size: 20, weight: .heavy))
                 .padding(.horizontal)
         
+            // Toggle for using the drawing feature or not
             Toggle("Drawing Feature", isOn: $isDrawingPictureHandler)
                 .onChange(of: isDrawingPictureHandler) {value in
                     hives.isDrawingHandler = isDrawingPictureHandler
@@ -57,10 +60,9 @@ struct SettingsMenu: View {
             
             
             Divider()
-            
             Spacer()
 
-            //Start new season button
+            // Start new season button
             Button(action: {
                 print("Start New Season Clicked")
                 self.activeSheet = .archiveMake
@@ -74,7 +76,7 @@ struct SettingsMenu: View {
                     .font(.system(size: 20, weight: .heavy))
             }.padding(.horizontal)
             
-            
+            // Export CSV Button
             Button(action: {
                 exportCSV()
             }){
@@ -87,7 +89,8 @@ struct SettingsMenu: View {
                     .font(.system(size: 20, weight: .heavy))
             }.buttonStyle(PlainButtonStyle())
             .padding(.horizontal)
-                        
+                  
+            // Clear the current hives information button
             Button(action: {
                 self.showingActionSheet = true
                 self.activeSheet = .reset
@@ -103,6 +106,8 @@ struct SettingsMenu: View {
             .padding(.bottom)
             .padding(.horizontal)
         }
+        
+        // Button to show the about us sheet
         Button(action: {
             self.showingActionSheet = true
             self.activeSheet = .about
@@ -156,9 +161,9 @@ struct SettingsMenu: View {
           })
     }
     
+    // Setup the CSV string information for the export
     func exportCSV(){
         csvHead = "Season,Date,Hive Title,Box #,Frame Area,Frame #,Side,Honey Weight Estimate\n"
-        
         
         for i in 0..<hives.hiveList.count{
             for j in 0..<hives.hiveList[i].beeBoxes.count{
@@ -168,41 +173,32 @@ struct SettingsMenu: View {
                 }
             }
         }
-        
         document.text = csvHead
         showExportSheet = true
     }
 }
 
-struct SettingsMenu_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsMenu().environmentObject(Hives())
-    }
-}
-
 struct TextFile: FileDocument {
-    // tell the system we support only plain text
+    // Setup file export to be a CSV file
     static var readableContentTypes = [UTType.commaSeparatedText]
 
-    // by default our document is empty
+    // Text for the document
     var text = ""
 
-    // a simple initializer that creates new, empty documents
+    // Create an empty document
     init(initialText: String = "") {
         text = initialText
     }
 
-    // this initializer loads data that has been saved previously
     init(configuration: ReadConfiguration) throws {
         if let data = configuration.file.regularFileContents {
             text = String(decoding: data, as: UTF8.self)
         }
     }
 
-    // this will be called when the system wants to write our data to disk
+    // Used to tell system to write to storage
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         let data = Data(text.utf8)
         return FileWrapper(regularFileWithContents: data)
     }
-    
 }

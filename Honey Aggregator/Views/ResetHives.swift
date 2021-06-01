@@ -1,10 +1,3 @@
-//
-//  ResetHives.swift
-//  Honey Aggregator
-//
-//  Created by Nico Morales on 5/5/21.
-//
-
 import SwiftUI
 
 struct ResetHives: View {
@@ -19,6 +12,7 @@ struct ResetHives: View {
                 .font(.system(size: 20, weight: .heavy))
                 .padding()
             HStack{
+                // Button for doing the reset
                 Button(action: {
                     hives.reset()
                     self.presentationMode.wrappedValue.dismiss()
@@ -32,6 +26,7 @@ struct ResetHives: View {
                         .pickerStyle(MenuPickerStyle())
                 }.padding()
 
+                // Button for canceling the reset
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }){
@@ -45,11 +40,5 @@ struct ResetHives: View {
                 }.padding()
             }
         })
-    }
-}
-
-struct ResetHives_Previews: PreviewProvider {
-    static var previews: some View {
-        ResetHives()
     }
 }

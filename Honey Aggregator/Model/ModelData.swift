@@ -1,13 +1,6 @@
-//
-//  ModelData.swift
-//  Honey_Aggregator
-//
-//  Created by Robert Matlock on 3/19/21.
-//  Special thanks to Sergey Kargopolov
-//  https://www.appsdeveloperblog.com/check-if-a-file-exist/
-
 import Foundation
 
+// Hives class is main body of storeing and retriving the hives information
 class Hives: ObservableObject{
     
     // File name of where the hive data is saved
@@ -23,11 +16,14 @@ class Hives: ObservableObject{
     // Setup for the readout information for the main page
     @Published var readOut: String = ""
     
+    // menuArray handles is for the home page hive selector
     @Published var menuArray:
         [String] = []
+    
     // Setup for unit type
     var isMetric: Bool = false
     
+    // Determine if user is using drawing feature or not
     var isDrawingHandler: Bool = false
     
     // Reset file for testing purposes
@@ -50,6 +46,7 @@ class Hives: ObservableObject{
         let fileURL = dir.appendingPathComponent(fileName)
         let templatefileURL = dir.appendingPathComponent(templateFileName)
         
+        // Hives Data loading
         // Test read to see if file is empty, if so then add a base to json file
         do {
             // Get the text from the file
@@ -114,6 +111,7 @@ class Hives: ObservableObject{
             let decoder = JSONDecoder()
             templates = try decoder.decode([Template].self, from: try Data(contentsOf: templatefileURL))
             
+            // Add these templates if file is non-existant or empty for some reason
             if templateFileEmpty {
                 templates.append(Template(name: "Langstroff Deep", height: 9.5625, width: 19.0))
                 templates.append(Template(name: "Langstroff Medium", height: 6.625, width: 19.0))
@@ -123,28 +121,29 @@ class Hives: ObservableObject{
         } catch {
             fatalError("Couldn't parse \(templateFileName) as [Hive] :\n\(error)")
         }
-        
     }
     
     //Checks to see if file is contained in file system
     func fileCheck(file: String)->String{
         var filePath = ""
         let dirs : [String] = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true)
+        
         //This check just makes sure we can right to the documents directory
         if dirs.count > 0 {
-            let dir = dirs[0] //documents directory
+            
+            //documents directory
+            let dir = dirs[0]
             filePath = dir.appendingFormat("/" + file)
-            //print("Local path = \(filePath)")
-        }
-        else {
+        } else {
             return "Could not find local directory to store file"
         }
+        
         let fileManager = FileManager.default
+        
         // Check if file exists
         if fileManager.fileExists(atPath: filePath) {
             return "File exists"
-        }
-        else {
+        } else {
             return "File does not exist"
         }
     }
@@ -155,19 +154,18 @@ class Hives: ObservableObject{
             // Setup the encoder
             let encoder = JSONEncoder()
             var fileURL: URL
+            
             // Attempt to encode the hivelist data
             let data = try encoder.encode(hiveList)
             if(file.isEmpty){
                 // Get the correct directory path to save the hivelist data
                 fileURL = dir.appendingPathComponent(fileName)
-            }
-           
-            else{
+            } else{
                 fileURL = dir.appendingPathComponent(file)
             }
+            
             // Attempt to write to file
             try data.write(to: fileURL)
-            
         } catch {
             fatalError("Couldn't save data to \(fileName)")
         }
@@ -179,23 +177,17 @@ class Hives: ObservableObject{
             // Setup the encoder
             let encoder = JSONEncoder()
             var fileURL: URL
+            
             // Attempt to encode the hivelist data
             let data = try encoder.encode(templates)
             if(templateFileName.isEmpty){
                 // Get the correct directory path to save the hivelist data
                 fileURL = dir.appendingPathComponent(templateFileName)
-            }
-           
-            else{
+            } else{
                 fileURL = dir.appendingPathComponent(templateFileName)
             }
             // Attempt to write to file
             try data.write(to: fileURL)
-            
-
-            // Get the text from the file
-            let fileTxt = try String(contentsOf: fileURL, encoding: .utf8)
-            print(fileTxt)
             
         } catch {
             fatalError("Couldn't save data to \(templateFileName)")
@@ -206,11 +198,13 @@ class Hives: ObservableObject{
     func archive(file:String)->String{
         do {
             var contingency = ""
+            
             //This is an error check and ensures a unique filename if somehow an empty string reaches this function
             if file.isEmpty{
                 //Hasher is always a unique valeu
                 var hasher = Hasher()
                 file.hash(into: &hasher)
+                
                 //This adds the date to this random unique file name after parsing it for characters that would break the file system.  You may be able to refactor the parse.
                 let today = "\(Date())".replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "").replacingOccurrences(of: ":", with: "").replacingOccurrences(of: "+", with: "")
                 let hashIntoString = "\(hasher.finalize())"
@@ -224,8 +218,6 @@ class Hives: ObservableObject{
             }
             //This should be the only branch that can be reached.
             if contingency.isEmpty{
-                print("The good branch")
-                print(file)
                 if(fileCheck(file: file) == "File exists" || fileCheck(file: file) == "Could not find local directory to store file"){
                     return "File name already in use."
                 }
@@ -234,8 +226,7 @@ class Hives: ObservableObject{
             }
             //This is a branch that should be impossible to reach but ensures any call to archive can be handled.
             else{
-                print("Impressive very impressive")
-                print("File is: \(file)")
+
                 if(fileCheck(file: contingency) == "File exists" || fileCheck(file: contingency) == "Could not find local directory to store file"){
                     return "File name already in use."
                 }
@@ -251,14 +242,12 @@ class Hives: ObservableObject{
     // on the main page for debug purposes.
     func getReadOut() -> String{
         var readOutString = ""
-        
         for i in 0..<hiveList.count{
             readOutString += "Hive: \(hiveList[i].hiveName)\n"
             for j in 0..<hiveList[i].beeBoxes.count{
                 readOutString += "\tBox: \(j) Honey Total: \(getBoxHoneyAmount(hiveidx: i, boxidx: j))\n"
                 for k in 0..<hiveList[i].beeBoxes[j].frames.count{
                     readOutString += "\t\tFrame: \(k) \n"
-                    
                     if isMetric{
                         readOutString += "\t\t\tHoney Total: \(String(format: "%.2f", (hiveList[i].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[i].beeBoxes[j].frames[k].honeyTotalSideB) / 2.20)) kg\n"
                     } else {
@@ -268,10 +257,10 @@ class Hives: ObservableObject{
             }
             readOutString += "\n"
         }
-        
         return readOutString
     }
     
+    // Get the total honey in a box
     func getBoxHoneyAmount(hiveidx: Int, boxidx: Int) -> Float {
         var totalHoney: Float = 0.0
         
@@ -282,6 +271,7 @@ class Hives: ObservableObject{
         return totalHoney
     }
     
+    // Get the total honey in a hive
     func getHiveHoneyTotal(hiveidx: Int) -> Float{
         var totalHoney: Float = 0.0
         
@@ -333,10 +323,19 @@ class Hives: ObservableObject{
                         readOutString += "\t\tHoney Total: \(String(format: "%.2f", hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideA + hiveList[tempIndex!].beeBoxes[j].frames[k].honeyTotalSideB)) lbs\n"
                     }
                 }
-
             }
         }
         return readOutString
+    }
+    
+    // Function for preventing crashing when deleting hive that is being viewed on ReadOutView
+    func menuIndexValid(idx: Int) -> Bool{
+        for i in 0..<hiveList.count{
+            if i == idx {
+                return true
+            }
+        }
+        return false
     }
     
     // Add a BeeBox to a hive using the hive's UUID
@@ -345,7 +344,6 @@ class Hives: ObservableObject{
             if hiveid == hiveList[i].id{
                 let newBeeBox = BeeBox(idx: hiveList[i].beeBoxes.count, honeyTotal: 0.0, frames: [])
                 hiveList[i].beeBoxes.append(newBeeBox)
-                
                 readOut = getReadOut()
                 return
             }
@@ -379,7 +377,6 @@ class Hives: ObservableObject{
         for i in 0..<hiveList.count{
             if hiveid == hiveList[i].id{
                 hiveList.remove(at: i)
-                
                 readOut = getReadOut()
                 menuArray = menuReadArray()
                 return
@@ -396,7 +393,6 @@ class Hives: ObservableObject{
                         hiveList[i].beeBoxes[k].idx -= 1
                     }
                     hiveList[i].beeBoxes.remove(at: j)
-                    
                     readOut = getReadOut()
                     return
                 }
@@ -414,14 +410,12 @@ class Hives: ObservableObject{
                     }
                     if frameid == hiveList[i].beeBoxes[j].frames[k].id{
                         hiveList[i].beeBoxes[j].frames.remove(at: k)
-                        
                         readOut = getReadOut()
                         return
                     }
                 }
             }
         }
-
     }
     
     //This removes all hiveList data Test for whether this is only current data
@@ -436,11 +430,8 @@ class Hives: ObservableObject{
         if name != ""{
             let newHive = Hive(hiveName: name, honeyTotal: 0.0, beeBoxes: [])
             hiveList.append(newHive)
-            
             readOut = getReadOut()
             menuArray = menuReadArray()
-            
-
         }
     }
     
@@ -449,14 +440,12 @@ class Hives: ObservableObject{
         for i in 0..<hiveList.count {
             for j in 0..<hiveList[i].beeBoxes.count{
                 if boxid == hiveList[i].beeBoxes[j].id{
-                    
+                    //Setup Data formatter
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateStyle = .short
                     let dateString = dateFormatter.string(from: Date())
-                    
                     let newFrame = Frame(idx: hiveList[i].beeBoxes[j].frames.count, height: height, width: width, honeyTotalSideA: honeyTotalSideA, honeyTotalSideB: honeyTotalSideB, dateMade: dateString)
                     hiveList[i].beeBoxes[j].frames.append(newFrame)
-                    
                     readOut = getReadOut()
                     return
                 }

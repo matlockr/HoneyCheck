@@ -1,11 +1,3 @@
-//
-//  FrameCreator.swift
-//  Honey_Agg
-//
-//  The FrameCreator view that allows users to add and remove
-//  hives, boxes, and frames.
-//
-
 import SwiftUI
 
 struct FrameCreator: View {
@@ -68,6 +60,7 @@ struct FrameCreator: View {
                 
             } else if state == STATE.Picture1Get{
                 
+                // Go to Drawing view is user selects to use drawing feature
                 if hives.isDrawingHandler{
                     PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 } else {
@@ -85,6 +78,7 @@ struct FrameCreator: View {
                 
             } else if state == STATE.Picture2Get{
                 
+                // Go to Drawing view is user selects to use drawing feature
                 if hives.isDrawingHandler{
                     PictureHandler(selectedTemplate: selectedTemplate!, titleText: $titleText, state: $state, tempHoneyAmount: $tempHoneyAmount, sideAHoneyAmount: $frameSideAHoneyAmount, sideBHoneyAmount: $frameSideBHoneyAmount)
                 } else {
@@ -181,6 +175,7 @@ struct FrameCreator: View {
                     }.background(Color(red: 255/255, green: 235/255, blue: 201/255))
                 }
                 
+                // Button to finilize the frame and add it to the hive
                 Button(action: {
                     // Create the new frame and add it to the selected box
                     hives.addFrame(boxid: selectedBox!.id, height: selectedTemplate!.height, width: selectedTemplate!.width, honeyTotalSideA: frameSideAHoneyAmount, honeyTotalSideB: frameSideBHoneyAmount)
@@ -253,6 +248,8 @@ struct FrameCreator: View {
                 }){
                     Image(systemName: "arrowshape.turn.up.left.fill")
                 }
+                
+                // Plus button for certain states that have certain actions
                 if state == STATE.SelectBox || state == STATE.SelectFrame{
                     Button(action: {
                         if state == STATE.SelectBox{
@@ -273,11 +270,5 @@ struct FrameCreator: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-    }
-}
-
-struct FrameCreator_Previews: PreviewProvider {
-    static var previews: some View {
-        FrameCreator().environmentObject(Hives())
     }
 }

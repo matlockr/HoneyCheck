@@ -1,15 +1,10 @@
-//
-//  ImagePicker.swift
-//  ImageImporter
-//
-//  Based on tutorial by InstaFilter from HackingWithSwift URL: https://www.hackingwithswift.com/read/13/overview
-//
-//  Additional thanks to @karthickselvaraj from Medium.com for sourceType information https://medium.com/better-programming/how-to-pick-an-image-from-camera-or-photo-library-in-swiftui-a596a0a2ece
 
 import SwiftUI
 
+// ImagePicker is used for getting pictures from the camera and photo library
 struct ImagePicker: UIViewControllerRepresentable{
     
+    // Coordinator setup
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate{
         let parent: ImagePicker
         
@@ -36,6 +31,7 @@ struct ImagePicker: UIViewControllerRepresentable{
         Coordinator(self)
     }
     
+    // Make UI View shows the sheet views of the camera/photo library
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
@@ -45,6 +41,7 @@ struct ImagePicker: UIViewControllerRepresentable{
         return picker
     }
     
+    // Update does nothing
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: UIViewControllerRepresentableContext<ImagePicker>) {
     }
 }

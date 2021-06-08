@@ -26,4 +26,33 @@ To use the HoneyCheck application the user needs to follow a simple set of steps
 
 1. Load into the application, the user will see a landing page with a hive selection button, a plus sign in the top right and a setting cog.
 2. Select the + symbol in the top right to begin a new hive
-3. WIP
+3. To enter a hive and add boxes: Select a saved hive name from the name boxes. 
+4. To save a hive: Enter a name for your hive. Press the + symbol to the right of the naming box to add the hive. 
+5. If you wish to delete old hives there is an option for that here near each saved hive.
+6. To enter a box, press the name of a saved box. To save a box, hit the + in the top right. Deletion functions the same as hives.
+7. Frames follow the same conventions as boxes for functionality.
+8. Select your template from either the defaults or create a custom template for your usage. These are the bee frame sizes, and are fairly standard.
+9. After selecting your template, you will see a Side A picture prompt. Press the camera logo. You may use an image from your image library or take one in the moment. 
+10. You will want to crop this image usually to cleanly get the image cropped along the frame. 
+11. Repeat the process for side B picture after being analyzed.
+12. See your new data on the front page of beehives! 
+
+This is a basic breakdown of how to step through the app, but this is not the only pathway that can be taken to use the app. 
+
+<h1 align="center">About Us</h1>
+HoneyCheck was designed by a capstone team for Southern Oregon University and was overseen by Dr. Fabrizzo Soares. The four students involved were: Robert Matlock, Avery Economou, Collin Robinson, and Nicholas Morales. For contact information reach out to the Computer Science department at Southern Oregon University, or see any that is personally listed for the students below:
+
+- Robert Matlock
+  - robertmatlock807@gmail.com
+
+- Avery Economou
+  - averyeconomou@gmail.com
+
+- Collin Robinson
+  - crobinson039@gmail.com
+
+- Nicholas Morales
+  - funkocouch on GitHub
+
+
+HoneyCheck in owned and operated through the RaiderSoft organization from Southern Oregon University.

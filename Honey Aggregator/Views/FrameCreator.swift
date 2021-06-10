@@ -165,11 +165,20 @@ struct FrameCreator: View {
                             .padding(.horizontal)
                     }.background(Color(red: 255/255, green: 235/255, blue: 201/255))
                     HStack{
-                        Text("Honey amount:")
+                        Text("Side A Honey:")
                             .padding(.horizontal)
                             .font(.system(size: 20, weight: .heavy))
                         Spacer()
-                        Text("\(String(format: "%.2f", tempHoneyAmount)) lbs")
+                        Text("\(String(format: "%.2f", frameSideAHoneyAmount)) lbs")
+                            .font(.system(size: 20, weight: .heavy))
+                            .padding(.horizontal)
+                    }.background(Color(red: 255/255, green: 235/255, blue: 201/255))
+                    HStack{
+                        Text("Side B Honey:")
+                            .padding(.horizontal)
+                            .font(.system(size: 20, weight: .heavy))
+                        Spacer()
+                        Text("\(String(format: "%.2f", frameSideBHoneyAmount)) lbs")
                             .font(.system(size: 20, weight: .heavy))
                             .padding(.horizontal)
                     }.background(Color(red: 255/255, green: 235/255, blue: 201/255))
@@ -190,7 +199,8 @@ struct FrameCreator: View {
                         .padding(10)
                         .background(Color(red: 255/255, green: 248/255, blue: 235/255))
                         .cornerRadius(10)
-                        .font(.system(size: 20, weight: .heavy))                }
+                        .font(.system(size: 20, weight: .heavy))
+                }
                 .padding()
             }
         }

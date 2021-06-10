@@ -56,3 +56,5 @@ HoneyCheck was designed by a capstone team for Southern Oregon University and wa
 
 
 HoneyCheck in owned and operated through the RaiderSoft organization from Southern Oregon University.
+
+Disclaimer: Due to this being only a student project, understand that HoneyCheck is not responsible for any loss of revenue or property. HoneyCheck is meant to be a tool and not to be relied upon as a exact measurement of honey amounts within a hive.

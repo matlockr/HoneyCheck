@@ -275,6 +275,9 @@ struct TemplateSelector: View{
                 }
             }
         }
+        .onAppear(perform: {
+            hives.loadTemplates()
+        })
     }
 }
 
@@ -310,16 +313,27 @@ struct CustomTemplateCreator: View{
         VStack{
             
             VStack{
+                Text("Template Name")
+                    .font(.title3)
+                    .padding()
                 // TextField for name of custom template
-                TextField("Template Name", text: $customTemplateName)
+                TextField("Enter Name", text: $customTemplateName)
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                
+                Text("Template Height")
+                    .font(.title3)
+                    .padding()
                 
                 // TextField for height of custom template
                 TextField("Enter Height", text: $customTemplateHeight)
                     .padding()
                     .keyboardType(.decimalPad)
                     .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 255/255, green: 248/255, blue: 235/255)))
+                
+                Text("Template Width")
+                    .font(.title3)
+                    .padding()
                 
                 // TextField for width of custom template
                 TextField("Enter Width",text: $customTemplateWidth)
@@ -343,9 +357,9 @@ struct CustomTemplateCreator: View{
                         } else {
                             // Convert the height and width is the isMetric is true
                             if hives.isMetric{
-                                selectedTemplate = Template(name: customTemplateName, height: floatHeight / 25.4, width: floatWidth / 25.4)
+                                selectedTemplate = Template(name: customTemplateName, height: Float(floatHeight) / 25.4, width: Float(floatWidth) / 25.4)
                             } else {
-                                selectedTemplate = Template(name: customTemplateName, height: floatHeight, width: floatWidth)
+                                selectedTemplate = Template(name: customTemplateName, height: Float(floatHeight), width: Float(floatWidth))
                             }
                             hives.templates.append(selectedTemplate!)
                             hives.saveTemplates()
@@ -361,7 +375,7 @@ struct CustomTemplateCreator: View{
                 .background(Color(red: 255/255, green: 248/255, blue: 235/255))
                 .cornerRadius(10)
                 .font(.system(size: 18, weight: .heavy))
-            }
+            }.padding(.bottom)
             
         }
         .sheet(item: $activeSheet, onDismiss: { activeSheet = nil }) { item in
@@ -561,8 +575,10 @@ struct PictureHandler: View{
     
     // Change the drawing state
     func ChangeDrawingState(){
-        subState = DrawingState.DrawFrame
-        drawView.brush.color = Color(UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0))
+        if inputImage != nil{
+            subState = DrawingState.DrawFrame
+            drawView.brush.color = Color(UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0))
+        }
     }
     
     // End the picture state and move the FrameCreator to Picture2Get and then the Finalize state
@@ -623,7 +639,7 @@ struct PictureHandler: View{
             
             let frameHeight: Float = selectedTemplate.height
             let frameWidth: Float = selectedTemplate.width
-            let honeyLBPerSquareIn: Float = 0.02508
+            let honeyLBPerSquareIn: Float = 0.028
             
             // Caluclate the honey amount for one side of the frame and add it
             // to the tempHoneyAmount
@@ -1006,11 +1022,15 @@ struct DetailedView: View {
     func HoneyCalculation(){
         let honeyPercent: Float = Float(honeyCount) / Float(predictionUIImages.count)
         
-        let honeyLBPerSquareIn: Float = 0.02508
+        let honeyLBPerSquareIn: Float = 0.028
         honeyTotal += (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)
 
         // Start the transistion to the next state
         done = true
+        
+        print(honeyCount)
+        print(dimHeight)
+        print(dimWidth)
         
         if state == .Picture1Get{
             sideAHoneyAmount = (Float(dimWidth * dimHeight) * honeyPercent * honeyLBPerSquareIn)

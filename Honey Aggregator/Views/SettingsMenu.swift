@@ -62,19 +62,6 @@ struct SettingsMenu: View {
             Divider()
             Spacer()
 
-            // Start new season button
-            Button(action: {
-                print("Start New Season Clicked")
-                self.activeSheet = .archiveMake
-            }){
-                Text("Start New Season")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .foregroundColor(Color.orange)
-                    .padding(10)
-                    .background(Color(red: 255/255, green: 248/255, blue: 235/255))
-                    .cornerRadius(10)
-                    .font(.system(size: 20, weight: .heavy))
-            }.padding(.horizontal)
             
             // Export CSV Button
             Button(action: {
@@ -163,13 +150,13 @@ struct SettingsMenu: View {
     
     // Setup the CSV string information for the export
     func exportCSV(){
-        csvHead = "Season,Date,Hive Title,Box #,Frame Area,Frame #,Side,Honey Weight Estimate\n"
+        csvHead = "Date,Hive Title,Box #,Frame Area,Frame #,Side,Honey Weight Estimate\n"
         
         for i in 0..<hives.hiveList.count{
             for j in 0..<hives.hiveList[i].beeBoxes.count{
                 for frame in hives.hiveList[i].beeBoxes[j].frames{
-                    csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),A,\(frame.honeyTotalSideA)\n")
-                    csvHead.append("2021,\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),B,\(frame.honeyTotalSideB)\n")
+                    csvHead.append("\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),A,\(frame.honeyTotalSideA)\n")
+                    csvHead.append("\(frame.dateMade),\(hives.hiveList[i].hiveName),\(hives.hiveList[i].beeBoxes[j].idx + 1),\(frame.width * frame.height),\(frame.idx + 1),B,\(frame.honeyTotalSideB)\n")
                 }
             }
         }

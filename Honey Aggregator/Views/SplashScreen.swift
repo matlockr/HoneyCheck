@@ -14,7 +14,7 @@ struct SplashScreen: View {
                 .background(Color.white)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
-            .transition(.scale)
+                .padding()
         }.onAppear(perform: {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                 showingIcon = false

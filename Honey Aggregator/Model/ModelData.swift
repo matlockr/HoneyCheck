@@ -30,11 +30,7 @@ class Hives: ObservableObject{
     let fileReset = false
         
     // List of Template types for template selection
-    var templates = [
-        Template(name: "Langstroff Deep", height: 9.5625, width: 19.0),
-        Template(name: "Langstroff Medium", height: 6.625, width: 19.0),
-        Template(name: "Langstroff Shallow", height: 5.75, width: 19.0)
-    ]
+    @Published var templates = [Template]()
     
     init(){
         
@@ -118,6 +114,8 @@ class Hives: ObservableObject{
                 templates.append(Template(name: "Langstroff Shallow", height: 5.75, width: 19.0))
             }
             
+            saveTemplates()
+            
         } catch {
             fatalError("Couldn't parse \(templateFileName) as [Hive] :\n\(error)")
         }
@@ -168,6 +166,53 @@ class Hives: ObservableObject{
             try data.write(to: fileURL)
         } catch {
             fatalError("Couldn't save data to \(fileName)")
+        }
+    }
+    
+    func loadTemplates(){
+        
+        let templatefileURL = dir.appendingPathComponent(templateFileName)
+        
+        // Templates loading
+        var templateFileEmpty: Bool = false
+        // Test read to see if file is empty, if so then add a base to json file
+        do {
+            // Get the text from the file
+            let fileTxt = try String(contentsOf: templatefileURL, encoding: .utf8)
+            
+            // Build base to file if empty or looking to reset file
+            if fileTxt == ""{
+                templateFileEmpty = true
+                try "[]".write(to: templatefileURL, atomically: false, encoding: .utf8)
+            }
+            
+        } catch is CocoaError{ // This error is for when there is no existing file
+            // Write to the file for the first time and give it the base JSON structure
+            do {
+                templateFileEmpty = true
+                try "[]".write(to: templatefileURL, atomically: false, encoding: .utf8)
+            } catch {
+                fatalError("Couldn't write to \(templateFileName) \(error)\n\n\(type(of: error))\n\n")
+            }
+        } catch {
+            // Any other error should stop the app
+            fatalError("Couldn't read \(templateFileName) \(error)\n\n\(type(of: error))\n\n")
+        }
+        
+        // Decode file information and build the list of templates
+        do {
+            let decoder = JSONDecoder()
+            templates = try decoder.decode([Template].self, from: try Data(contentsOf: templatefileURL))
+            
+            // Add these templates if file is non-existant or empty for some reason
+            if templateFileEmpty {
+                templates.append(Template(name: "Langstroff Deep", height: 9.5625, width: 19.0))
+                templates.append(Template(name: "Langstroff Medium", height: 6.625, width: 19.0))
+                templates.append(Template(name: "Langstroff Shallow", height: 5.75, width: 19.0))
+            }
+            
+        } catch {
+            fatalError("Couldn't parse \(templateFileName) as [Hive] :\n\(error)")
         }
     }
     

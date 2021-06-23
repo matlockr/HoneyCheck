@@ -1,8 +1,4 @@
-<p align="center">
-  <img width="200" src="https://github.com/RaiderSoft/Help-Local-Beekepers/blob/main/Honey%20Aggregator/Assets.xcassets/appLogo.imageset/appLogo.png?raw=true"
-  </p>
-  
-<h1 align="center">About HoneyCheck</h1>
+<h1 align="center">About</h1>
 
 Honeycheck is an iOS mobile application that was designed as a tool for beekeepers to allow for them to monitor and store information about their hives and the honey calculations within. The honey calculation is used doing image analysis on a personally taken picture of a bee hive frame. These pictures can be taken in the moment of needed calculation or can be loaded later from the device's photo library. 
 
